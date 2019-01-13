@@ -1,14 +1,14 @@
 ---
-name: New feature template
-about: Issue template for new feature.
-title: New feature name
+name: Task request
+about: Issue template for new tasks.
+title: Task name
 labels: ''
 assignees: ''
 
 ---
 
 ## To-do
-Description of the new feature and what to make.
+Description of the new task and what to make.
 
 ## Checklist
 -   Task A
