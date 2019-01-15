@@ -11,7 +11,7 @@
 A robust conversation app to replace the chit system in Model United Nations build over node with socket.
 
 Wanna join in for the development?
-- Refer to the [development](https://github.com/VITCMUN/munverse.wiki.git) for the project and file structures.
-- Refer to the [coding standards](https://github.com/VITCMUN/munverse.wiki.git) we follow.
-- Refer to our [design standards](https://github.com/VITCMUN/munverse.wiki.git).
-- Look at how we handle data with our [data models](https://github.com/VITCMUN/munverse.wiki.git).
+- Refer to the [development](https://github.com/VITCMUN/munverse/wiki/Development) for the project and file structures.
+- Refer to the [coding standards](https://github.com/VITCMUN/munverse/wiki/Coding-Standards) we follow.
+- Refer to our [design standards](https://github.com/VITCMUN/munverse/wiki/Design-Standards).
+- Look at how we handle data with our [data models](https://github.com/VITCMUN/munverse/wiki/Data-Models).
