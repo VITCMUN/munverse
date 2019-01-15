@@ -8,7 +8,7 @@
 
 
 
-A robust conversation app to replace the chit system in Model Unite Nations build over node with socket.
+A robust conversation app to replace the chit system in Model United Nations build over node with socket.
 
 Wanna join in for the development?
 - Refer to the [development](https://github.com/VITCMUN/munverse.wiki.git) for the project and file structures.
