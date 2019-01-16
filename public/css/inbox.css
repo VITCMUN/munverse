@@ -1,6 +1,6 @@
 html,
 body {
-    font-family: 'Open Sans', serif;
+    font-family: 'Nunito', sans-serif;
     font-size: 16px;
     line-height: 1.5;
     height: 100%;
@@ -8,11 +8,19 @@ body {
 }
 
 nav.navbar {
-    border-top: 1px;
+    border-top: 4px;
     border-color: #FCCC00;
     margin-bottom: 1rem;
 }
 
+.navbar-item.is-logo{
+    position: absolute;
+    left: 50%;
+    margin-left: -63px;
+    height: 100%;
+    display: flex;
+    align-items: center;
+}
 
 nav.dark{
     background: #000000;
@@ -28,8 +36,15 @@ nav.dark{
     font-weight: 700;
 }
 
+.navbar-flag {
+    width: 230px;
+}
+
 .navbar-item img{
     max-height:100%;
+    display: block;
+    margin-left: auto;
+    margin-right: auto;
 }
 
 .columns {
@@ -108,6 +123,10 @@ a.gold-button {
     border-color: #FCCC00;
 }
 
+img.icon-top{
+    padding-left: 0px;
+}
+
 
 .aside {
     display: block;
@@ -120,23 +139,28 @@ a.gold-button {
   margin:0 -10px;
   padding: 25px 30px;
 }
+
 .aside .compose .button {
   color: #000000;
 }
+
 .aside .compose .button .compose {
   font-size: 14px;
   font-weight: 700;
 }
+
 .aside .main {
   padding: 40px;
   color: #000000;
 }
+
 .aside .title {
   color: #000000;
   font-size: 12px;
   font-weight: bold;
   text-transform: uppercase;
 }
+
 .aside .main .item {
   display: block;
   padding: 10px 0;
