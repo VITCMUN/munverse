@@ -4,7 +4,7 @@
 [![dependencies Status](https://david-dm.org/VITCMUN/munverse/status.svg)](https://david-dm.org/VITCMUN/munverse)
 [![devDependencies Status](https://david-dm.org/VITCMUN/munverse/dev-status.svg)](https://david-dm.org/VITCMUN/munverse?type=dev)
 [![HitCount](http://hits.dwyl.io/vitcmun/munverse.svg)](http://hits.dwyl.io/vitcmun/munverse)
-
+[![License: GPL v3](https://img.shields.io/badge/License-GPLv3-blue.svg)](https://www.gnu.org/licenses/gpl-3.0)
 
 
 
