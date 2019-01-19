@@ -83,7 +83,7 @@
             <div class="columns">
                 <div class="container">
                     <div class="inbox-messages is-dark">
-                        <div class="card" id="msg-card-0">
+                        <div class="card" id="msg-card-0" onclick="display_content()">
                             <div class="card-content">
                                 <div class="columns">
                                     <div class="column is-1">
@@ -110,7 +110,7 @@
                             </div>
                            </div>
                         </div>
-                        <div class="card" id="msg-card-1">
+                        <div class="card" id="msg-card-1" onclick="display_content()">
                                 <div class="card-content">
                                     <div class="columns">
                                         <div class="column is-1">
@@ -137,7 +137,7 @@
                                 </div>
                             </div>
                         </div>
-                        <div class="card" id="msg-card-2">
+                        <div class="card" id="msg-card-2" onclick="display_content()">
                             <div class="card-content">
                                 <div class="columns">
                                     <div class="column is-1">
@@ -164,7 +164,7 @@
                                 </div>
                             </div>
                         </div>
-                    <div class="card" id="msg-card-3">
+                    <div class="card" id="msg-card-3" onclick="display_content()">
                         <div class="card-content">
                             <div class="columns">
                                 <div class="column is-1">
@@ -196,6 +196,13 @@
         </div>
     </div>
     <script async type="text/javascript" src="../public/js/bulma.js"></script>
+    <!----script>
+        function display_content()
+        {
+            documnent.getElementByClassName("card").innerHTML=
+        }
+
+    </script-->
 </body>
 
 </html>
