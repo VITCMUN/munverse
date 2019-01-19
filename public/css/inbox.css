@@ -82,7 +82,8 @@ nav.dark{
     background: #000000;
 }
 .card:hover{
-    background-color: rgb(180, 149, 11);
+    background-color: #FCCC00;
+    transition-duration: 200ms;
 }
 
 .card-header-title {
@@ -194,4 +195,25 @@ img.icon-top{
   font-size: 15px;
   color: #FFFFFF;
   font-weight: 500;
+}
+
+.ribbon{
+    border-radius: 10%;
+    background-color:#000000;
+    color:hsl(0, 0%, 96%)
+
+}
+
+@media screen and (max-width: 400px){
+    .set-right{
+        margin-left:38%;
+    }
+}
+
+.set-right{
+    margin-left:45%;
+}
+
+.set-center{
+    margin-left:38%;
 }
