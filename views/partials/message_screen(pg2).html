@@ -82,13 +82,36 @@
         <div class="column is-10">
             <div class="columns">
                 <div class="container">
+                            <div class="card-header">
+                                <div class="control is-grouped">
+                                    <a class="ribbon button">
+                                        <i class="fa fa-refresh"></i>
+                                    </a>
+                                </div>
+                                &nbsp;&nbsp;&nbsp;&nbsp;
+                                <div class="control">
+                                    <a class="ribbon button">
+                                        <h1>1-10</h1>
+                                    </a>
+                                </div>
+                                &nbsp;&nbsp;&nbsp;&nbsp;
+                                    <div class="control is-grouped">
+                                        <a class="ribbon button">
+                                            <i class="fa fa-angle-left"></i>
+                                        </a>
+                                        <a class="ribbon button">
+                                            <i class="fa fa-angle-right"></i>
+                                        </a>
+                                    </div>
+                            </div>
+                    <br><br>
                     <div class="inbox-messages is-dark">
-                        <div class="card" id="msg-card-0" onclick="display_content()">
+                        <div class="card" id="msg-card-0">
                             <div class="card-content">
                                 <div class="columns">
                                     <div class="column is-1">
                                             <span class="msg-from">
-                                                    <img src="../../media/flag/India.png" alt="India" width="35px" height="35px" style="border-radius:75%">
+                                                <img src="../../media/flag/India.png" alt="India" width="35px" height="35px" style="border-radius:75%">
                                             </span>
                                     </div>
                                 <div class="column is-11">
@@ -110,7 +133,7 @@
                             </div>
                            </div>
                         </div>
-                        <div class="card" id="msg-card-1" onclick="display_content()">
+                        <div class="card" id="msg-card-1">
                                 <div class="card-content">
                                     <div class="columns">
                                         <div class="column is-1">
@@ -196,13 +219,6 @@
         </div>
     </div>
     <script async type="text/javascript" src="../public/js/bulma.js"></script>
-    <!----script>
-        function display_content()
-        {
-            documnent.getElementByClassName("card").innerHTML=
-        }
-
-    </script-->
 </body>
 
 </html>
