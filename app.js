@@ -9,7 +9,6 @@ const User = require('./models/user.model')
 const logger = require('./utils/logger')
 const auth_route=require('./routes/auth.route')
 const app = express()
-process.env.NODE_ENV = 'test'
 
 // set up
 app.set('view engine', 'ejs')
