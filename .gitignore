@@ -1,1 +1,4 @@
 node_modules/
+public/css/font-awesome-4.7.0/*
+public/css/bulma.min.css
+public/css/nunito.tff
