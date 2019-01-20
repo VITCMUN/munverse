@@ -1,0 +1,145 @@
+<!DOCTYPE html>
+
+<html>
+
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1, max-scale=1.0">
+    <title>VITCMUN 19: E-Chit</title>
+    <link rel="stylesheet" href="../public/css/font-awesome-4.7.0/css/font-awesome.min.css">
+    <!-- Bulma Version 0.7.2-->
+    <link rel="stylesheet" href="../public/css/bulma.min.css" />
+    <link rel="stylesheet" type="text/css" href="../public/css/inbox.css">
+</head>
+
+<body>
+
+    <!-- START NAV -->
+    <nav class="navbar dark" role="navigation" aria-label="main navigation">
+        <div class="navbar-brand">
+            <!--Big Flag for Desktop Device-->
+            <a class="navbar-item is-hidden-mobile navbar-flag" href="#">
+                <img class="icon-top" src="../media/flag/india.png" width="137mm" height="137mm">
+            </a>
+            <!--Small Flag for Mobile Devices-->
+            <a class="navbar-item is-hidden-tablet" href="#">
+                <img class="icon-top" src="../media/flag/india.png" width="50mm" height="50mm">
+            </a>
+            <!--Council Logo for Mobile Devices-->
+            <div class="navbar-item is-logo is-hidden-tablet">
+                <a class="is-logo" href="#">
+                    <img class="icon-top" src="../media/council_logos/EU.JPG" width="120">
+                </a>
+            </div>
+            <a role="button" class="navbar-burger burger" aria-label="menu" aria-expanded="false" data-target="navMenu">
+                <span aria-hidden="true"></span>
+                <span aria-hidden="true"></span>
+                <span aria-hidden="true"></span>
+            </a>
+        </div>
+        <div id="navbarMenu" class="navbar-menu">
+            <!--Council Logo for Laptop Devices-->
+            <div class="navbar-item is-logo is-hidden-mobile">
+                <a class="is-logo" href="#">
+                    <img class="icon-top" src="../media/council_logos/EU.JPG" width="210mm">
+                </a>
+            </div>
+            <div class="navbar-end">
+                <div class="navbar-item">
+                    <div class="buttons">
+                        <a class="button gold-button">
+                            <strong>
+                                LOGOUT
+                            </strong>
+                        </a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </nav>
+    <!-- END NAV -->
+    <div class="columns">
+        <aside class="column is-2 aside hero">
+            <div>
+                <div class="compose has-text-centered">
+                    <a class="button gold-button is-block is-bold">
+                        <span class="compose">
+                            <strong>
+                                COMPOSE
+                            </strong>
+                        </span>
+                    </a>
+                </div>
+                <div class="main">
+                    <a href="#" class="item active"><span class="icon"><i class="fa fa-inbox"></i></span><span class="name">Inbox</span></a>
+                    <a href="#" class="item"><span class="icon"><i class="fa fa-star"></i></span><span class="name">Starred</span></a>
+                    <a href="#" class="item"><span class="icon"><i class="fa fa-envelope-o"></i></span><span class="name">Sent Mail</span></a>
+                </div>
+            </div>
+        </aside>
+        <div class="column is-10">
+            <div class="card-header">
+                <div class="columns is-mobile">
+                    <div class="column is-4 control is-grouped has-text-left">
+                        <a class="ribbon button">
+                            <i class="fa fa-arrow-left"></i>
+                        </a>
+                        <a class="ribbon button">
+                            <i class="fa fa-repeat"></i>
+                        </a>
+                    </div>
+                    <div class="column is-8 control is-grouped is-narrow has-text-right">
+                        <a class="ribbon button">
+                            <i class="fa fa-angle-left"></i>
+                        </a>
+                        <a class="ribbon button">
+                            <h1>1 / 10</h1>
+                        </a>
+                        <a class="ribbon button">
+                            <i class="fa fa-angle-right"></i>
+                        </a>
+                    </div>
+                </div>
+            </div>
+            <div class="headerchat">
+                <div class="card-content">
+                    <div class="columns">
+                        <div class="column is-1">
+                            <input class="star" type="checkbox" title="bookmark page" checked>
+                        </div>
+                        <div class="column is-1">
+                            <span class="msg-from">
+                                <img src="../media/flag/USA.png" alt="USA" width="44px" height="44px" style="border-radius:75%">
+                            </span>
+                        </div>
+                        <div class="column is-9">
+                            <div class="mesg-header">
+                                <span class="mesg-header">
+                                    <h1>USA</h1>
+                                </span>
+                            </div>
+                            <div class="msg-subject">
+                                <span class="msg-subject">
+                                    <small id="subject-0" style="color:antiquewhite">Hello Delegate lets form an alliance and Draft a Resolution</small>
+                                </span>
+                            </div>
+                        </div>
+                        <div class="column is-1">
+                            <span class="msg-timestamp" style="color:antiquewhite">12:34</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <a class="button gold-button is-bold">
+                <span class="compose">
+                    <strong>
+                        REPLY
+                    </strong>
+                </span>
+            </a>
+        </div>
+    </div>
+</body>
+
+</html>

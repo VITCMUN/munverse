@@ -1,0 +1,223 @@
+<!DOCTYPE html>
+
+<html>
+
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1, max-scale=1.0">
+    <title>VITCMUN 19: E-Chit</title>
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css">
+    <link href="https://fonts.googleapis.com/css?family=Nunito" rel="stylesheet">
+    <!-- Bulma Version 0.7.2-->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/bulma/0.7.2/css/bulma.min.css" />
+    <link rel="stylesheet" type="text/css" href="../../public/css/inbox.css">
+</head>
+
+<body>
+
+    <!-- START NAV -->
+    <nav class="navbar dark" role="navigation" aria-label="main navigation">
+        <div class="navbar-brand">
+            <!--Big Flag for Desktop Device-->
+            <a class="navbar-item is-hidden-mobile navbar-flag" href="#">
+                <img class="icon-top" src="../../media/flag/india.png" width="137mm" height="137mm">
+            </a>
+            <!--Small Flag for Mobile Devices-->
+            <a class="navbar-item is-hidden-tablet" href="#">
+                <img class="icon-top" src="../../media/flag/india.png" width="50mm" height="50mm">
+            </a>
+            <!--Council Logo for Mobile Devices-->
+            <div class="navbar-item is-logo is-hidden-tablet">
+                <a class="is-logo" href="#">
+                    <img class="icon-top" src="../../media/council_logos/EU.JPG" width="120">
+                </a>
+            </div>
+            <a role="button" class="navbar-burger burger" aria-label="menu" aria-expanded="false" data-target="navbarBasicExample">
+                <span aria-hidden="true"></span>
+                <span aria-hidden="true"></span>
+                <span aria-hidden="true"></span>
+            </a>
+        </div>
+        <div id="navbarBasicExample" class="navbar-menu">
+            <!--Council Logo for Laptop Devices-->
+            <div class="navbar-item is-logo is-hidden-mobile">
+                <a class="is-logo" href="#">
+                    <img class="icon-top" src="../../media/council_logos/EU.JPG" width="210mm">
+                </a>
+            </div>
+            <div class="navbar-end">
+                <div class="navbar-item">
+                    <div class="buttons">
+                        <a class="button gold-button">
+                            <strong>
+                                LOGOUT
+                            </strong>
+                        </a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </nav>
+    <!-- END NAV -->
+    <div class="columns">
+        <aside class="column is-2 aside hero">
+            <div>
+                <div class="compose has-text-centered">
+                    <a class="button gold-button is-block is-bold">
+                        <span class="compose">
+                            <strong>
+                                COMPOSE
+                            </strong>
+                        </span>
+                    </a>
+                </div>
+                <div class="main">
+                    <a href="#" class="item active"><span class="icon"><i class="fa fa-inbox"></i></span><span class="name">Inbox</span></a>
+                    <a href="#" class="item"><span class="icon"><i class="fa fa-star"></i></span><span class="name">Starred</span></a>
+                    <a href="#" class="item"><span class="icon"><i class="fa fa-envelope-o"></i></span><span class="name">Sent Mail</span></a>
+                </div>
+            </div>
+        </aside>
+        <div class="column is-10">
+            <div class="columns">
+                <div class="container">
+                            <div class="card-header">
+                                <div class="control is-grouped">
+                                    <a class="ribbon button">
+                                        <i class="fa fa-refresh"></i>
+                                    </a>
+                                </div>
+                                &nbsp;&nbsp;&nbsp;&nbsp;
+                                <div class="control">
+                                    <a class="ribbon button">
+                                        <h1>1-10</h1>
+                                    </a>
+                                </div>
+                                &nbsp;&nbsp;&nbsp;&nbsp;
+                                    <div class="control is-grouped">
+                                        <a class="ribbon button">
+                                            <i class="fa fa-angle-left"></i>
+                                        </a>
+                                        <a class="ribbon button">
+                                            <i class="fa fa-angle-right"></i>
+                                        </a>
+                                    </div>
+                            </div>
+                    <br><br>
+                    <div class="inbox-messages is-dark">
+                        <div class="card" id="msg-card-0">
+                            <div class="card-content">
+                                <div class="columns">
+                                    <div class="column is-1">
+                                            <span class="msg-from">
+                                                <img src="../../media/flag/India.png" alt="India" width="35px" height="35px" style="border-radius:75%">
+                                            </span>
+                                    </div>
+                                <div class="column is-11">
+                                <div class="mesg-header">
+                                    <span class="mesg-header"> 
+                                        <span class="msg-timestamp"></span>
+                                        <span class="msg-attachment">
+                                            <i class="fa fa-paperclip"></i>
+                                        </span>
+                                    </span>
+                                    </div>
+                                    <div class="msg-subject">
+                                    <span class="msg-subject">
+                                        <strong style="color:antiquewhite">From: India</strong>
+                                        &nbsp;<small id="subject-0" style="color:antiquewhite">Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nam gravida elit nisi, in suscipit libero blandit quis.</small>
+                                    </span>
+                                </div>
+                                </div>
+                            </div>
+                           </div>
+                        </div>
+                        <div class="card" id="msg-card-1">
+                                <div class="card-content">
+                                    <div class="columns">
+                                        <div class="column is-1">
+                                                <span class="msg-from">
+                                                        <img src="../../media/flag/Russia.png" alt="Russia" width="35px" height="35px" style="border-radius:75%">
+                                                </span>
+                                        </div>
+                                    <div class="column is-11">
+                                    <div class="mesg-header">
+                                        <span class="mesg-header"> 
+                                            <span class="msg-timestamp"></span>
+                                            <span class="msg-attachment">
+                                                <i class="fa fa-paperclip"></i>
+                                            </span>
+                                        </span>
+                                        </div>
+                                        <div class="msg-subject">
+                                        <span class="msg-subject">
+                                            <strong style="color:antiquewhite">From: Russia</strong>
+                                            &nbsp;<small id="subject-1" style="color:antiquewhite">Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nam gravida elit nisi, in suscipit libero blandit quis.</small>
+                                        </span>
+                                    </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="card" id="msg-card-2" onclick="display_content()">
+                            <div class="card-content">
+                                <div class="columns">
+                                    <div class="column is-1">
+                                            <span class="msg-from">
+                                                    <img src="../../media/flag/usa.png" alt="USA" width="35px" height="35px" style="border-radius:75%">
+                                            </span>
+                                    </div>
+                                <div class="column is-11">
+                                <div class="mesg-header">
+                                    <span class="mesg-header"> 
+                                        <span class="msg-timestamp"></span>
+                                        <span class="msg-attachment">
+                                            <i class="fa fa-paperclip"></i>
+                                        </span>
+                                    </span>
+                                    </div>
+                                    <div class="msg-subject">
+                                    <span class="msg-subject">
+                                        <strong style="color:antiquewhite">From: USA</strong>
+                                        &nbsp;<small id="subject-2" style="color:antiquewhite">Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nam gravida elit nisi, in suscipit libero blandit quis.</small>
+                                    </span>
+                                    </div>
+                                  </div>
+                                </div>
+                            </div>
+                        </div>
+                    <div class="card" id="msg-card-3" onclick="display_content()">
+                        <div class="card-content">
+                            <div class="columns">
+                                <div class="column is-1">
+                                        <span class="msg-from">
+                                                <img src="../../media/flag/china.png" alt="China" width="35px" height="35px" style="border-radius:75%">
+                                        </span>
+                                </div>
+                            <div class="column is-11">
+                            <div class="mesg-header">
+                                <span class="mesg-header"> 
+                                    <span class="msg-timestamp"></span>
+                                    <span class="msg-attachment">
+                                        <i class="fa fa-paperclip"></i>
+                                    </span>
+                                </span>
+                                </div>
+                                <div class="msg-subject">
+                                <span class="msg-subject">
+                                    <strong style="color:antiquewhite">From: China</strong>
+                                    &nbsp;<small id="subject-3" style="color:antiquewhite">Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nam gravida elit nisi, in suscipit libero blandit quis.</small>
+                                </span>
+                            </div>
+                            </div>
+                          </div>
+                        </div>
+                    </div>
+                    </div>
+            </div>
+        </div>
+    </div>
+</body>
+
+</html>
