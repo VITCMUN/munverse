@@ -1,6 +1,6 @@
 const logger = require('../utils/logger')
 
-exports.is_Authenticated = (req, res, next) => {
+exports.is_authenticated = (req, res, next) => {
     if (req.user) {
         return next()
     } else {
