@@ -29,7 +29,7 @@ describe("signup",()=>{
 it('signup',(done)=>{
   chai.request(app).
   post('/signup')
-  .send({ password: "1234", username:"china" })
+  .send({ password: "1234", username:"random" })
   .end((err,res)=>{
     expect(res).to.have.status(200)
     done()
