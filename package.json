@@ -8,7 +8,7 @@
   },
   "scripts": {
     "start": "node app.js",
-    "test": "mocha --recursive --exit"
+    "test": "./node_modules/.bin/mocha --recursive --exit"
   },
   "repository": {
     "type": "git",
