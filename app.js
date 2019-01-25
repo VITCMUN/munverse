@@ -8,7 +8,6 @@ app.use(express.static(path.join(__dirname, 'public')))
 
 // db connections
 const mongoose = require("mongoose")
-var Schema = mongoose.Schema
 const db_url = "mongodb://kunal:sahni1@ds161794.mlab.com:61794/mongoose"
 mongoose.connect(db_url,{useNewUrlParser:true})
 mongoose.Promise = global.Promise
