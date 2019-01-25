@@ -5,16 +5,16 @@
 
 const socketController = require("./controllers/socketController")
 
-module.exports = function(app, io) {
+module.exports = (app, io)=> {
 // add routes based on front end
 
     //IO listeners
-    io.on('connect', function(socket) {
+    io.on('connect', (socket) => {
     	socketController.connected(socket)
-    	socket.on('disconnect', function() {
+    	socket.on('disconnect', ()=> {
     		socketController.disconnected(socket)
     	})
-        socket.on('message', function(data) {
+        socket.on('message', (data) =>{
             socketController.sendmessage(socket, data)
         })
     })
