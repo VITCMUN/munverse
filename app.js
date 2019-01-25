@@ -31,7 +31,7 @@ require('./routes/routes.js')(app, io)
 
 
 
-server.listen(3000, function () {
+server.listen(3000,  () =>{
   // conosle.log("Start Messaging)
-});
+})
 
