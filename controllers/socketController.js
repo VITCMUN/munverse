@@ -7,7 +7,7 @@ const User = require("../models/user.model")
 var users = {} //Map: id -> name of the user
 
 //New connected user
-exports.connected = function(socket) {
+exports.connected = (socket)=> {
     //Give the new user a list of the existing connected users.
     socket.emit('allusers', {
         users: users
@@ -31,7 +31,7 @@ exports.connected = function(socket) {
 }
 
 //A user disconnected.
-exports.disconnected = function(socket) {
+exports.disconnected = (socket) => {
     //Delete the user from the map.
     delete users[socket.id]
     //Broadcast to the existing users.
@@ -43,7 +43,7 @@ exports.disconnected = function(socket) {
 
 
 //A user sent a message to another user.
-exports.sendmessage = function(socket, data) {
+exports.sendmessage = (socket, data) => {
     socket.to(data.id).emit('newmessage', {
         message: data.message,
         name: users[socket.id]
