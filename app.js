@@ -33,6 +33,6 @@ require('./routes/routes.js')(app, io)
 
 
 server.listen(3000, function () {
-  console.log('SocketChat started on port 3000!')
+  // conosle.log("Start Messaging)
 });
 
