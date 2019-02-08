@@ -3,7 +3,7 @@
 // socketController
 // dbController
 
-const socketController = require("./controllers/socketController")
+const socketController = require("./controllers/socketController.js")
 
 module.exports = (app, io)=> {
 // add routes based on front end
