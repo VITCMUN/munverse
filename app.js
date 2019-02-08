@@ -1,7 +1,7 @@
 const config = require('./config')
 const morgan = require('morgan')
 const express = require('express')
-const logger = require('/utils/logger')
+const logger = require('./utils/logger')
 
 const app = express()
 var path = require('path')
