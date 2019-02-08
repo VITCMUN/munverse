@@ -1,29 +1,48 @@
 const config = require('./config')
-const express = require('express')
 const morgan = require('morgan')
-const bodyParser = require('body-parser')
-const logger = require('./utils/logger')
+const express = require('express')
+const logger = require('/utils/logger')
 
 const app = express()
+var path = require('path')
+const bodyParser = require("body-parser")
 
-// set up
-app.set('view engine', 'ejs')
-app.use(express.static('public'))
+// set-up
+app.use(bodyParser.urlencoded({extended:true}))
 app.use(bodyParser.json())
-app.use(bodyParser.urlencoded({extended: false}))
+app.use(express.static(path.join(__dirname, 'public')))  
 
 if (process.env.NODE_ENV !== 'test') {
     app.use(morgan('dev'))
 }
 
-app.get('/server-status', (req, res) => {
-    res.status(200).send('Server is up!')
+// db connections
+const mongoose = require("mongoose")
+const db_url = "mongodb://kunal:sahni1@ds161794.mlab.com:61794/mongoose"
+mongoose.connect(db_url,{useNewUrlParser:true})
+mongoose.Promise = global.Promise
+let db = mongoose.connection
+db.on('error', console.error.bind(console, 'Error connecting to MongoDB'))
+const User = require("./models/user.model")
+
+
+// server setup
+const http = require('http')
+var server = http.createServer(app)
+var io = require('socket.io')(server)
+
+
+
+// set the templating engine
+app.set("view engine","ejs")
+
+// for handling routes
+require('./routes/routes.js')(app, io)
+
+
+
+server.listen(config.port,  () =>{
+   logger.info(`munverse started on ${config.port}`)
 })
 
-// start the server
-app.listen(config.port, '0.0.0.0', ()=>{
-    logger.info(`munverse started on ${config.port}`)
-})
-
-// expose to the test suite
 module.exports = app
