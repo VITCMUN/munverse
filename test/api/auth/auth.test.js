@@ -11,10 +11,23 @@ const User = require('../../../models/user.model')
 var app = require('../../../app')
 chai.use(chaihttp)
 var expect = chai.expect;
+beforeEach('inserting dummy data for testing',()=>{
+var user = new User({username:"shantanu",user_typ:0})
+User.register(user,"1234",(err, user) => {
+    if(err){
+        logger.error('A user with given credentials exists')
+    }
+    else{
+        passport.authenticate('local')(req, res, function(){
+            logger.info('New user successfully signed up'+user.username)
 
+        })
+    }
+})
+})
 describe('login',()=>{
   it('login', (done)=>{
-    User.findOne({}, {}, { sort: { 'created_at' : -1 } },(err, post)=> {
+    User.findOne({}, {}, { sort: { 'created_at' : -1 }} ,(err, post)=> {
     chai.request(app)
       .post('/login')
       .send({ password: "1234", username: post['username'] })
@@ -29,9 +42,9 @@ describe("signup",()=>{
 it('signup',(done)=>{
   chai.request(app).
   post('/signup')
-  .send({ password: "1234", username:"random" })
+  .send({ password: "1234", username:"shantanu" })
   .end((err,res)=>{
-    expect(res).to.have.status(200)
+    expect(res).to.have.status(500)
     done()
   })
 })
