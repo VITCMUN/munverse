@@ -56,9 +56,7 @@ it('signup failure', (done)=>{
     .post('/signup')
     .send({ password: "1234", username: post['username'] })
     .end((err, res) => {
-      expect((res)=>{
-        return res==200 || res==304
-      })
+      expect(res.status).to.be.oneOf([200,304])
       done()
     })
 })
