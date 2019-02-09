@@ -4,7 +4,7 @@ exports.is_authenticated = (req, res, next) => {
     if (req.user) {
         return next()
     } else {
-        res.render('/login')
+        res.redirect('/login')
     }
 }
 
@@ -34,4 +34,3 @@ exports.is_delegate=(req,res,next)=> {
         res.status(403).send({"message": "User is unauthorized."})
     }
 }
-
