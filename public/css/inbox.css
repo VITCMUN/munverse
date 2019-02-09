@@ -1,0 +1,264 @@
+@font-face {
+    font-family: 'Nunito';
+    font-style: normal;
+    font-weight: 400;
+    src: url(nunito.ttf) format('truetype');
+}
+
+html, body {
+    font-family: 'Nunito', sans-serif;
+    font-size: 16px;
+    line-height: 1.5;
+    height: 100%;
+    background: #000000;
+}
+
+h1 {
+    color: antiquewhite;
+    font-size: 20px;
+    font-weight: bolder;
+}
+
+nav.navbar {
+    border-top: 4px;
+    border-color: #FCCC00;
+    margin-bottom: 1rem;
+}
+
+.navbar-item.is-logo {
+    position: absolute;
+    left: 50%;
+    margin-left: -63px;
+    height: 100%;
+    display: flex;
+    align-items: center;
+}
+
+nav.dark {
+    background: #000000;
+}
+
+.navbar-item.brand-text {
+    font-weight: 300;
+}
+
+.navbar-item,
+.navbar-link {
+    font-size: 14px;
+    font-weight: 700;
+}
+
+.navbar-flag {
+    width: 230px;
+}
+
+.navbar-item img {
+    max-height: 100%;
+    display: block;
+    margin-left: auto;
+    margin-right: auto;
+}
+
+.columns {
+    width: 100%;
+    height: 100%;
+    margin-left: 0;
+}
+
+.menu-label {
+    color: #ffffff;
+    letter-spacing: 1.3;
+    font-weight: 700;
+}
+
+.menu-list a {
+    color: #ffffff;
+    font-size: 14px;
+    font-weight: 700;
+}
+
+.menu-list a:hover {
+    background-color: transparent;
+    color: #FCCC00;
+}
+
+.menu-list a.is-active {
+    background-color: transparent;
+    color: #FCCC00;
+    font-weight: 700;
+}
+
+.headerchat {
+    box-shadow: 0px 1px #000000;
+    margin-bottom: 1rem;
+    background: #000000;
+}
+
+.card {
+    box-shadow: 0px 1px #232323;
+    margin-bottom: 1rem;
+    background: #000000;
+}
+
+.card:hover {
+    background-color: #404040;
+    color: #000000;
+    transition: 0.25s;
+}
+
+.card-header-title {
+    color: #FFFFFF;
+    font-weight: 400;
+}
+
+.info-tiles {
+    margin: 1rem 0;
+}
+
+.info-tiles .subtitle {
+    font-weight: 300;
+    color: #8F99A3;
+}
+
+.card .content {
+    font-size: 14px;
+}
+
+.card-footer-item {
+    font-size: 14px;
+    font-weight: 700;
+    color: #8F99A3;
+}
+
+.card-table .table {
+    margin-bottom: 0;
+}
+
+.events-card .card-table {
+    max-height: 250px;
+    overflow-y: scroll;
+}
+
+a.gold-button {
+    background-color: #FCCC00;
+    font-weight: bolder;
+    color: #000000;
+    border-color: #FCCC00;
+}
+
+img.icon-top {
+    padding-left: 0px;
+}
+
+.aside {
+    display: block;
+    background-color: #000000;
+    border-right: 1px solid #FFFFFF;
+}
+
+.aside .compose {
+    height: 95px;
+    margin: 0 -10px;
+    padding: 25px 30px;
+}
+
+.aside .compose .button {
+    color: #000000;
+}
+
+.aside .compose .button .compose {
+    font-size: 14px;
+    font-weight: 700;
+}
+
+.aside .main {
+    padding: 40px;
+    color: #000000;
+}
+
+.aside .title {
+    color: #000000;
+    font-size: 12px;
+    font-weight: bold;
+    text-transform: uppercase;
+}
+
+.aside .main .item {
+    display: block;
+    padding: 10px 0;
+    color: #000000;
+}
+
+.aside .main .item.active {
+    background-color: #000000;
+    color: #000000;
+    margin: 0 -50px;
+    padding-left: 50px;
+}
+
+.aside .main .item:active, .aside .main .item:hover {
+    background-color: #404040;
+    margin: 0 -50px;
+    padding-left: 50px;
+    transition: 0.25s;
+}
+
+.aside .main .icon {
+    font-size: 19px;
+    padding-right: 30px;
+    color: #FFFFFF;
+}
+
+.aside .main .name {
+    font-size: 15px;
+    color: #FFFFFF;
+    font-weight: 500;
+}
+
+.star {
+    visibility: hidden;
+    font-size: 30px;
+    cursor: pointer;
+    color: #FCC000;
+}
+
+.star:before {
+    content: "\2605";
+    position: absolute;
+    visibility: visible;
+}
+
+.star:checked:before {
+    content: "\2606";
+    color: #FFFFFF;
+    position: absolute;
+}
+
+.ribbon {
+    border-radius: 10%;
+    border-color: #000000;
+    background-color: #000000;
+    color: hsl(0, 0%, 96%)
+}
+
+@media screen and (max-width: 400px) {
+    .set-right {
+        margin-left: 38%;
+    }
+}
+
+.set-right {
+    margin-left: 45%;
+}
+
+.set-center {
+    margin-left: 38%;
+}
+
+.ribbon.button:hover {
+    background: #ffffff;
+}
+
+.ribbon.button.h1:hover {
+    color: #000000;
+}
