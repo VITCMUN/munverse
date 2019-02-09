@@ -1,72 +1,61 @@
 process.env.NODE_ENV = 'test'
-const mocha = require('mocha')
-const chai = require('chai')
-const chaihttp =require('chai-http')
-const request = require('supertest')
-const auth_controller =require('../../../controllers/auth.controller')
-const auth_route =require('../../../routes/auth.route')
-const middleware=require('../../../middlewares/auth.middleware')
-const User = require('../../../models/user.model')
-const logger = require('../../.././utils/logger')
 
-var app = require('../../../app')
+const chai = require('chai')
+const chaihttp = require('chai-http')
+const request = require('supertest')
+const User = require('../../../models/user.model')
+const app = require('../../../app')
+
 chai.use(chaihttp)
 var expect = chai.expect;
-beforeEach('inserting dummy data for testing',()=>{
-var user = new User({username:"shantanu",user_typ:0})
 
- User.register(user,"1234",(err, user) => {
-    if(err){
-        logger.error('A user with given credentials exists')
-    }
-    else{
-        passport.authenticate('local')(req, res, function(){
-            logger.info('New user successfully signed up'+user.username)
-        })
-    }
-})
+before('inserting dummy data for testing', async () => {
+  var user = new User({ username: "johndoe", user_type: 0 })
+  await User.register(user, "password")
 })
 
-describe('login',()=>{
-  it('login', (done)=>{
-    User.findOne({username:"shantanu"},(err, post)=> {
+after('remove dummy data', async () => {
+  await User.deleteMany({})
+})
+
+describe('login', () => {
+  it('login normally with right username and password', (done) => {
     chai.request(app)
       .post('/login')
-      .send({ password: "1234", username:"shantanu" })
+      .send({ password: "password", username: "johndoe" })
       .end((err, res) => {
         expect(res).to.have.status(200)
         done()
       })
+  }).timeout(5000)
+})
+
+describe("signup", () => {
+  it('signup with existing username and password', (done) => {
+    chai.request(app).
+      post('/signup')
+      .send({ password: "password", username: "johndoe", user_type: 0 })
+      .end((err, res) => {
+        expect(res.status).to.be.equal(403)
+        done()
+      })
   })
-}).timeout(5000)
+  it('signup with new username and password', (done) => {
+      chai.request(app)
+        .post('/signup')
+        .send({ password: "password", username: "jandoe", user_type: 0 })
+        .end((err, res) => {
+          expect(res.status).to.be.oneOf([200, 304])
+          done()
+        })
+  }).timeout(5000)
 })
-describe("signup",()=>{
-it('signup',(done)=>{
-  chai.request(app).
-  post('/signup')
-  .send({ password: "1234", username:"shantanu" })
-  .end((err,res)=>{
-    expect(res.status).to.be.oneOf([200, 304])
-    done()
-  })
-})
-it('signup failure', (done)=>{
-  User.findOne({}, {}, { sort: { 'created_at' : -1 } },(err, post)=> {
-  chai.request(app)
-    .post('/signup')
-    .send({ password: "1234", username: post['username'] })
-    .end((err, res) => {
-      expect(res.status).to.be.oneOf([200, 304])
-      done()
-    })
-})
-}).timeout(5000)
-})
-describe("logout",()=>{
-  it('should redirect to main page if logged out',(done)=>{
+
+describe("logout", () => {
+  it('should redirect to main page if logged out', (done) => {
     request(app)
-    .get('/logout')
-    .expect('Location', '/')
-    .end(done)
+      .get('/logout')
+      .expect('Location', '/')
+      .end(done)
   })
 })

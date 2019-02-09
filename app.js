@@ -15,10 +15,10 @@ app.use(express.static('public'))
 app.use(bodyParser.json())
 app.use(bodyParser.urlencoded({ extended: false }))
 
-if (process.env.NODE_ENV !== 'test') {
-    app.use(morgan('dev'))
+if (process.env.NODE_ENV === 'test') {
     db_url = "mongodb://localhost:27017/test"
-} else if (process.env.NODE_ENV !== 'production') {
+} else {
+    app.use(morgan('dev'))
     db_url = "mongodb://localhost:27017/munverse"
 }
 

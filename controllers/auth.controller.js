@@ -49,14 +49,14 @@ exports.signup = (req, res) => {
     if (req.user) {
         logger.error('User already logged in.')
         res.status(403).send({ "message": "user already logged in." })
-    } else if (!(req.body.username && req.body.password && req.body.user_type)) {
+    } else if (req.body.username === null || req.body.password === null || req.body.user_type === null) {
         res.status(403).send({ "message": "data not adequate." })
     } else {
         var user = new User({ username: req.body.username, user_type: req.body.user_type })
         User.register(user, req.body.password, (err, user) => {
             if (err) {
                 logger.error(err)
-                res.status(200).send({ "message": err })
+                res.status(403).send({ "message": err })
             }
             else {
                 passport.authenticate('local')(req, res, function () {
