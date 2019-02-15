@@ -1,0 +1,162 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1, max-scale=1.0">
+    <title>VITCMUN 19: Admin Portal</title>
+    <link rel="stylesheet" href="../public/css/bulma.min.css" />
+    <link rel="stylesheet" href="../public/css/font-awesome-4.7.0/css/font-awesome.min.css">
+</head>
+
+<body>
+    <nav class="navbar is-dark" role="navigation" aria-label="main navigation">
+        <div class="navbar-brand">
+            <a class="navbar-item" href="./admin.html">
+                <h1><strong>VITCMUN 19: Admin Portal</strong></h1>
+            </a>
+
+            <a role="button" class="navbar-burger" aria-label="menu" aria-expanded="false">
+                <span aria-hidden="true"></span>
+                <span aria-hidden="true"></span>
+                <span aria-hidden="true"></span>
+            </a>
+        </div>
+    </nav>
+    <div class="columns is-2">
+        <div class="column">
+            <strong class="is-size-3">Event</strong>
+            <br>
+            <h2>Current Name: <strong>This Event</strong> </h2>
+            <h2>Current Logo: </h2>
+            <img class="icon-top" src="../media/council_logos/EU.JPG" width="210mm">
+            <form action="something.js" method="POST">
+                <div class="field">
+                    <label class="label">Event Name</label>
+                    <div class="control">
+                        <input class="input" type="text" placeholder="e.g VITCMUN 19">
+                    </div>
+                </div>
+
+                <div class="field">
+                    <label class="label">Logo</label>
+                    <div class="control">
+                        <input class="input" type="email" placeholder="e.g. ../media/something.png">
+                    </div>
+                </div>
+                <div class="field">
+                    <div class="control">
+                        <button class="button is-primary">Submit</button>
+                    </div>
+                </div>
+            </form>
+        </div>
+        <div class="column">
+            <strong class="is-size-3">Council</strong>
+            <h2>Current Council: <strong>This Event</strong> </h2>
+            <h2>Current Banner: </h2>
+            <img class="icon-top" src="../media/council_logos/EU.JPG" width="210mm">
+            <form action="something.js" method="POST">
+                <div class="field">
+                    <label class="label">Event Name</label>
+                    <div class="control">
+                        <input class="input" type="text" placeholder="e.g VITCMUN 19">
+                    </div>
+                </div>
+
+                <div class="field">
+                    <label class="label">Logo</label>
+                    <div class="control">
+                        <input class="input" type="email" placeholder="e.g. ../media/something.png">
+                    </div>
+                </div>
+                <div class="field">
+                    <div class="control">
+                        <button class="button is-primary">Submit</button>
+                    </div>
+                </div>
+            </form>
+        </div>
+        <div class="column">
+            <strong class="is-size-3">Users</strong>
+            <br>
+            <button class="button is-primary modal-button" data-target="#myModal" aria-haspopup="true">Add New User</button>
+
+            <div class="modal" id="myModal">
+                <div class="modal-background"></div>
+                <div class="modal-content box">
+                    <h1><strong>Adding a New User</strong></h1>
+                    <form action="something.js" method="POST">
+                        <div class="field">
+                            <label class="label">Username</label>
+                            <div class="control">
+                                <input class="input" type="text" placeholder="e.g america">
+                            </div>
+                        </div>
+
+                        <div class="field">
+                            <label class="label">Password</label>
+                            <div class="control">
+                                <input class="input" type="email" placeholder="Password">
+                            </div>
+                        </div>
+                        <div class="field">
+                            <label class="label">Usertype</label>
+                            <div class="control">
+                                <div class="select">
+                                    <select>
+                                        <option>Delegate</option>
+                                        <option>EB</option>
+                                        <option>Admin</option>
+                                    </select>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="field">
+                            <div class="control">
+                                <button class="button is-primary">Submit</button>
+                            </div>
+                        </div>
+                    </form>
+                </div>
+                <button class="modal-close is-large" aria-label="close"></button>
+            </div>
+            
+            <hr>
+            <div class="card-table">
+                <div class="content">
+                    <table class="table is-fullwidth is-striped">
+                        <tbody>
+                            <tr>
+                                <td width="5%"><a class="is-small is-primary" href="#"><i class="fa fa-trash-o"></i></a></td>
+                                <td>Argentina</td>
+                                <td><a class="is-small is-primary" href="#"><i class="fa fa-pencil"></i></a></td>
+                            </tr>
+                            <tr>
+                                <td width="5%"><a class="is-small is-primary" href="#"><i class="fa fa-trash-o"></i></a></td>
+                                <td>India</td>
+                                <td><a class="is-small is-primary" href="#"><i class="fa fa-pencil"></i></a></td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+    </div>
+</body>
+<script>
+    document.querySelectorAll('.modal-button').forEach(function(el) {
+  el.addEventListener('click', function() {
+    var target = document.querySelector(el.getAttribute('data-target'));
+
+    target.classList.add('is-active');
+
+    target.querySelector('.modal-close').addEventListener('click',   function() {
+        target.classList.remove('is-active');
+     });
+  });
+});
+</script>
+
+</html>
