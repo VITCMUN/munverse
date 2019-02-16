@@ -2,25 +2,27 @@ const passport = require('passport')
 const User = require('../models/user.model')
 const logger = require('../utils/logger')
 
-exports.welcome_view = (req, res) => {
-    var profile_picture_path = req.user.profile_picture_path
-    var username = req.user.username
-    res.status(200).send({ "view": `welcome ${username}` })
+exports.home_view = (req, res) => {
+    /** view function for home page */
+    if (req.user.user_type == 2)
+        res.status(200).send({ "view": `Welcome administrator ${req.user.username}` })
+    else
+        res.status(200).send({ "view": `Welcome ${req.user.username}!` })
 }
 
 exports.login_view = (req, res) => {
+    /** view function for login page */
     if (req.user) {
         res.redirect("/")
-    }
-    else {
+    } else {
         res.render('../views/login')
     }
 }
 
 exports.login = (req, res) => { 
     /**
-     * Login endpoint
-     * Requires: username, password
+     * login endpoint
+     * requires: username, password
      */
     if (req.user) {
         res.status(403).send({ "message": "Already logged in. Logout to continue." })
@@ -29,15 +31,6 @@ exports.login = (req, res) => {
         return res.redirect('/')
     })
 
-}
-
-exports.signup_view = (req, res) => {
-    if (req.user) {
-        res.status(403).send({ "message": "Already logged in. Logout to continue." })
-    }
-    else {
-        res.status(200).send({ "view": "Sign up." })
-    }
 }
 
 exports.signup = (req, res) => {
@@ -50,15 +43,14 @@ exports.signup = (req, res) => {
         logger.error('User already logged in.')
         res.status(403).send({ "message": "user already logged in." })
     } else if (req.body.username === null || req.body.password === null || req.body.user_type === null) {
-        res.status(403).send({ "message": "data not adequate." })
+        res.status(400).send({ "message": "data not adequate." })
     } else {
         var user = new User({ username: req.body.username, user_type: req.body.user_type })
-        User.register(user, req.body.password, (err, user) => {
+        User.register(user, req.body.password, (err, _) => {
             if (err) {
                 logger.error(err)
                 res.status(403).send({ "message": err })
-            }
-            else {
+            } else {
                 passport.authenticate('local')(req, res, function () {
                     logger.info(`New user successfully signed up - ${req.body.username}`)
                     res.redirect('/')
@@ -69,7 +61,12 @@ exports.signup = (req, res) => {
 }
 
 exports.logout = (req, res) => {
-    req.logout();
-    logger.info('User has logged out.')
-    res.redirect('/')
+    /** logout */
+    if (req.user) {
+        logger.info(`${req.user.username} is logging out.`)
+        req.logout();
+        res.redirect('/')
+    } else {
+        res.status(400).send({ "message": "Login first!" })
+    }
 }
