@@ -12,7 +12,7 @@ $(document).ready(function () {
     })
 })
 
-function login(username, password) {
+function login() {
     loginreq = new XMLHttpRequest()
 
     loginreq.onload = function () {
