@@ -10,10 +10,10 @@ exports.welcome_view = (req, res) => {
 
 exports.login_view = (req, res) => {
     if (req.user) {
-        res.status(403).send({ "message": "Already logged in. Logout to continue." })
+        res.redirect("/")
     }
     else {
-        res.status(200).send({ "view": "Log in." })
+        res.render('../views/login')
     }
 }
 
