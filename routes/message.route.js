@@ -1,5 +1,5 @@
 const express = require('express')
-const message_controller = require('../controllers/message.controller')
+const chat = require('../controllers/message.controller')
 
 exports.module = (app,io) => {
 
