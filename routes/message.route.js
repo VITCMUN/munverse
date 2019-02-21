@@ -1,4 +1,3 @@
-const express = require('express')
 const chat = require('../controllers/message.controller')
 
 exports.module = (app,io) => {
