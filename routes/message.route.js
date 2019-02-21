@@ -1,10 +1,12 @@
 const express = require('express')
-const router = express.Router()
 const message_controller = require('../controllers/message.controller')
 
+exports.module = (app,io) => {
 
 
-router.get('/chatroom', message_controller.getchatroom)
+app.get("/", (req,res) => {
+	// render chat room view page
+})
 
 //Io listeners
 io.on('connect', (socket) => {
@@ -19,3 +21,4 @@ io.on('connect', (socket) => {
     })
 })
 
+}
