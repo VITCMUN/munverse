@@ -1,5 +1,5 @@
 var config = {
-    port: process.env.PORT || 8080,
+    port: process.env.PORT || 8079,
     error_log_file: '/var/tmp/munverse-error.log'
 }
 

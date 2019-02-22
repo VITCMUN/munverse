@@ -7,7 +7,7 @@
     "test": "test"
   },
   "scripts": {
-    "start": "node app.js",
+    "start": "nodemon app.js",
     "test": "./node_modules/.bin/mocha --recursive --exit"
   },
   "repository": {
@@ -22,15 +22,24 @@
   "homepage": "https://github.com/VITCMUN/munverse#readme",
   "dependencies": {
     "body-parser": "^1.18.3",
+    "ejs": "^2.6.1",
     "express": "^4.16.4",
-    "mongoose": "^5.4.3",
+    "express-session": "^1.15.6",
+    "form-data": "^2.3.3",
+    "formidable": "^1.2.1",
+    "fs": "0.0.1-security",
+    "mongoose": "^5.4.5",
     "morgan": "^1.9.1",
-    "validator": "^10.10.0",
+    "passport": "^0.4.0",
+    "passport-local": "^1.0.0",
+    "passport-local-mongoose": "^5.0.1",
+    "randomstring": "^1.1.5",
     "winston": "^3.1.0"
   },
   "devDependencies": {
     "chai": "^4.2.0",
     "chai-http": "^4.2.1",
-    "mocha": "^5.2.0"
+    "mocha": "^5.2.0",
+    "nodemon": "^1.18.10"
   }
 }
