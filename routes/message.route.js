@@ -1,6 +1,6 @@
 const chat = require('../controllers/message.controller')
 
-exports.module = (app,io) => {
+module.exports = (app,io) => {
 
 
 app.get("/", (req,res) => {
