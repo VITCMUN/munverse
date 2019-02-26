@@ -8,12 +8,12 @@ const app = require('../../../app')
 chai.use(chaihttp)
 var expect = chai.expect;
 
-beforeEach('inserting dummy data for testing', async () => {
+before('inserting dummy data for testing', async () => {
   var user = new User({ username: "johndoe", user_type: 0 })
   await User.register(user, "password")
 })
 
-afterEach('remove dummy data', async () => {
+after('remove dummy data', async () => {
   await User.deleteMany({})
 })
 

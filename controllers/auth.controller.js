@@ -33,33 +33,6 @@ exports.login = (req, res) => {
 
 }
 
-exports.signup = (req, res) => {
-    /**
-     * Registers a user to the website
-     * Requires: username, password, user_type
-     * user_type: 0 - delegate, 1 - EB, 2 - admin
-     */
-    if (req.user) {
-        logger.error('User already logged in.')
-        res.status(403).send({ "message": "user already logged in." })
-    } else if (req.body.username === null || req.body.password === null || req.body.user_type === null) {
-        res.status(400).send({ "message": "data not adequate." })
-    } else {
-        var user = new User({ username: req.body.username, user_type: req.body.user_type })
-        User.register(user, req.body.password, (err, _) => {
-            if (err) {
-                logger.error(err)
-                res.status(403).send({ "message": err })
-            } else {
-                passport.authenticate('local')(req, res, function () {
-                    logger.info(`New user successfully signed up - ${req.body.username}`)
-                    res.redirect('/')
-                })
-            }
-        })
-    }
-}
-
 exports.logout = (req, res) => {
     /** logout */
     if (req.user) {
