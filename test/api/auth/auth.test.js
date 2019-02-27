@@ -9,12 +9,12 @@ chai.use(chaihttp)
 var expect = chai.expect;
 
 before('inserting dummy data for testing', async () => {
-  var user = new User({ username: "johndoe", user_type: 0 })
+  var user = new User({ username: "johndoe", user_type: 0, profile_picture_url: "./../media/user_profile_pictures/placeholder.jpg"})
   await User.register(user, "password")
 })
 
 after('remove dummy data', async () => {
-  await User.deleteMany({})
+  //await User.deleteMany({})
 })
 
 describe('login', () => {

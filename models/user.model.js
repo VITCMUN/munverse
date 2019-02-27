@@ -17,10 +17,6 @@ var UserSchema = new Schema({
         unique: true,
         required: true,
     },
-    password: {
-        type: String,
-        required: true,
-    },
     profile_picture_url: {
         type: String,
         required: true,
