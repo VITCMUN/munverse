@@ -54,7 +54,7 @@ exports.add_user = (req, res) => {
         User.register(user, req.body.password, (err, _) => {
             if (err) {
                 logger.error(err)
-                res.status(500).send({ "message": err })
+                res.status(403).send({ "message": err })
             } else {
                 passport.authenticate('local')(req, res, function () {
                     logger.info(`new user successfully signed up - ${req.body.username}`)
@@ -100,7 +100,7 @@ exports.update_user = (req, res) => {
         { upsert: false }, (err, updated) => {
             if (err) {
                 logger.error(err)
-                res.status(500).send({ "message": err })
+                res.status(403).send({ "message": err })
             } else {
                 updated.password = req.body.password
                 updated.save()
@@ -117,7 +117,7 @@ exports.delete_user = (req, res) => {
         User.findOneAndRemove({ username: req.body.username }, (err, deleted) => {
             if (err) {
                 logger.error(err)
-                res.status(500).send(err)
+                res.status(403).send(err)
             } else {
                 logger.info('Deleted user ' + deleted)
                 res.status(200).send('Deleted successful!')

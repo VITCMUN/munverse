@@ -10,7 +10,7 @@ exports.get_council = (req, res) => {
     Council.findOne({ id: 0 }, (err, council) => {
         if (err) {
             logger.error(err)
-            res.status(500).send({ "message": err })
+            res.status(403).send({ "message": err })
         } else {
             res.status(200).send(council)
         }
@@ -44,19 +44,31 @@ exports.add_or_update_council = (req, res) => {
         })
     }
 
-    Council.findByIdAndUpdate({ id: 0 },
-        {
-            $set: {
-                council_name: req.body.council_name,
-                council_logo_url: council_logo_url
-            }
-        },
-        { upsert: true }, (err, updated) => {
-            if (err) {
-                logger.error(err)
-                res.status(500).send({ "message": err })
-            } else {
-                res.status(200).send(updated)
-            }
-        })
+    Council.findOne({}, (err, council) => {
+        if (err) {
+            logger.error(err)
+            res.status(403).send(err)
+        } else if (council) {
+            if (req.body.council_name) council.council_name = req.body.council_name
+            if (council_logo_url) council.council_logo_url = council_logo_url
+            council.save((err, new_council) => {
+                if (err) {
+                    logger.error(err)
+                    res.status(403).send({ "message": err })
+                } else {
+                    res.status(200).send(new_council)
+                }
+            })
+        } else {
+            var council = new Council({ id: 0, council_name: req.body.council_name, council_logo_url: council_logo_url })
+            council.save((err, new_council) => {
+                if (err) {
+                    logger.error(err)
+                    res.status(403).send({ "message": err })
+                } else {
+                    res.status(200).send(new_council)
+                }
+            })
+        }
+    })
 }

@@ -44,19 +44,31 @@ exports.add_or_update_event = (req, res) => {
         })
     }
 
-    Event.findOneAndUpdate({ id: 0 },
-        {
-            $set: {
-                event_name: req.body.event_name,
-                event_logo_url: event_logo_url
-            }
-        },
-        { upsert: true }, (err, updated) => {
-            if (err) {
-                logger.error(err)
-                res.status(500).send({ "message": err })
-            } else {
-                res.status(200).send(updated)
-            }
-        })
+    Event.findOne({}, (err, event) => {
+        if (err) {
+            logger.error(err)
+            res.status(403).send(err)
+        } else if (event) {
+            if (req.body.event_name) event.event_name = req.body.event_name
+            if (event_logo_url) event.event_logo_url = event_logo_url
+            event.save((err, new_event) => {
+                if (err) {
+                    logger.error(err)
+                    res.status(403).send({ "message": err })
+                } else {
+                    res.status(200).send(new_event)
+                }
+            })
+        } else {
+            var event = new Event({ id: 0, event_name: req.body.event_name, event_logo_url: event_logo_url })
+            event.save((err, new_event) => {
+                if (err) {
+                    logger.error(err)
+                    res.status(403).send({ "message": err })
+                } else {
+                    res.status(200).send(new_event)
+                }
+            })
+        }
+    })
 }

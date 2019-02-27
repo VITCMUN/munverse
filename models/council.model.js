@@ -13,7 +13,7 @@ var CouncilSchema = new Schema({
         type: String,
         required: true,
     },
-    council_banner_url: {
+    council_logo_url: {
         type: String,
         required: true,
     },

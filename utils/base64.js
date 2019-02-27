@@ -14,7 +14,7 @@ exports.decode_image = (data_string) => {
     if (response.type !== 'image')
         return null
         
-    if (['jpeg', 'jpg', 'png'].indexOf(response.extention) < 0)
+    if (['jpeg', 'jpg', 'png'].indexOf(response.extension) < 0)
         return null
 
     return response
