@@ -2,9 +2,9 @@ var _  = require('lodash')
 
 // required 
 exports.getchatroom = (req,res) => {
-	// global variable
+    // global variable
     user_name = user.username
-	res.render("../public/main.html")
+    res.render("../public/main.html")
 }
 
 // load users 
@@ -34,7 +34,7 @@ exports.disconnected = () =>{
 exports.sendmessage = (socket,data) => {
 	socket.to(data.id).emit('newmessage', {
         message: data.message,
-        name: "KUNAL" // get sender name from the UI refer /public/js/chatscript
+        name: user_name // get sender name from the UI refer /public/js/chatscript
     })
 }
 
