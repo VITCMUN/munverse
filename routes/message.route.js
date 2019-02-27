@@ -15,7 +15,7 @@ io.on('connect', (socket) => {
         chat.disconnected(socket)
     })
 
-    socket.on('new message', (data) => {
+    socket.on('message', (data) => {
         chat.sendmessage(socket, data)
     })
 })
