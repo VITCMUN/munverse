@@ -48,12 +48,12 @@ app.get('/server-status', (req, res) => {
 })
 
 // start the server
-const server = app.listen(config.port, '0.0.0.0', ()=>{
+const server = app.listen(config.port, '0.0.0.0', () => {
     logger.info(`munverse started on ${config.port}`)
 })
 
 var io = require('socket.io')(server)
-require('./routes/message.route')(app,io)
+require('./routes/message.route')(app, io)
 
 // expose to the test suite
 module.exports = app
