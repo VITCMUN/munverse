@@ -36,7 +36,7 @@ exports.add_or_update_event = (req, res) => {
             return
         }
         var filename = random.generate()
-        var event_logo_path = `../media/event_logos/${filename}.${image_data.extension}`
+        var event_logo_path = `${__dirname}/../../media/event_logos/${filename}.${image_data.extension}`
         event_logo_url = `/event_logos/${filename}.${image_data.extension}`
         fs.writeFile(event_logo_path, image_data.data, (err) => {
             if (err)

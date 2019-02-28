@@ -36,7 +36,7 @@ exports.add_or_update_council = (req, res) => {
             return
         }
         var filename = random.generate()
-        var council_logo_path = `../media/council_logos/${filename}.${image_data.extension}`
+        var council_logo_path = `${__dirname}/../../media/council_logos/${filename}.${image_data.extension}`
         council_logo_url = `/council_logos/${filename}.${image_data.extension}`
         fs.writeFile(council_logo_path, image_data.data, (err) => {
             if (err)
