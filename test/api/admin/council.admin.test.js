@@ -45,7 +45,7 @@ describe('councils', () => {
             })
     })
 
-    it('should add single parameter of council and fail.', (done) => {
+    it('should add single parameter of council and pass.', (done) => {
         var agent = chai.request.agent(app)
         agent.post('/login')
             .send({ password: "password", username: "johndoe" })
@@ -53,7 +53,7 @@ describe('councils', () => {
                 agent.post('/admin/council')
                     .send({ 'council_name': 'Lok Sabha' })
                     .end((err, res) => {
-                        expect(res.statusCode).to.equal(403)
+                        expect(res.statusCode).to.equal(200)
                         done()
                     })
             })
