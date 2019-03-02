@@ -13,6 +13,10 @@ $(document).ready(() => {
         }
     })
 
+    $('#div-logout').click(() => {
+        window.location.href = '/logout'
+    }).css("cursor", "pointer");
+
     var reader_event = new FileReader()
     var event_preview = $("#event-logo-preview")
     reader_event.addEventListener("load", function () {

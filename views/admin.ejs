@@ -3,10 +3,7 @@
   <head>
     <meta charset="utf-8" />
     <meta http-equiv="X-UA-Compatible" content="IE=edge" />
-    <meta
-      name="viewport"
-      content="width=device-width, initial-scale=1, max-scale=1.0"
-    />
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1.0"/>
     <title>
       <%= event.event_name %>: Control Center
     </title>
@@ -19,8 +16,15 @@
 
   <body>
     <section style="padding-bottom:0" class="section has-background-black has-text-white">
-      <div class="container is-fluid is-size-4">
-        munverse <br><div class="is-size-1"><i class="fa fa-sliders-h"></i> Control Center</div>
+      <div class="columns">
+          <div class="column is-half transparent">
+            <div class="container is-fluid is-size-4">
+                munverse <br><div class="is-size-1"><i class="fa fa-sliders-h"></i> Control Center </div>
+            </div>
+          </div>
+          <div class="column is-half transparent" style="margin-top:auto">
+                <div id="div-logout" class="is-pulled-right is-size-4"><i class="fa fa-sign-out"></i> logout </div>
+          </div>
       </div>
     </section>
     <section class="section" style="padding: 0">

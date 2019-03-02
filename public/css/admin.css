@@ -21,3 +21,9 @@
     margin-top: 30px;
     margin-left: 5px;
 }
+
+.transparent{
+    margin: 0px;
+    padding: 0;
+    border: none;
+}
