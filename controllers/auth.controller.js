@@ -4,10 +4,13 @@ const logger = require('../utils/logger')
 
 exports.home_view = (req, res) => {
     /** view function for home page */
-    if (req.user.user_type == 2)
-        res.status(200).send({ "view": `Welcome administrator ${req.user.username}` })
-    else
+    if (req.user.user_type == 2){
+        //res.status(200).send({ "view": `Welcome administrator ${req.user.username}` })
+        res.render('../views/admin')
+    }else{
         res.status(200).send({ "view": `Welcome ${req.user.username}!` })
+    }
+        
 }
 
 exports.login_view = (req, res) => {
@@ -42,4 +45,32 @@ exports.logout = (req, res) => {
     } else {
         res.status(400).send({ "message": "Login first!" })
     }
+}
+
+
+exports.signup = (req, res) => {	
+    /**	
+     * Registers a user to the website	
+     * Requires: username, password, user_type, profile_picture_url
+     * user_type: 0 - delegate, 1 - EB, 2 - admin	
+     */	
+    if (req.user) {	
+        logger.error('User already logged in.')	
+        res.status(403).send({ "message": "user already logged in." })	
+    } else if (req.body.username === null || req.body.password === null || req.body.user_type === null) {	
+        res.status(400).send({ "message": "data not adequate." })	
+    } else {	
+        var user = new User({ username: req.body.username, user_type: req.body.user_type, profile_picture_url: req.body.profile_picture_url })	
+        User.register(user, req.body.password, (err, _) => {	
+            if (err) {	
+                logger.error(err)	
+                res.status(403).send({ "message": err })	
+            } else {	
+                passport.authenticate('local')(req, res, function () {	
+                    logger.info(`New user successfully signed up - ${req.body.username}`)	
+                    res.redirect('/')	
+                })	
+            }	
+        })	
+    }	
 }
