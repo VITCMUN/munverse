@@ -7,6 +7,8 @@ exports.home_view = (req, res) => {
     /** view function for home page */
     if (req.user.user_type == 2) {
         admin_renderer.admin_data().then((data) => {
+            data.error_event = req.query.error_event
+            data.error_council = req.query.error_council
             res.render('../views/admin', data)
         }).catch((err) => {
             logger.error(err)

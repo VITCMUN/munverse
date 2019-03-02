@@ -5,6 +5,11 @@ const base64 = require('../../utils/base64')
 const sanitize = require('../../utils/sanitize')
 const fs = require('fs')
 
+function redirect_with_error(res, error){
+    error.replace(" ", "%20")
+    res.redirect(`/?error_council=${error}`)
+}
+
 exports.get_council = (req, res) => {
     /** Get the council details */
     Council.findOne({ id: 0 }, (err, council) => {
@@ -24,7 +29,7 @@ exports.add_or_update_council = (req, res) => {
      */
     if (req.body.council_name) {
         if (!sanitize.valid_name(req.body.council_name)) {
-            res.status(400).send({ "message": "invalid council name" })
+            redirect_with_error(res, "invalid council name")
             return
         }
     }
@@ -32,7 +37,7 @@ exports.add_or_update_council = (req, res) => {
     if (req.body.council_logo) {
         var image_data = base64.decode_image(req.body.council_logo)
         if (!image_data) {
-            res.status(400).send({ "message": "invalid image type" })
+            redirect_with_error(res, "invalid image type")
             return
         }
         var filename = random.generate()
@@ -54,9 +59,9 @@ exports.add_or_update_council = (req, res) => {
             council.save((err, new_council) => {
                 if (err) {
                     logger.error(err)
-                    res.status(403).send({ "message": err })
+                    redirect_with_error(res, err.message)
                 } else {
-                    res.status(200).send(new_council)
+                    res.redirect("/")
                 }
             })
         } else {
@@ -64,9 +69,9 @@ exports.add_or_update_council = (req, res) => {
             council.save((err, new_council) => {
                 if (err) {
                     logger.error(err)
-                    res.status(403).send({ "message": err })
+                    redirect_with_error(res, err.message)
                 } else {
-                    res.status(200).send(new_council)
+                    res.redirect("/")
                 }
             })
         }
