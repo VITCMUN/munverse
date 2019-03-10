@@ -4,7 +4,7 @@ const moment = require('moment-timezone')
 const config = require('../config')
 
 const log_format = printf(info => {
-  return `(${info.timestamp}) [${info.level}] ${info.message}`
+  return `(${info.timestamp}) [${info.level}] ${JSON.stringify(info.message)}`
 })
 
 const timestamp = format((info) => {
