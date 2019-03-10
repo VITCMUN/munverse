@@ -45,7 +45,7 @@ describe('events', () => {
             })
     })
 
-    it('should add single parameter of event and fail.', (done) => {
+    it('should add single parameter of event and pass.', (done) => {
         var agent = chai.request.agent(app)
         agent.post('/login')
             .send({ password: "password", username: "johndoe" })
@@ -53,7 +53,7 @@ describe('events', () => {
                 agent.post('/admin/event')
                     .send({ 'event_name': 'Lok Sabha' })
                     .end((err, res) => {
-                        expect(res.statusCode).to.equal(403)
+                        expect(res.statusCode).to.equal(200)
                         done()
                     })
             })

@@ -14,8 +14,8 @@ const app = express()
 app.set('view engine', 'ejs')
 app.use(express.static('public'))
 app.use(express.static('media'))
-app.use(bodyParser.json())
-app.use(bodyParser.urlencoded({ extended: false }))
+app.use(bodyParser.json({limit: "5mb"}))
+app.use(bodyParser.urlencoded({ limit: "5mb", extended: false }))
 
 if (process.env.NODE_ENV === 'test') {
     db_url = "mongodb://localhost:27017/test"

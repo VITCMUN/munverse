@@ -1,0 +1,29 @@
+.image-container{
+    position:relative;
+    width:200px;
+    height:200px;
+    padding-top: 48px;
+    height: 240px; 
+    width: 240px
+}
+.icon-top{
+    width: 210mm;
+    border-radius: 10%;
+    position:absolute;
+    top:0;
+    bottom:0;
+    margin:auto;
+}
+.column{
+    border: 0.5px solid black;
+    padding-left: 25px;
+    padding-right: 25px;
+    margin-top: 30px;
+    margin-left: 5px;
+}
+
+.transparent{
+    margin: 0px;
+    padding: 0;
+    border: none;
+}

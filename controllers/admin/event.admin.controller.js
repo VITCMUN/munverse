@@ -5,6 +5,12 @@ const base64 = require('../../utils/base64')
 const sanitize = require('../../utils/sanitize')
 const fs = require('fs')
 
+
+function redirect_with_error(res, error){
+    error.replace(" ", "%20")
+    res.redirect(`/?error_event=${error}`)
+}
+
 exports.get_event = (req, res) => {
     /** Get the event details */
     Event.findOne({ id: 0 }, (err, event) => {
@@ -24,7 +30,7 @@ exports.add_or_update_event = (req, res) => {
      */
     if (req.body.event_name) {
         if (!sanitize.valid_name(req.body.event_name)) {
-            res.status(400).send({ "message": "invalid event name" })
+            redirect_with_error(res, "invalid event name")
             return
         }
     }
@@ -32,7 +38,7 @@ exports.add_or_update_event = (req, res) => {
     if (req.body.event_logo) {
         var image_data = base64.decode_image(req.body.event_logo)
         if (!image_data) {
-            res.status(400).send({ "message": "invalid image type" })
+            redirect_with_error(res, "invalid image type")
             return
         }
         var filename = random.generate()
@@ -47,16 +53,16 @@ exports.add_or_update_event = (req, res) => {
     Event.findOne({}, (err, event) => {
         if (err) {
             logger.error(err)
-            res.status(403).send(err)
+            redirect_with_error(res, err.message)
         } else if (event) {
             if (req.body.event_name) event.event_name = req.body.event_name
             if (event_logo_url) event.event_logo_url = event_logo_url
             event.save((err, new_event) => {
                 if (err) {
                     logger.error(err)
-                    res.status(403).send({ "message": err })
+                    redirect_with_error(res, err.message)
                 } else {
-                    res.status(200).send(new_event)
+                    res.redirect("/")
                 }
             })
         } else {
@@ -64,9 +70,9 @@ exports.add_or_update_event = (req, res) => {
             event.save((err, new_event) => {
                 if (err) {
                     logger.error(err)
-                    res.status(403).send({ "message": err })
+                    redirect_with_error(res, err.message)
                 } else {
-                    res.status(200).send(new_event)
+                    res.redirect("/")
                 }
             })
         }
