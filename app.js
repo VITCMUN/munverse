@@ -9,6 +9,7 @@ const User = require('./models/user.model')
 const logger = require('./utils/logger')
 const auth_route = require('./routes/auth.route')
 const admin_route = require('./routes/admin.route')
+var socket = require('socket.io')
 const app = express()
 
 app.set('view engine', 'ejs')
@@ -51,9 +52,16 @@ app.get('/server-status', (req, res) => {
 })
 
 // start the server
-app.listen(config.port, '0.0.0.0', () => {
+const server = app.listen(config.port, '0.0.0.0', () => {
     logger.info(`munverse started on ${config.port}`)
 })
 
+var io = socket(server)
+
+require("./routes/message.router.js")(io)
+
+
+
 // expose to the test suite
 module.exports = app
+

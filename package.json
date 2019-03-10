@@ -33,6 +33,7 @@
     "passport-local": "^1.0.0",
     "passport-local-mongoose": "^5.0.1",
     "randomstring": "^1.1.5",
+    "socketio": "^1.0.0",
     "winston": "^3.1.0"
   },
   "devDependencies": {
