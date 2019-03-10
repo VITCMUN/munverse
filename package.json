@@ -26,6 +26,7 @@
     "express": "^4.16.4",
     "express-session": "^1.15.6",
     "image-to-base64": "^2.0.1",
+    "moment-timezone": "^0.5.23",
     "mongoose": "^5.4.5",
     "morgan": "^1.9.1",
     "passport": "^0.4.0",

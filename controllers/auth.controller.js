@@ -1,13 +1,23 @@
 const passport = require('passport')
 const User = require('../models/user.model')
 const logger = require('../utils/logger')
+const admin_renderer = require('../renderer/admin')
 
 exports.home_view = (req, res) => {
     /** view function for home page */
-    if (req.user.user_type == 2)
-        res.status(200).send({ "view": `Welcome administrator ${req.user.username}` })
-    else
+    if (req.user.user_type == 2) {
+        admin_renderer.admin_data().then((data) => {
+            data.error_event = req.query.error_event
+            data.error_council = req.query.error_council
+            res.render('../views/admin', data)
+        }).catch((err) => {
+            logger.error(err)
+            res.status(500).send({ "message": "error rendering page" })
+        })
+    } else {
         res.status(200).send({ "view": `Welcome ${req.user.username}!` })
+    }
+
 }
 
 exports.login_view = (req, res) => {
@@ -15,21 +25,27 @@ exports.login_view = (req, res) => {
     if (req.user) {
         res.redirect("/")
     } else {
-        res.render('../views/login')
+        admin_renderer.shared_data().then((data) => {
+            res.render('../views/login', data)
+        }).catch((err) => {
+            logger.error(err)
+            res.status(500).send({ "message": "error rendering page" })
+        })
     }
 }
 
-exports.login = (req, res) => { 
+exports.login = (req, res) => {
     /**
      * login endpoint
      * requires: username, password
      */
     if (req.user) {
         res.status(403).send({ "message": "Already logged in. Logout to continue." })
+    } else {
+        passport.authenticate('local')(req, res, function () {
+            return res.redirect('/')
+        })
     }
-    passport.authenticate('local')(req, res, function(){
-        return res.redirect('/')
-    })
 
 }
 
@@ -41,5 +57,33 @@ exports.logout = (req, res) => {
         res.redirect('/')
     } else {
         res.status(400).send({ "message": "Login first!" })
+    }
+}
+
+
+exports.signup = (req, res) => {
+    /**	
+     * Registers a user to the website	
+     * Requires: username, password, user_type, profile_picture_url
+     * user_type: 0 - delegate, 1 - EB, 2 - admin	
+     */
+    if (req.user) {
+        logger.error('User already logged in.')
+        res.status(403).send({ "message": "user already logged in." })
+    } else if (req.body.username === null || req.body.password === null || req.body.user_type === null) {
+        res.status(400).send({ "message": "data not adequate." })
+    } else {
+        var user = new User({ username: req.body.username, user_type: req.body.user_type, profile_picture_url: req.body.profile_picture_url })
+        User.register(user, req.body.password, (err, _) => {
+            if (err) {
+                logger.error(err)
+                res.status(403).send({ "message": err })
+            } else {
+                passport.authenticate('local')(req, res, function () {
+                    logger.info(`New user successfully signed up - ${req.body.username}`)
+                    res.redirect('/')
+                })
+            }
+        })
     }
 }
