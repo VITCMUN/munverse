@@ -1,0 +1,86 @@
+body{
+	font-family: 'Nunito', sans-serif;
+}
+
+input:focus {
+	outline: 0;
+    outline:none;
+}
+
+@font-face {
+    font-family: 'Nunito';
+    font-style: normal;
+    font-weight: 400;
+    src: url(nunito.ttf) format('truetype');
+}
+
+html{
+	background-color: black;
+}
+
+.column{
+	height: 100vh;
+	border-right: 2px solid black;
+}
+
+#council-image{
+	display:block;
+  	margin:auto;
+	height: 80%;
+}
+
+.control{
+	display: block;
+	margin: auto;
+	width: 30%;
+	top: 10vh;
+}
+
+#vitcmun-logo{
+	display: block;
+	margin: auto;
+	margin-top: 10%;
+	height: 40%;
+}
+
+
+.input {
+    font-size: 16px;
+	margin-top: 4px;
+	margin-left: 2px;
+	margin-bottom: 10px;
+	background-color: black;
+	color: white;
+	border: 0;
+	border-bottom: 2px solid white;
+}
+
+.input:focus {
+	border: 0;
+	border-bottom: 2px solid white;
+}
+
+.input::placeholder {
+	color: white;
+}
+
+div#error_message {
+	color: red;
+}
+
+.button {
+  background-color: black; 
+  border: 2px solid white;
+  color: white;
+  font-size: 16px;
+  text-transform: capitalize;
+  display: inline-block;
+  font-size: 16px;
+  margin: 4%;
+  transition-duration: 0.4s;
+}
+
+.button:hover {
+	background-color: white;
+	color: black;
+}

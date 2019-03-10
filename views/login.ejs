@@ -1,0 +1,53 @@
+<!DOCTYPE html>
+<html>
+  
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>VITCMUN'19</title>
+    <!--css/dependencies-->
+    <link rel="stylesheet" type="text/css" href="/css/bulma.min.css">
+    <link rel="stylesheet" type="text/css" href="/css/login.css">
+    
+    <!--js/dependencies-->
+    <script src="/js/jquery.min.js"></script>
+    <script src="/js/login.js"></script>
+  </head>
+
+  <body>
+    <div id="main" class="columns is-multiline is-centered is-vcentered">
+      <div class="column is-half is-hidden-mobile is-centered is-vcentered">
+          <img id="council-image" src="/councils/AIPPM.png">
+      </div>
+      <div id="login-form" class="column is-half">
+        <img id="vitcmun-logo" src="/misc/logo_mun.png">
+        <div class="field">
+          <div class="control">  
+
+            <div id="error_message"></div>
+
+            <input 
+              class="input" 
+              type="text" 
+              id="username"
+              placeholder="Username"
+              onfocus="this.placeholder = ''"
+              onblur="this.placeholder = 'Username'">
+            <input 
+              class="input" 
+              type="password" 
+              id="password"
+              placeholder="Password"
+              onfocus="this.placeholder = ''"
+              onblur="this.placeholder = 'Password'">
+            
+            <div style="text-align:center">
+              <button class="button" id="login_button">Login</button>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </body>
+
+</html>

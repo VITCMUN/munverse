@@ -8,10 +8,12 @@ const LocalStrategy = require('passport-local').Strategy
 const User = require('./models/user.model')
 const logger = require('./utils/logger')
 const auth_route = require('./routes/auth.route')
+const admin_route = require('./routes/admin.route')
 const app = express()
 
 app.set('view engine', 'ejs')
 app.use(express.static('public'))
+app.use(express.static('media'))
 app.use(bodyParser.json())
 app.use(bodyParser.urlencoded({ extended: false }))
 
@@ -36,8 +38,9 @@ passport.serializeUser(User.serializeUser())
 passport.deserializeUser(User.deserializeUser())
 
 app.use(auth_route)
+app.use('/admin', admin_route)
 
-mongoose.connect(db_url, { useNewUrlParser: true })
+mongoose.connect(db_url, { useCreateIndex: true, useNewUrlParser: true })
 mongoose.Promise = global.Promise
 
 let db = mongoose.connection
