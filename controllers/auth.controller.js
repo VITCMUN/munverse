@@ -2,8 +2,9 @@ const passport = require('passport')
 const User = require('../models/user.model')
 const logger = require('../utils/logger')
 const admin_renderer = require('../renderer/admin')
+const shared_renderer = require('../renderer/shared')
 
-exports.home_view = (req, res) => {
+exports.home_view = (req, res, next) => {
     /** view function for home page */
     if (req.user.user_type == 2) {
         admin_renderer.admin_data().then((data) => {
@@ -15,9 +16,15 @@ exports.home_view = (req, res) => {
             res.status(500).send({ "message": "error rendering page" })
         })
     } else {
-        res.status(200).send({ "view": `Welcome ${req.user.username}!` })
+        shared_renderer.shared_data(req.user.username).then((data) => {
+           // console.log(data)
+            res.render('../views/inbox', data)
+            return next()
+        }).catch((err) => {
+            logger.error(err)
+            res.status(500).send({ "message": "error rendering page" })
+        })
     }
-
 }
 
 exports.login_view = (req, res) => {
@@ -25,7 +32,7 @@ exports.login_view = (req, res) => {
     if (req.user) {
         res.redirect("/")
     } else {
-        admin_renderer.shared_data().then((data) => {
+        shared_renderer.shared_data().then((data) => {
             res.render('../views/login', data)
         }).catch((err) => {
             logger.error(err)
