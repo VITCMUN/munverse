@@ -13,6 +13,18 @@ html, body {
     background: #000000;
 }
 
+input.darksearch {
+  background-color : #212121;
+  color : #FCCC00;
+}
+
+input.darksearch::-webkit-input-placeholder {
+  color: #FCCC00;
+  font-weight: bolder;
+  opacity: 0.4;
+}
+
+
 h1 {
     color: antiquewhite;
     font-size: 20px;
