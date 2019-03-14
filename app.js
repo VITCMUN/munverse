@@ -9,6 +9,7 @@ const User = require('./models/user.model')
 const logger = require('./utils/logger')
 const auth_route = require('./routes/auth.route')
 const admin_route = require('./routes/admin.route')
+const message_route = require('./routes/message.route')
 var socket = require('socket.io')
 const app = express()
 
@@ -40,6 +41,7 @@ passport.deserializeUser(User.deserializeUser())
 
 app.use(auth_route)
 app.use('/admin', admin_route)
+app.use('/message', message_route.router)
 
 mongoose.connect(db_url, { useCreateIndex: true, useNewUrlParser: true })
 mongoose.Promise = global.Promise
@@ -57,8 +59,7 @@ const server = app.listen(config.port, '0.0.0.0', () => {
 })
 
 var io = socket(server)
-
-require("./routes/message.router.js")(io)
+message_route.io(io)
 
 
 

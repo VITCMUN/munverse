@@ -1,11 +1,12 @@
 const mongoose = require('mongoose');
-var Schema = mongoose.Schema;
 const User = require("../models/user.model")
+var Schema = mongoose.Schema;
+
 var MessageSchema = new Schema({
-	sender : String,
-	receiver : String,
-	//new Date().toLocaleTimeString('en-US',{hour12:true}),
-	ViaEb :{type: Boolean},
-	content : {type:String}
+	sender : User.schema,
+	receiver : User.schema,
+	ViaEb : Boolean,
+	content : String
 },{ timestamps: true})
-module.exports = mongoose.model('message',MessageSchema)
+
+module.exports = mongoose.model('Message', MessageSchema)

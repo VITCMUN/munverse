@@ -1,14 +1,37 @@
 const Message = require('../models/message.model')
+const User = require('../models/user.model')
 const logger = require('../utils/logger')
 
-exports.get_user_list = async (sender) => {
+exports.get_message_list = async (sender_username) => {
     /**
-     * get list of all users that have sent a message to sender
+     * get list of all message that have sent a message to sender or vice versa
      */
-    await Message.find({ sender: sender }).distinct('receiver', (err, users) => {
-        if (err) { logger.error(err) }
-        return users
-    })
+    var all_users = await User.find({'username': {$ne: sender_username}})
+    messages = {}
+    for (var i=0; i<all_users.length; i++) {
+        message = await Message.findOne(
+            {
+                'sender.username': sender_username,
+                'receiver.username': all_users[i].username
+            }).sort({'createdAt': -1})
+        if (message)
+            messages[all_users[i].username] = message
+        message = await Message.findOne(
+            {
+                'receiver.username': sender_username,
+                'sender.username': all_users[i].username
+            }).sort({'createdAt': -1})
+        if (message) {
+            if (messages[all_users[i].username]) {
+                if (messages[all_users[i].username].createdAt < message.createdAt) {
+                    messages[all_users[i].username] = message
+                }
+            } else 
+                messages[all_users[i].username] = message
+        }
+    }
+    console.log(Object.values(messages))
+    return Object.values(messages)
 }
 
 exports.get_messages_from_user = async (user, from_user, page) => {
@@ -18,13 +41,14 @@ exports.get_messages_from_user = async (user, from_user, page) => {
      */
     page_size = 10
     if (!page) { page = 0 }
-    await Message.find({ sender: { $in: [user, from_user] } })
+    messages_data = []
+    await Message.find({ $or: [{"sender.username": user}, {"sender.username": from_user}]})
         .sort({ 'createdAt': -1 })
         .skip(page * page_size)
         .limit(page_size)
         .exec((err, messages) => {
             if (err) { logger.error(err) }
-            return messages
+            messages_data = messages
     })
-
+    return messages_data
 }
