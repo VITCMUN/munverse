@@ -3,11 +3,13 @@ const User = require('../models/user.model')
 const logger = require('../utils/logger')
 const admin_renderer = require('../renderer/admin')
 const shared_renderer = require('../renderer/shared')
+const message_renderer = require('../renderer/message')
 
-exports.home_view = (req, res, next) => {
+// /get-messages/?from=Pakistan
+exports.home_view = async (req, res) => {
     /** view function for home page */
     if (req.user.user_type == 2) {
-        admin_renderer.admin_data().then((data) => {
+        await admin_renderer.admin_data().then((data) => {
             data.error_event = req.query.error_event
             data.error_council = req.query.error_council
             res.render('../views/admin', data)
@@ -16,14 +18,20 @@ exports.home_view = (req, res, next) => {
             res.status(500).send({ "message": "error rendering page" })
         })
     } else {
-        shared_renderer.shared_data(req.user.username).then((data) => {
-           // console.log(data)
-            res.render('../views/inbox', data)
-            return next()
-        }).catch((err) => {
-            logger.error(err)
-            res.status(500).send({ "message": "error rendering page" })
-        })
+        data = {}
+        await shared_renderer.shared_data(req.user.username)
+            .then((shared_data) => {
+                data = shared_data
+            }).catch((err) => {
+                logger.error(err)
+            })
+        await message_renderer.get_message_list(req.user.username)
+            .then((message_data) => {
+                data.messages = message_data
+            }).catch((err) => {
+                logger.error(err)
+            })
+        res.render('../views/inbox', data);   
     }
 }
 

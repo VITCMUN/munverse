@@ -8,9 +8,11 @@ var message = document.getElementById("send_message")
 var user_name = document.getElementById("user")
 
 users = {}
+
 msg.on("userconnected", (data) => {
   users[data.name] = data.name
 })
+
 msg.on('allusers', (data) => {
 
   _.each(data.users, (id, name) => {
@@ -22,8 +24,6 @@ msg.on('allusers', (data) => {
 msg.on('userdisconnected', (data) => {
   // delete from front end active user list
   delete users[data.name]
-
-
 })
 
 

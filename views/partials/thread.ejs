@@ -1,7 +1,12 @@
 <!--Message Thread-->
-<div class="card" id="msg-card-0" onclick="display_content()">
+<div class="card" id="msg-card-0">
+    <% if(message.sender.username == user.username) {
+         username = message.receiver.username
+      } else {
+         username = message.sender.username
+     } %>
   <div class="card-content">
-    <div class="columns">
+    <div class="columns" onclick="columns_click('<%= username %>')">
       <div class="column is-1">
         <input class="star" type="checkbox" title="bookmark page" checked>
       </div>
@@ -13,17 +18,22 @@
       <div class="column is-9">
         <div class="mesg-header">
           <span class="mesg-header">
-            <h1>India</h1>
+            <h1 class="username">
+              <%= username %>
+            </h1>
           </span>
         </div>
         <div class="msg-subject">
           <span class="msg-subject">
-            <small id="subject-0" style="color:antiquewhite">Hello Delegate lets form an alliance and Draft a Resolution</small>
+            <small id="subject-0" style="color:antiquewhite"><%= message.content %></small>
           </span>
         </div>
       </div>
       <div class="column is-1">
-        <span class="msg-timestamp" style="color:antiquewhite">12:34</span>
+        <% var minutes = message.createdAt.getMinutes()
+           var hours = message.createdAt.getHours()
+           var time = hours + ":" + minutes %>
+        <span class="msg-timestamp" style="color:antiquewhite"><%= time %></span>
       </div>
     </div>
   </div>
