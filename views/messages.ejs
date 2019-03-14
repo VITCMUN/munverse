@@ -1,36 +1,55 @@
-<div class="headerchat">
-    <div class="card-content">
-        <div class="columns">
-            <div class="column is-1">
-                <input class="star" type="checkbox" title="bookmark page" checked>
-            </div>
-            <div class="column is-1">
-                <span class="msg-from">
-                    <img src="../media/flag/USA.png" alt="USA" width="44px" height="44px" style="border-radius:75%">
-                </span>
-            </div>
-            <div class="column is-9">
-                <div class="mesg-header">
-                    <span class="mesg-header">
-                        <h1>USA</h1>
+<!DOCTYPE html>
+
+<html>
+
+<head>
+  <meta charset="utf-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1, max-scale=1.0">
+  <title>VITCMUN 19: E-Chit</title>
+  <link rel="stylesheet" href="/css/font-awesome-4.7.0/css/font-awesome.min.css">
+  <!-- Bulma Version 0.7.2-->
+  <link rel="stylesheet" href="/css/bulma.min.css" />
+  <link rel="stylesheet" type="text/css" href="/css/inbox.css">
+  <link rel="stylesheet" type="text/css" href="/css/chatbubbles.css">
+  <script type="text/javascript" src="/js/jquery.min.js"></script>
+  <script type="text/javascript" src="/js/inbox.js"></script>
+
+<body>
+    <div class="headerchat">
+        <div class="columns is-multiline">
+                <div class="column is-1">
+                    <input class="star" type="checkbox" title="bookmark page" checked>
+                </div>
+                <div class="column is-1">
+                    <span class="msg-from">
+                        <img src="../media/user_profile_pictures/placeholder.jpg" alt="USA" width="44px" height="44px" style="border-radius:75%">
                     </span>
                 </div>
-                <div class="msg-subject">
-                    <span class="msg-subject">
-                        <small id="subject-0" style="color:antiquewhite"><%= messages[0].content %></small>
-                    </span>
+                <div class="column is-9">
+                    <div class="mesg-header">
+                        <span class="mesg-header">
+                            <h1><%= from_user %></h1>
+                        </span>
+                    </div>
                 </div>
-            </div>
-            <div class="column is-1">
-                <span class="msg-timestamp" style="color:antiquewhite">12:34</span>
+                <div class="column is-full mesg-body">
+                <% for(var i = 0; i<messages.length; i++ ){ %>    
+                        <% if(messages[i].sender.username == from_user){ %>
+                          <%- include('partials/recieve-chat', {message: messages[i]}) %>  
+                        <% }else{ %>
+                         <%-  include('partials/send-chat', {message: messages[i]})  %>  
+                       <% } %>
+                   <% } %> 
+                </div>
             </div>
         </div>
     </div>
-</div>
-<a class="button gold-button is-bold">
-    <span class="compose">
-        <strong>
-            REPLY
-        </strong>
-    </span>
-</a>
+    <a class="button gold-button is-bold">
+        <span class="compose">
+            <strong>
+                REPLY
+            </strong>
+        </span>
+    </a>
+</body>

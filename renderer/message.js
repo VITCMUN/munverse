@@ -30,7 +30,7 @@ exports.get_message_list = async (sender_username) => {
                 messages[all_users[i].username] = message
         }
     }
-    console.log(Object.values(messages))
+    // console.log(Object.values(messages))
     return Object.values(messages)
 }
 
@@ -41,14 +41,8 @@ exports.get_messages_from_user = async (user, from_user, page) => {
      */
     page_size = 10
     if (!page) { page = 0 }
-    messages_data = []
-    await Message.find({ $or: [{"sender.username": user}, {"sender.username": from_user}]})
+    return await Message.find({ $or: [{"sender.username": user}, {"sender.username": from_user}]})
         .sort({ 'createdAt': -1 })
         .skip(page * page_size)
         .limit(page_size)
-        .exec((err, messages) => {
-            if (err) { logger.error(err) }
-            messages_data = messages
-    })
-    return messages_data
 }

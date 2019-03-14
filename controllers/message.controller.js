@@ -97,8 +97,7 @@ exports.get_messages = async (req, res) => {
     } else {
         await message_data.get_messages_from_user(username, from_user, page)
         .then((messages)=>{
-            console.log(messages)
-            res.render('../views/messages', messages)
+            res.render('../views/messages', {messages: messages, from_user: from_user})
         })
     }
 }
