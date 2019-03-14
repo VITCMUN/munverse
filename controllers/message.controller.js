@@ -95,7 +95,7 @@ exports.get_messages = async (req, res) => {
         res.status(400).send({"message": "from_user missing"})
         return
     } else {
-        message_data.get_messages_from_user(username, from_user, page)
+        await message_data.get_messages_from_user(username, from_user, page)
         .then((messages)=>{
             console.log(messages)
             res.render('../views/messages', messages)
