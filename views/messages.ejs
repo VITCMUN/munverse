@@ -14,42 +14,24 @@
   <link rel="stylesheet" type="text/css" href="/css/chatbubbles.css">
   <script type="text/javascript" src="/js/jquery.min.js"></script>
   <script type="text/javascript" src="/js/inbox.js"></script>
-
+  <script>
+      $(window).on('load',function() {
+        $("html, body").animate({ scrollTop: $(document).height()-$(window).height() });
+        });
+  </script>
 <body>
     <div class="headerchat">
         <div class="columns is-multiline">
-                <div class="column is-1">
-                    <input class="star" type="checkbox" title="bookmark page" checked>
-                </div>
-                <div class="column is-1">
-                    <span class="msg-from">
-                        <img src="../media/user_profile_pictures/placeholder.jpg" alt="USA" width="44px" height="44px" style="border-radius:75%">
-                    </span>
-                </div>
-                <div class="column is-9">
-                    <div class="mesg-header">
-                        <span class="mesg-header">
-                            <h1><%= from_user %></h1>
-                        </span>
-                    </div>
-                </div>
-                <div class="column is-full mesg-body">
-                <% for(var i = 0; i<messages.length; i++ ){ %>    
+               <div class="message-screen column is-full mesg-body" style="overflow: auto;">
+                <% for(var i = (messages.length-1); i>=0; i-- ){ %>    
                         <% if(messages[i].sender.username == from_user){ %>
-                          <%- include('partials/recieve-chat', {message: messages[i]}) %>  
+                          <%- include('partials/receive-chat', {message: messages[i]}) %>  
                         <% }else{ %>
                          <%-  include('partials/send-chat', {message: messages[i]})  %>  
                        <% } %>
                    <% } %> 
-                </div>
+                 </div>
             </div>
         </div>
     </div>
-    <a class="button gold-button is-bold">
-        <span class="compose">
-            <strong>
-                REPLY
-            </strong>
-        </span>
-    </a>
 </body>

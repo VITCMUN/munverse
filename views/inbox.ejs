@@ -13,18 +13,25 @@
   <link rel="stylesheet" type="text/css" href="/css/inbox.css">
   <link rel="stylesheet" type="text/css" href="/css/chatbubbles.css">
   <script type="text/javascript" src="/js/jquery.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/socket.io/2.2.0/socket.io.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/underscore.js/1.9.1/underscore-min.js"></script>
   <script type="text/javascript" src="/js/inbox.js"></script>
+  <script type="text/javascript" src="/js/message.js"></script>
+
   <script>
     function columns_click(username) {
+        $("#from_user").html(username);
+        $(".message-input").show()
+        $(".send").show()
         $(".iframe").html(`<iframe src='/message?from_user=${username}' style="height:100%;width:100%; color: white"></iframe>`)
     }
   </script>
 </head>
 
-<body>
-
+<body scroll="no" style="overflow: hidden">
+  <div id="current_user"><%= user.username %></div>
   <!-- START NAV -->
-  <nav class="navbar dark" role="navigation" aria-label="main navigation">
+  <nav class="navbar dark" role="navigation" aria-label="main navigation" style="margin-top: 50px">
     <div class="navbar-brand">
       <!--Big Flag for Desktop Device-->
       <a class="navbar-item is-hidden-mobile navbar-flag" href="#">
@@ -53,7 +60,7 @@
           <img class="icon-top" src="<%= council.council_logo_url %>" width="100px">
         </a>
       </div>
-      <div class="navbar-end" id="navMenu">
+      <div class="navbar-end" id="navMenu" style="margin-right: 20px">
         <div class="navbar-item">
           <div class="buttons">
             <a class="button gold-button">
@@ -67,78 +74,47 @@
     </div>
   </nav>
   <!-- END NAV -->
-  <div class="columns">
-    <aside class="colum[ { _id: 5c84ef3c35ebb7154b43eb57,
-      username: 'India',
-      user_type: 0,
-      profile_picture_url: '/media/user_profile_pictures/placeholder.jpg',
-      __v: 0 },
-    { _id: 5c854073ab7c8a5179e40221,
-      username: 'Pakistan',
-      user_type: 0,
-      profile_picture_url: '/media/user_profile_pictures/placeholder.jpg',
-      __v: 0 } ]
-  n is-2 aside hero">
-      <div>
-        <div class="compose has-text-centered">
-          <form>
-            <div class="field">
-              <div class="control has-icons-left has-icons-right">
-                <input class="input is-warning darksearch" type="text" placeholder="Search delegates">
-                <span class="icon is-small is-left">
-                  <i class="fas fa-user"></i>
-                </span>
-                <span class="icon is-small is-right">
-                  <i class="fas fa-search"></i>
-                </span>
-              </div>
-            </div>
-          </form>
-          <!--a class="button gold-button is-block is-bold">
-                        <span class="compose">
-                            <strong>
-                                COMPOSE
-                            </strong>
-                        </span>
-                    </a-->
-        </div>
-        <div class="main">
-          <a href="#" class="item active"><span class="icon"><i class="fa fa-inbox"></i></span><span class="name">Inbox</span></a>
-          <a href="#" class="item"><span class="icon"><i class="fa fa-star"></i></span><span class="name">Starred</span></a>
-          <a href="#" class="item"><span class="icon"><i class="fa fa-envelope-o"></i></span><span class="name">Sent Mail</span></a>
-        </div>
+  <div class="columns is-multiline is-mobile border is-gapless is-vcentered" style="height: 100px">
+      <div class="column border is-1" style="height: 100px;">
+          <span class="msg-from">
+              <img src="../media/user_profile_pictures/placeholder.jpg" alt="USA" width="44px" height="44px" style="border-radius:75%">
+          </span>
       </div>
-    </aside>
-    <div class="column is-10">
-      <div class="columns">
-        <div class="container iframe">
-          <div class="card-header">
-            <div class="columns is-mobile">
-              <div class="column is-2 is-narrow control is-grouped has-text-left">
-                <a class="ribbon button">
-                  <i class="fa fa-repeat"></i>
-                </a>
-              </div>
-              <div class="column is-10 control is-grouped is-narrow has-text-right">
-                <a class="ribbon button">
-                  <i class="fa fa-angle-left"></i>
-                </a>
-                <a class="ribbon button">
-                  <h1>1 / 10</h1>
-                </a>
-                <a class="ribbon button">
-                  <i class="fa fa-angle-right"></i>
-                </a>
-              </div>
-            </div>
+      <div class="column border is-8" style="height: 100px;">
+          <div class="mesg-header">
+              <span class="mesg-header">
+                  <h1 id="from_user"></h1>
+              </span>
           </div>
-          <div class="inbox-messages is-dark">
+      </div>
+  
+    <div class="column border is-9 iframe" style="height: 580px;" >
+        <div class="columns border">
+          <div class="column is-full inbox-messages is-dark">
               <% for(var i=0; i<messages.length; i++) {%>
                   <%- include('partials/thread', {message: messages[i], user: user}); %>
                 <% } %>
           </div>
+        
+      </div>
+    </div>
+    <div class="column border is-3" style="height: 580px;"></div>
+    <div class="column border is-8">
+      <div class="field">
+        <div class="control">
+          <textarea class="textarea is-warning message-input" placeholder="Enter message."></textarea>
         </div>
       </div>
+    </div>
+    <div class="send column is-1 has-text-centered">
+      <a class="button gold-button is-bold">
+        <span class="compose">
+            <strong>
+                REPLY
+            </strong>
+        </span>
+      </a>
+    </div>
     </div>
 </body>
 

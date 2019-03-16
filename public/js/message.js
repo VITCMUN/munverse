@@ -1,50 +1,75 @@
-var output = document.getElementById('inbox')
-var msg = io.connect(document.location.href, {
-  reconnection: false
-})
-var btn = document.getElementById('send')
-var to = document.getElementById('receiver')
-var message = document.getElementById("send_message")
-var user_name = document.getElementById("user")
+$(document).ready(() => {
+  var msg = io.connect(document.location.href, {
+    reconnection: false
+  });
 
-users = {}
+  var btn = $(".send");
+  var to = $("#from_user");
+  var message = $(".message-input");
+  var user_name = $("#current_user");
+  console.log(btn, to, message, user_name);
+  users = {};
 
-msg.on("userconnected", (data) => {
-  users[data.name] = data.name
-})
+  var chat_bubble_part_1 =
+    '<div class="column is-full has-text-right"> \
+        <div class="talk-bubble tri-right round btm-right-in">\
+          <div class="talktext">\
+            <p>';
 
-msg.on('allusers', (data) => {
+  var chat_bubble_part_2 = "</p></div></div></div>";
 
-  _.each(data.users, (id, name) => {
-    //addUser(id, name)
-    users[name] = id
-  })
-})
+  var chat_bubble_part_1_r = 
+    '<div class="column is-full">\
+        <div class="talk-bubble tri-right round btm-left">\
+          <div class="talktext">\
+            <p>'
+  
+  var chat_bubble_part_2_r = '</p></div></div></div>'
+     
 
-msg.on('userdisconnected', (data) => {
-  // delete from front end active user list
-  delete users[data.name]
-})
+  msg.on("userconnected", data => {
+    users[data.name] = data.name;
+  });
 
+  msg.on("allusers", data => {
+    _.each(data.users, (id, name) => {
+      //addUser(id, name)
+      users[name] = id;
+    });
+  });
 
-btn.onclick = (e) => {
-  e.preventDefault();
-  msg.emit("message", {
-    name: to.value,
-    message: message.value
-  })
-  console.log("emit")
-}
+  msg.on("userdisconnected", data => {
+    // delete from front end active user list
+    delete users[data.name];
+  });
 
-msg.on("newmessage", (data) => {
-  output.innerHTML += "<p>" + data.name + " says " + data.message + "</p>"
-  msg.emit('acknowledge', {
-    ack: 'ack',
-    name: data.name
-  })
-  //  console.log('ack')
+  btn.on("click", () => {
+    console.log(btn, to.html(), message.val(), user_name.html());
+    msg.emit("message", {
+      name: to.html(),
+      message: message.val()
+    });
+    $("iframe")
+      .contents()
+      .find("body")
+      .append(chat_bubble_part_1 + message.val() + chat_bubble_part_2);
+    message.val() = "";
+    console.log("emit");
+  });
 
-})
-msg.on('doubletick', (data) => {
-  console.log(data)
-})
+  msg.on("newmessage", data => {
+    console.log(data);
+    $("iframe")
+      .contents()
+      .find("body")
+      .append(chat_bubble_part_1_r + data.message + chat_bubble_part_2_r);
+    msg.emit("acknowledge", {
+      ack: "ack",
+      name: data.name
+    });
+    //  console.log('ack')
+  });
+  msg.on("doubletick", data => {
+    console.log(data);
+  });
+});

@@ -274,3 +274,7 @@ img.icon-top {
 .ribbon.button.h1:hover {
     color: #000000;
 }
+
+.border{
+    border: 2px solid white;
+}
