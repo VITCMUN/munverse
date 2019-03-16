@@ -59,10 +59,7 @@ exports.add_user = (req, res) => {
                 logger.error(err)
                 res.status(403).send({ "message": err })
             } else {
-                passport.authenticate('local')(req, res, function () {
-                    logger.info(`new user successfully signed up - ${req.body.username}`)
-                    res.redirect('/')
-                })
+                res.status(200).send({ "message": `${user.username} created successfully!` })
             }
         })
     }

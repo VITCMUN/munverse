@@ -126,37 +126,61 @@
                         </form>
                     </div>
                     <div class="column is-fourth">
-                        <div class="is-size-1">User Settings</div>
+                        <div class="is-size-1">User Settings
+                                <div class="control">
+                                        <a data-target="#myModal" class="modal-button button is-primary">
+                                        ADD USER
+                                        </a>
+                                    </div>
+                        </div>
                         <div class="modal" id="myModal">
                             <div class="modal-background"></div>
                             <div class="modal-content box">
-                                <h1><strong>Adding a New User</strong></h1>
-                                <form action="something.js" method="POST">
+                                <h1><strong>New User</strong></h1>
+                                <form action="/admin/user" method="POST">
                                     <div class="field">
                                         <label class="label">Username</label>
                                         <div class="control">
-                                            <input class="input" type="text" placeholder="e.g america">
+                                            <input name="username" class="input" type="text" placeholder="e.g India">
                                         </div>
                                     </div>
             
                                     <div class="field">
                                         <label class="label">Password</label>
                                         <div class="control">
-                                            <input class="input" type="email" placeholder="Password">
+                                            <input name="password" class="input" type="password" placeholder="password">
                                         </div>
                                     </div>
                                     <div class="field">
-                                        <label class="label">Usertype</label>
+                                        <label class="label">User Type</label>
                                         <div class="control">
                                             <div class="select">
-                                                <select>
-                                                    <option>Delegate</option>
-                                                    <option>EB</option>
-                                                    <option>Admin</option>
+                                                <select name="user_type" id="select">
+                                                    <option value="1">Delegate</option>
+                                                    <option value="2">EB</option>
+                                                    <option value="3">Admin</option>
                                                 </select>
                                             </div>
                                         </div>
                                     </div>
+                                    <div class="field">
+                                            <div class="control">
+                                                <div class="file is-small">
+                                                    <label class="file-label">
+                                                        <input id="profile-picture" class="file-input" type="file">
+                                                        <input id="profile-picture-base64" name="profile_picture" type="text" style="display:none">
+                                                        <span class="file-cta">
+                                                            <span class="file-icon">
+                                                                <i class="fa fa-upload"></i>
+                                                            </span>
+                                                            <span class="file-label">
+                                                                <strong>Choose a file</strong>
+                                                            </span>
+                                                        </span>
+                                                    </label>
+                                                </div>
+                                            </div>
+                                        </div>
                                     <div class="field">
                                         <div class="control">
                                             <button class="button is-primary">Submit</button>

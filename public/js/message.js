@@ -58,11 +58,13 @@ $(document).ready(() => {
   });
 
   msg.on("newmessage", data => {
-    console.log(data);
+    var message_thread = $("#"+data.name)
+    console.log(message_thread, data);
     $("iframe")
       .contents()
       .find("body")
       .append(chat_bubble_part_1_r + data.message + chat_bubble_part_2_r);
+    message_thread.html(data.message)
     msg.emit("acknowledge", {
       ack: "ack",
       name: data.name

@@ -13,6 +13,13 @@ $(document).ready(() => {
         }
     })
 
+    $("#profile-picture").on("change", (e) => {
+        var img_file = $("#profile-picture").prop('files')[0];
+        if (img_file) {
+            reader_profile.readAsDataURL(img_file)
+        }
+    })
+
     $('#div-logout').click(() => {
         window.location.href = '/logout'
     }).css("cursor", "pointer");
@@ -31,5 +38,9 @@ $(document).ready(() => {
         $("#council-logo").val(reader_council.result)
     }, false);
 
+    var reader_profile = new FileReader()
+    reader_profile.addEventListener("load", function () {
+        $("#profile-picture-base64").val(reader_profile.result)
+    }, false);
 
 })
