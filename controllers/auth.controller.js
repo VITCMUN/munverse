@@ -1,9 +1,9 @@
 const passport = require('passport')
 const User = require('../models/user.model')
 const logger = require('../utils/logger')
-const admin_renderer = require('../renderer/admin')
-const shared_renderer = require('../renderer/shared')
-const message_renderer = require('../renderer/message')
+const admin_renderer = require('../renderer/admin.renderer')
+const shared_renderer = require('../renderer/shared.renderer')
+const message_renderer = require('../renderer/message.renderer')
 
 // /get-messages/?from=Pakistan
 exports.home_view = async (req, res) => {

@@ -1,6 +1,6 @@
 const Message = require('../models/message.model')
 const logger = require('../utils/logger')
-const message_data = require('../renderer/message')
+const message_data = require('../renderer/message.renderer')
 
 user = null
 cache = []

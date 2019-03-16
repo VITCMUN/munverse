@@ -1,6 +1,6 @@
 const User = require('../models/user.model')
 const logger = require('../utils/logger')
-const shared_renderer = require('./shared')
+const shared_renderer = require('./shared.renderer')
 
 exports.admin_data = async () => {
     data = { council: null, event: null, users: null }

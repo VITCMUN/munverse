@@ -127,15 +127,17 @@
                     </div>
                     <div class="column is-fourth">
                         <div class="is-size-1">User Settings</div>
-                        <div class="modal" id="myModal">
+                        <div class="modal" id="user_add_modal">
                             <div class="modal-background"></div>
                             <div class="modal-content box">
-                                <h1><strong>Adding a New User</strong></h1>
+                                <center>
+                                    <h1><strong>New User</strong></h1>
+                                </center>
                                 <form action="something.js" method="POST">
                                     <div class="field">
                                         <label class="label">Username</label>
                                         <div class="control">
-                                            <input class="input" type="text" placeholder="e.g america">
+                                            <input class="input" type="text" placeholder="e.g India">
                                         </div>
                                     </div>
             
@@ -146,13 +148,13 @@
                                         </div>
                                     </div>
                                     <div class="field">
-                                        <label class="label">Usertype</label>
+                                        <label class="label">User type</label>
                                         <div class="control">
                                             <div class="select">
                                                 <select>
-                                                    <option>Delegate</option>
-                                                    <option>EB</option>
-                                                    <option>Admin</option>
+                                                    <option value="0">Delegate</option>
+                                                    <option value="1">EB</option>
+                                                    <option value="2">Admin</option>
                                                 </select>
                                             </div>
                                         </div>
@@ -205,19 +207,4 @@
             </div>
     </section>
   </body>
-  <script>
-    document.querySelectorAll(".modal-button").forEach(function(el) {
-      el.addEventListener("click", function() {
-        var target = document.querySelector(el.getAttribute("data-target"));
-
-        target.classList.add("is-active");
-
-        target
-          .querySelector(".modal-close")
-          .addEventListener("click", function() {
-            target.classList.remove("is-active");
-          });
-      });
-    });
-  </script>
 </html>
