@@ -6,6 +6,11 @@ const base64 = require('../../utils/base64')
 const sanitize = require('../../utils/sanitize')
 const fs = require('fs')
 
+function redirect_with_error(res, error){
+    error.replace(" ", "%20")
+    res.redirect(`/?error_user=${error}`)
+}
+
 exports.get_users = (req, res) => {
     /** Get all users */
     User.find({}, (err, users) => {
@@ -25,20 +30,20 @@ exports.add_user = (req, res) => {
      * user_type: 0 - delegate, 1 - EB, 2 - admin
      */ 
     if ((req.body.username == null) || (req.body.password == null) || (req.body.user_type == null) || (req.body.profile_picture == null)) {
-        res.status(400).send({ "message": "data not adequate." })
+        redirect_with_error(res, "data not adequate")
     } else {
         if (!sanitize.valid_name(req.body.username)) {
-            res.status(400).send({ "message": "invalid username" })
+            redirect_with_error(res, "invalid username")
             return
         }
         if (isNaN(req.body.user_type) || req.body.user_type > 2 || req.body.user_type < 0) {
-            res.status(400).send({ "message": "invalid user_type" })
+            redirect_with_error(res, "invalid user type")
             return
         }
         
         var image_data = base64.decode_image(req.body.profile_picture)
         if (!image_data) {
-            res.status(400).send({ "message": "invalid image type" })
+            redirect_with_error(res, "invalid image type")
             return
         }
         var filename = random.generate()
@@ -57,9 +62,9 @@ exports.add_user = (req, res) => {
         User.register(user, req.body.password, (err, _) => {
             if (err) {
                 logger.error(err)
-                res.status(403).send({ "message": err })
+                redirect_with_error(res, err.message)
             } else {
-                res.status(200).send({ "message": `${user.username} created successfully!` })
+                res.redirect('/')
             }
         })
     }
@@ -74,12 +79,12 @@ exports.update_user = (req, res) => {
      */
     update = {}
     if (!req.body.username) {
-        res.status(400).send({ "message": "username missing" })
+        redirect_with_error(res, "missing username")
         return
     }
     if (req.body.user_type){
         if(isNaN(req.body.user_type) || req.body.user_type > 2 || req.body.user_type < 0) {
-            res.status(400).send({ "message": "invalid user_type" })
+            redirect_with_error(res, "invalid user type")
             return
         } else {
             update.user_type = req.body.user_type
@@ -88,7 +93,7 @@ exports.update_user = (req, res) => {
     if (req.body.profile_picture) {
         var image_data = base64.decode_image(req.body.profile_picture)
         if (!image_data) {
-            res.status(400).send({ "message": "invalid image type" })
+            redirect_with_error(res, "invalid image type")
             return
         }
         var filename = random.generate()
@@ -107,10 +112,10 @@ exports.update_user = (req, res) => {
         { upsert: false }, (err, updated) => {
             if (err) {
                 logger.error(err)
-                res.status(403).send({ "message": err })
+                redirect_with_error(res, err.message)
             } else {
                 updated.setPassword(req.body.password, (_)=>{
-                    res.status(200).send(updated)
+                    res.redirect("/")
                 })
             }
         })
@@ -124,15 +129,15 @@ exports.delete_user = (req, res) => {
         User.findOneAndRemove({ username: req.body.username }, (err, deleted) => {
             if (err) {
                 logger.error(err)
-                res.status(403).send(err)
+                redirect_with_error(res, err.message)
             } else if(deleted) {
                 logger.info('Deleted user ' + deleted)
-                res.status(200).send({"message": "Deleted successful!"})
+                res.redirect("/")
             } else {
-                res.status(403).send({"message": "user not found"})
+                redirect_with_error(res, "user not found")
             }
         })
     } else {
-        res.status(400).send({ "message": "missing username" })
+        redirect_with_error(res, "missing username")
     }
 }

@@ -23,7 +23,7 @@
         $("#from_user").html(username);
         $(".message-input").show()
         $(".send").show()
-        $(".iframe").html(`<iframe src='/message?from_user=${username}' style="height:100%;width:100%; color: white"></iframe>`)
+        $(".iframe").html(`<iframe id="message-window" src='/message?from_user=${username}' style="height:100%;width:100%; color: white"></iframe>`)
     }
   </script>
 </head>
@@ -74,13 +74,13 @@
     </div>
   </nav>
   <!-- END NAV -->
-  <div class="columns is-multiline is-mobile border is-gapless is-vcentered" style="height: 100px">
-      <div class="column border is-1" style="height: 100px;">
+  <div class="columns is-multiline is-mobile is-gapless is-vcentered" style="height: 100px">
+      <div class="column  is-1" style="height: 100px;">
           <span class="msg-from">
-              <img src="../media/user_profile_pictures/placeholder.jpg" alt="USA" width="44px" height="44px" style="border-radius:75%">
+              <img id="msg-from-img" src="<%= user.profile_picture_url%>" alt="USA" width="44px" height="44px" style="border-radius:75%">
           </span>
       </div>
-      <div class="column border is-8" style="height: 100px;">
+      <div class="column  is-8" style="height: 100px;">
           <div class="mesg-header">
               <span class="mesg-header">
                   <h1 id="from_user"></h1>
@@ -88,18 +88,21 @@
           </div>
       </div>
   
-    <div class="column border is-9 iframe" style="height: 580px;" >
-        <div class="columns border">
-          <div class="column is-full inbox-messages is-dark">
-              <% for(var i=0; i<messages.length; i++) {%>
-                  <%- include('partials/thread', {message: messages[i], user: user}); %>
-                <% } %>
-          </div>
-        
-      </div>
+    <div class="column  is-9 iframe" style="height: 580px;" >
+        <iframe id="threads-window" src='/message/threads' style="height:100%;width:100%; color: white"></iframe>
     </div>
-    <div class="column border is-3" style="height: 580px;"></div>
-    <div class="column border is-8">
+    <div id="user-list" class="column  is-3" style="height: 580px;overflow: scrollY">
+          <div class="list">
+            <% for(var i=0; i<users.length; i++) {%>
+              <% if (users[i].user_type !== 2 && users[i].username != user.username) { %>
+                <a class="list-item" onclick="columns_click(`<%= users[i].username %>`)">
+                  <img width="44px" height="44px" style="border-radius:75%" src="<%= users[i].profile_picture_url %>"> <%= users[i].username %>
+                </a>
+              <% } %>
+            <%}%>
+          </div>
+    </div>
+    <div class="column is-8">
       <div class="field">
         <div class="control">
           <textarea class="textarea is-warning message-input" placeholder="Enter message."></textarea>

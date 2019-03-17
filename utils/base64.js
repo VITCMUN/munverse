@@ -1,5 +1,8 @@
 exports.decode_image = (data_string) => {
 
+    if (data_string == null || data_string == "")
+        return null
+
     var pattern = /^data:([A-Za-z-+\/]+);base64,(.+)$/
     var matches = data_string.match(pattern)
 

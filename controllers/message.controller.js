@@ -1,7 +1,7 @@
 const Message = require('../models/message.model')
 const logger = require('../utils/logger')
-const message_data = require('../renderer/message')
-
+const message_renderer = require('../renderer/message.renderer')
+const shared_renderer = require('../renderer/shared.renderer')
 user = null
 cache = []
 
@@ -93,11 +93,35 @@ exports.get_messages = async (req, res) => {
 
     if (from_user == null) {
         res.status(400).send({"message": "from_user missing"})
-        return
+        return next()
     } else {
-        await message_data.get_messages_from_user(username, from_user, page)
+        await message_renderer.get_messages_from_user(username, from_user, page)
         .then((messages)=>{
             res.render('../views/messages', {messages: messages, from_user: from_user})
         })
+        return next()
+    }
+}
+
+exports.get_threads = async (req, res) => {
+    username = req.user.username
+    if (username == null) {
+        res.status(400).send({"message": "user missing"})
+        return
+    } else {
+        data = {}
+        await shared_renderer.shared_data(req.user.username)
+            .then((shared_data) => {
+                data = shared_data
+            }).catch((err) => {
+                logger.error(err)
+            })
+        await message_renderer.get_message_list(req.user.username)
+            .then((message_data) => {
+                data.messages = message_data
+            }).catch((err) => {
+                logger.error(err)
+            })
+        res.render('../views/threads', data); 
     }
 }

@@ -1,9 +1,9 @@
 const passport = require('passport')
 const User = require('../models/user.model')
 const logger = require('../utils/logger')
-const admin_renderer = require('../renderer/admin')
-const shared_renderer = require('../renderer/shared')
-const message_renderer = require('../renderer/message')
+const admin_renderer = require('../renderer/admin.renderer')
+const shared_renderer = require('../renderer/shared.renderer')
+const message_renderer = require('../renderer/message.renderer')
 
 // /get-messages/?from=Pakistan
 exports.home_view = async (req, res) => {
@@ -12,6 +12,7 @@ exports.home_view = async (req, res) => {
         await admin_renderer.admin_data().then((data) => {
             data.error_event = req.query.error_event
             data.error_council = req.query.error_council
+            data.error_user = req.query.error_user
             res.render('../views/admin', data)
         }).catch((err) => {
             logger.error(err)
@@ -20,14 +21,14 @@ exports.home_view = async (req, res) => {
     } else {
         data = {}
         await shared_renderer.shared_data(req.user.username)
+        .then((shared_data) => {
+            data = shared_data
+        }).catch((err) => {
+            logger.error(err)
+        })
+        await shared_renderer.shared_data(req.user.username)
             .then((shared_data) => {
                 data = shared_data
-            }).catch((err) => {
-                logger.error(err)
-            })
-        await message_renderer.get_message_list(req.user.username)
-            .then((message_data) => {
-                data.messages = message_data
             }).catch((err) => {
                 logger.error(err)
             })

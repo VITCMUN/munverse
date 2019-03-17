@@ -1,31 +1,31 @@
 <!--Message Thread-->
 <div class="thread card" id="msg-card-0">
     <% if(message.sender.username == user.username) {
-         username = message.receiver.username
+         from_user = message.receiver
       } else {
-         username = message.sender.username
+         from_user = message.sender
      } %>
   <div class="card-content">
-    <div class="columns" onclick="columns_click('<%= username %>')">
+    <div class="columns" onclick="columns_click('<%= from_user.username %>')">
       <div class="column is-1">
         <input class="star" type="checkbox" title="bookmark page" checked>
       </div>
       <div class="column is-1">
         <span class="msg-from">
-          <img src="/flag/India.png" alt="India" width="44px" height="44px" style="border-radius:75%">
+          <img id="from-user-thread-img" src="<%= from_user.profile_picture_url %>" alt="India" width="44px" height="44px" style="border-radius:75%">
         </span>
       </div>
       <div class="column is-9">
         <div class="mesg-header">
           <span class="mesg-header">
             <h1 class="username">
-              <%= username %>
+              <%= from_user.username %>
             </h1>
           </span>
         </div>
         <div class="msg-subject">
           <span class="msg-subject">
-            <small id="<%= username %>" style="color:antiquewhite"><%= message.content %></small>
+            <small id="<%= from_user %>" style="color:antiquewhite"><%= message.content %></small>
           </span>
         </div>
       </div>

@@ -7,7 +7,7 @@ const user_admin_controller = require('../controllers/admin/user.admin.controlle
 
 router.get('/event', event_admin_controller.get_event)
 router.post('/event', middleware.is_admin, event_admin_controller.add_or_update_event)
-router.get('/users', middleware.is_admin, user_admin_controller.get_users)
+router.get('/users', middleware.is_authenticated, user_admin_controller.get_users)
 router.post('/user', middleware.is_admin, user_admin_controller.add_user)
 router.put('/user', middleware.is_admin, user_admin_controller.update_user)
 router.delete('/user', middleware.is_admin, user_admin_controller.delete_user)

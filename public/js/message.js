@@ -29,6 +29,7 @@ $(document).ready(() => {
 
   msg.on("userconnected", data => {
     users[data.name] = data.name;
+    console.log(users)
   });
 
   msg.on("allusers", data => {
@@ -49,7 +50,7 @@ $(document).ready(() => {
       name: to.html(),
       message: message.val()
     });
-    $("iframe")
+    $("#message-window")
       .contents()
       .find("body")
       .append(chat_bubble_part_1 + message.val() + chat_bubble_part_2);
@@ -58,9 +59,10 @@ $(document).ready(() => {
   });
 
   msg.on("newmessage", data => {
-    var message_thread = $("#"+data.name)
+    document.getElementById("threads-window").contentWindow.location.reload()
+    //var message_thread = $("#threads-window").contents().find("#"+data.name)
     console.log(message_thread, data);
-    $("iframe")
+    $("#message-window")
       .contents()
       .find("body")
       .append(chat_bubble_part_1_r + data.message + chat_bubble_part_2_r);

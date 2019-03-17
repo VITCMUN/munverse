@@ -36,6 +36,9 @@
                 <% if (error_council) { %>
                     Council error: <%= error_council %>
                 <% } %>
+                <% if (error_user) { %>
+                    User error: <%= error_user %>
+                <% } %>
             </div>
             <div class="columns">
                     <div class="column is-fourth">
@@ -127,16 +130,19 @@
                     </div>
                     <div class="column is-fourth">
                         <div class="is-size-1">User Settings
-                                <div class="control">
-                                        <a data-target="#myModal" class="modal-button button is-primary">
-                                        ADD USER
-                                        </a>
+                                <div class="field">
+                                        <div class="control">
+                                            <button id="add-user-button" class="button is-primary">ADD USER</button>
+                                        </div>
                                     </div>
                         </div>
-                        <div class="modal" id="myModal">
+                        
+                        <div class="modal" id="user_add_modal">
                             <div class="modal-background"></div>
                             <div class="modal-content box">
-                                <h1><strong>New User</strong></h1>
+                                <center>
+                                    <h1><strong>New User</strong></h1>
+                                </center>
                                 <form action="/admin/user" method="POST">
                                     <div class="field">
                                         <label class="label">Username</label>
@@ -188,7 +194,7 @@
                                     </div>
                                 </form>
                             </div>
-                            <button class="modal-close is-large" aria-label="close"></button>
+                            <button id="user_add_modal_close" class="modal-close is-large" aria-label="close"></button>
                         </div>
             
                         <hr>
@@ -230,18 +236,13 @@
     </section>
   </body>
   <script>
-    document.querySelectorAll(".modal-button").forEach(function(el) {
-      el.addEventListener("click", function() {
-        var target = document.querySelector(el.getAttribute("data-target"));
-
-        target.classList.add("is-active");
-
-        target
-          .querySelector(".modal-close")
-          .addEventListener("click", function() {
-            target.classList.remove("is-active");
+        document.getElementById('add-user-button').addEventListener("click", function() {
+            var target = document.getElementById("user_add_modal");
+            target.classList.add("is-active");
+            document.getElementById("user_add_modal_close")
+              .addEventListener("click", function() {
+                target.classList.remove("is-active");
+              });
           });
-      });
-    });
-  </script>
+      </script>
 </html>

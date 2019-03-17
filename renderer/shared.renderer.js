@@ -19,5 +19,9 @@ exports.shared_data = async (username) => {
         if (err) { logger.error(err) }
         data.user = user
     })
+    await User.find({}, (err, users) => {
+        if (err) { logger.error(err) }
+        data.users = users
+    })
     return data;
 }

@@ -41,7 +41,19 @@ exports.get_messages_from_user = async (user, from_user, page) => {
      */
     page_size = 10
     if (!page) { page = 0 }
-    return await Message.find({ $or: [{"sender.username": user}, {"sender.username": from_user}]})
+    return await Message.find(
+        { 
+            $or: 
+            [
+                {$and: [
+                    {"sender.username": from_user}, 
+                    {"receiver.username": user}]},
+                {$and: [
+                    {"sender.username": user}, 
+                    {"receiver.username": from_user}
+                ]}
+            ]
+        })
         .sort({ 'createdAt': -1 })
         .skip(page * page_size)
         .limit(page_size)

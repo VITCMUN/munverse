@@ -42,7 +42,7 @@ passport.deserializeUser(User.deserializeUser())
 app.use(auth_route)
 app.use('/admin', admin_route)
 app.use('/message', message_route.router)
-
+app.use('/threads',message_route.router)
 mongoose.connect(db_url, { useCreateIndex: true, useNewUrlParser: true })
 mongoose.Promise = global.Promise
 
