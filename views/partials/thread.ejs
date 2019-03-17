@@ -6,7 +6,7 @@
          from_user = message.sender
      } %>
   <div class="card-content">
-    <div class="columns" onclick="columns_click('<%= from_user.username %>')">
+    <div class="columns" onclick="parent.columns_click(`<%= from_user.username %>`, '<%= from_user.profile_picture_url %>')">
       <div class="column is-1">
         <input class="star" type="checkbox" title="bookmark page" checked>
       </div>

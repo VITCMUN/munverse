@@ -5,9 +5,9 @@
 <head>
   <meta charset="utf-8">
   <meta http-equiv="X-UA-Compatible" content="IE=edge">
-  <meta name="viewport" content="width=device-width, initial-scale=1, max-scale=1.0">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
   <title>VITCMUN 19: E-Chit</title>
-  <link rel="stylesheet" href="/css/font-awesome-4.7.0/css/font-awesome.min.css">
+  <link rel="stylesheet" href="/css/fontawesome.min.css">
   <!-- Bulma Version 0.7.2-->
   <link rel="stylesheet" href="/css/bulma.min.css" />
   <link rel="stylesheet" type="text/css" href="/css/inbox.css">
@@ -19,32 +19,35 @@
   <script type="text/javascript" src="/js/message.js"></script>
 
   <script>
-    function columns_click(username) {
-        $("#from_user").html(username);
-        $(".message-input").show()
-        $(".send").show()
+    function columns_click(username, profile_picture_url) {
+        console.log(username, profile_picture_url)
+        $("#from_user").html(username)
+        $("#msg-from-img").attr("src", profile_picture_url)
+        $("#message_box").show()
+        $("#send_message").show()
         $(".iframe").html(`<iframe id="message-window" src='/message?from_user=${username}' style="height:100%;width:100%; color: white"></iframe>`)
     }
   </script>
 </head>
 
-<body scroll="no" style="overflow: hidden">
-  <div id="current_user"><%= user.username %></div>
+<body style="overflow: hidden;">
   <!-- START NAV -->
-  <nav class="navbar dark" role="navigation" aria-label="main navigation" style="margin-top: 50px">
+  <nav class="navbar dark shadow" role="navigation" aria-label="main navigation">
     <div class="navbar-brand">
       <!--Big Flag for Desktop Device-->
       <a class="navbar-item is-hidden-mobile navbar-flag" href="#">
-        <img class="icon-top" src="<%= user.profile_picture_url %>" width="137mm" height="137mm">
+        <img id="user-icon" class="icon-top" src="<%= user.profile_picture_url %>" width="25%" height="25%">
+        <h1 id="current_user" style="margin-left: 20px"><%= user.username %></h1>
       </a>
       <!--Small Flag for Mobile Devices-->
       <a class="navbar-item is-hidden-tablet" href="#">
         <img class="icon-top" src="<%= user.profile_picture_url %>" width="50mm" height="50mm">
       </a>
       <!--Council Logo for Mobile Devices-->
+     
       <div class="navbar-item is-logo is-hidden-tablet">
         <a class="is-logo" href="#">
-          <img class="icon-top" src="<%= council.council_logo_url %>" width="120">
+          <img id="council-icon" class="icon-top" src="<%= council.council_logo_url %>">
         </a>
       </div>
       <a role="button" class="navbar-burger burger" aria-label="menu" aria-expanded="false" data-target="navMenu" style="color: #ffffff;">
@@ -57,10 +60,10 @@
       <!--Council Logo for Laptop Devices-->
       <div class="navbar-item is-logo is-hidden-mobile">
         <a class="is-logo" href="#">
-          <img class="icon-top" src="<%= council.council_logo_url %>" width="100px">
+          <img id="council-icon" class="icon-top" src="<%= council.council_logo_url %>">
         </a>
       </div>
-      <div class="navbar-end" id="navMenu" style="margin-right: 20px">
+      <div class="navbar-end" id="navMenu">
         <div class="navbar-item">
           <div class="buttons">
             <a class="button gold-button">
@@ -74,29 +77,51 @@
     </div>
   </nav>
   <!-- END NAV -->
-  <div class="columns is-multiline is-mobile is-gapless is-vcentered" style="height: 100px">
-      <div class="column  is-1" style="height: 100px;">
-          <span class="msg-from">
-              <img id="msg-from-img" src="<%= user.profile_picture_url%>" alt="USA" width="44px" height="44px" style="border-radius:75%">
-          </span>
-      </div>
-      <div class="column  is-8" style="height: 100px;">
-          <div class="mesg-header">
-              <span class="mesg-header">
-                  <h1 id="from_user"></h1>
+  <table style="display:none">
+    <tr>
+      <td>
+        <!-- from-country -->
+        <table class="padded-table narrow-height-column">
+            <tr>
+              <td>
+                <span class="msg-from">
+                  <img id="msg-from-img" width="44mm" height="44mm" style="border-radius:75%">
               </span>
-          </div>
-      </div>
-  
-    <div class="column  is-9 iframe" style="height: 580px;" >
+              </td>
+              <td>
+                <div class="mesg-header">
+                  <span class="mesg-header">
+                      <h1 id="from_user"></h1>
+                  </span>
+                </div>
+              </td>
+            </tr>
+          </table>
+      </td>
+      <td>
+        <!-- search bar-->
+      </td>
+    </tr>
+  </table>
+  <div class="columns is-multiline is-mobile top-margin-little">
+    <div class="column is-9 iframe">
         <iframe id="threads-window" src='/message/threads' style="height:100%;width:100%; color: white"></iframe>
     </div>
-    <div id="user-list" class="column  is-3" style="height: 580px;overflow: scrollY">
+
+    <div id="user-list" class="column is-3" style="overflow: scrollY">
           <div class="list">
             <% for(var i=0; i<users.length; i++) {%>
               <% if (users[i].user_type !== 2 && users[i].username != user.username) { %>
-                <a class="list-item" onclick="columns_click(`<%= users[i].username %>`)">
-                  <img width="44px" height="44px" style="border-radius:75%" src="<%= users[i].profile_picture_url %>"> <%= users[i].username %>
+                <a class="list-item" style="background: white" onclick="columns_click(`<%= users[i].username %>`, '<%= users[i].profile_picture_url %>')">
+                  <table class="padded-table">
+                    <tr>
+                      <td style="width:20%">
+                          <img width="44px" height="44px" style="border-radius:75%" src="<%= users[i].profile_picture_url %>">
+                      </td>
+                      <td style="width:60%"> <%= users[i].username %> </td>
+                      <td style="width:20%"> <i id="<%= users[i].username %>_status" class="fa fa-circle offline" style="color:green"></i> </td>
+                    </tr>
+                  </table>
                 </a>
               <% } %>
             <%}%>
@@ -105,11 +130,11 @@
     <div class="column is-8">
       <div class="field">
         <div class="control">
-          <textarea class="textarea is-warning message-input" placeholder="Enter message."></textarea>
+          <textarea id="message_box" class="textarea is-warning message-input" placeholder="Message goes here"></textarea>
         </div>
       </div>
     </div>
-    <div class="send column is-1 has-text-centered">
+    <div id="send_message" class="column is-1 has-text-centered">
       <a class="button gold-button is-bold">
         <span class="compose">
             <strong>

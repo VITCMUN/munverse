@@ -1,22 +1,20 @@
 $(document).ready(() => {
   var msg = io.connect(document.location.href, {
     reconnection: false
-  });
+  })
 
-  var btn = $(".send");
-  var to = $("#from_user");
-  var message = $(".message-input");
-  var user_name = $("#current_user");
-  console.log(btn, to, message, user_name);
-  users = {};
+  var btn = $("#send_message")
+  var to = $("#from_user")
+  var message = $("#message_box")
+  users = {}
 
   var chat_bubble_part_1 =
     '<div class="column is-full has-text-right"> \
         <div class="talk-bubble tri-right round btm-right-in">\
           <div class="talktext">\
-            <p>';
+            <p>'
 
-  var chat_bubble_part_2 = "</p></div></div></div>";
+  var chat_bubble_part_2 = "</p></div></div></div>"
 
   var chat_bubble_part_1_r = 
     '<div class="column is-full">\
@@ -25,55 +23,58 @@ $(document).ready(() => {
             <p>'
   
   var chat_bubble_part_2_r = '</p></div></div></div>'
-     
 
-  msg.on("userconnected", data => {
-    users[data.name] = data.name;
-    console.log(users)
-  });
+
+  function animateIFrame() {
+    $("#message-window")[0].contentWindow.scrollTo( 0, 999999 );
+  }
 
   msg.on("allusers", data => {
-    _.each(data.users, (id, name) => {
-      //addUser(id, name)
-      users[name] = id;
-    });
-  });
+    _.each(data.users, (name, id) => {
+      users[id] = name
+      try {
+        $("#" + name + "_status")[0].classList.remove("offline")
+      }
+      catch(err) {}
+    })
+  })
 
   msg.on("userdisconnected", data => {
     // delete from front end active user list
-    delete users[data.name];
-  });
+    delete users[data.name]
+  })
 
   btn.on("click", () => {
-    console.log(btn, to.html(), message.val(), user_name.html());
+    // emit message
     msg.emit("message", {
       name: to.html(),
       message: message.val()
-    });
+    })
+    // append to window
     $("#message-window")
       .contents()
       .find("body")
-      .append(chat_bubble_part_1 + message.val() + chat_bubble_part_2);
-    message.val() = "";
-    console.log("emit");
-  });
+      .append(chat_bubble_part_1 + message.val() + chat_bubble_part_2)
+    // reset the box value
+    message.val("")
+    // scroll down
+    animateIFrame();
+  })
 
   msg.on("newmessage", data => {
-    document.getElementById("threads-window").contentWindow.location.reload()
-    //var message_thread = $("#threads-window").contents().find("#"+data.name)
-    console.log(message_thread, data);
-    $("#message-window")
-      .contents()
-      .find("body")
-      .append(chat_bubble_part_1_r + data.message + chat_bubble_part_2_r);
-    message_thread.html(data.message)
-    msg.emit("acknowledge", {
-      ack: "ack",
-      name: data.name
-    });
-    //  console.log('ack')
-  });
+    var threads_window = document.getElementById("threads-window")
+    if (threads_window != null) {
+      threads_window.contentWindow.location.reload() 
+    } else {
+      $("#message-window").contents().find("body").append(chat_bubble_part_1_r + data.message + chat_bubble_part_2_r)
+      animateIFrame();
+      msg.emit("acknowledge", {
+        ack: "ack",
+        name: data.name
+      })
+    }
+  })
   msg.on("doubletick", data => {
-    console.log(data);
-  });
-});
+    console.log(data)
+  })
+})

@@ -4,7 +4,7 @@ const middleware = require('../middlewares/auth.middleware')
 const chat = require('../controllers/message.controller')
 const message_controller = require('../controllers/message.controller')
 
-router.get('/', middleware.is_authenticated, message_controller.get_messages)
+router.get('/', middleware.is_authenticated_with_404_fallback, message_controller.get_messages)
 router.get('/threads', middleware.is_authenticated, message_controller.get_threads)
 exports.router = router
 

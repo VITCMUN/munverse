@@ -14,21 +14,14 @@
   <link rel="stylesheet" type="text/css" href="/css/chatbubbles.css">
   <script type="text/javascript" src="/js/jquery.min.js"></script>
   <script type="text/javascript" src="/js/inbox.js"></script>
-  <script>
-        function columns_click(username) {
-            console.log('clicked inside iframe')
-            $("#from_user", window.parent.document).html(username);
-            $(".message-input", window.parent.document).show()
-            $(".send", window.parent.document).show()
-            $(".iframe", window.parent.document).html(`<iframe id="message-window" src='/message?from_user=${username}' style="height:100%;width:100%; color: white"></iframe>`)
-        }
-      </script>
 <body>
 <div class="columns">
     <div class="column is-full inbox-messages is-dark">
         <% for(var i=0; i<messages.length; i++) {%>
             <%- include('partials/thread', {message: messages[i], user: user}); %>
-            <% } %>
+        <% } %>
     </div>
 </div>
 </body>
+
+</html>

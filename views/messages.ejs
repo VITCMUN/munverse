@@ -17,12 +17,12 @@
   <script>
       $(window).on('load',function() {
         $("html, body").animate({ scrollTop: $(document).height()-$(window).height() });
-        });
+       });
   </script>
 <body>
     <div class="headerchat">
         <div class="columns is-multiline">
-               <div class="message-screen column is-full mesg-body" style="overflow: auto;">
+               <div class="message-screen column is-full mesg-body">
                 <% for(var i = (messages.length-1); i>=0; i-- ){ %>    
                         <% if(messages[i].sender.username == from_user){ %>
                           <%- include('partials/receive-chat', {message: messages[i]}) %>  

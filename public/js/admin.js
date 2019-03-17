@@ -1,20 +1,20 @@
 $(document).ready(() => {
     $("#event-logo-file").on("change", (e) => {
-        var img_file = $("#event-logo-file").prop('files')[0];
+        var img_file = $("#event-logo-file").prop('files')[0]
         if (img_file) {
             reader_event.readAsDataURL(img_file)
         }
     })
 
     $("#council-logo-file").on("change", (e) => {
-        var img_file = $("#council-logo-file").prop('files')[0];
+        var img_file = $("#council-logo-file").prop('files')[0]
         if (img_file) {
             reader_council.readAsDataURL(img_file)
         }
     })
 
     $("#profile-picture").on("change", (e) => {
-        var img_file = $("#profile-picture").prop('files')[0];
+        var img_file = $("#profile-picture").prop('files')[0]
         if (img_file) {
             reader_profile.readAsDataURL(img_file)
         }
