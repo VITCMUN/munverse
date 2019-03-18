@@ -120,11 +120,11 @@
   </table>
   <div class="columns is-multiline is-mobile top-margin-little">
     <div class="column is-9 iframe">
-        <iframe id="threads-window" src='/message/threads' style="height:100%;width:100%; color: white"></iframe>
+        <iframe id="threads-window" src='/message/threads' style="height:100%; width:100%; color: white"></iframe>
     </div>
 
-    <div id="user-list" class="column is-3" style="overflow: scrollY">
-          <div class="list">
+    <div id="user-list has-text-right" class="column is-3" style="margin-left: 100; display:inline;">
+          <div class="list"  style="height: 54vh;width: 80%; overflow: auto">
             <% for(var i=0; i<users.length; i++) {%>
               <% if (users[i].user_type !== 2 && users[i].username != user.username) { %>
                 <a id="<%= users[i].username %>_list_item" class="list-item" style="background: white" onclick="columns_click(`<%= users[i].username %>`, '<%= users[i].profile_picture_url %>')">
@@ -134,7 +134,7 @@
                           <img width="44px" height="44px" style="border-radius:75%" src="<%= users[i].profile_picture_url %>">
                       </td>
                       <td style="width:60%"> <%= users[i].username %> </td>
-                      <td style="width:20%"> <i id="<%= users[i].username %>_status" class="fa fa-circle offline" style="color:green"></i> </td>
+                      <td class="has-text-right" style="width:50%"> <i id="<%= users[i].username %>_status" class="fa fa-circle offline" style="color:green"></i> </td>
                     </tr>
                   </table>
                 </a>
