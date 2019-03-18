@@ -3,6 +3,19 @@ $(document).ready(() => {
     reconnection: false
   })
 
+  function sanitize(string) {
+    const map = {
+        '&': '&amp;',
+        '<': '&lt;',
+        '>': '&gt;',
+        '"': '&quot;',
+        "'": '&#x27;',
+        "/": '&#x2F;',
+    };
+    const reg = /[&<>"'/]/ig;
+    return string.replace(reg, (match)=>(map[match]));
+  }
+
   var btn = $("#send_message")
   var to = $("#from_user")
   var message = $("#message_box")
@@ -55,7 +68,7 @@ $(document).ready(() => {
 
   btn.on("click", () => {
     // emit message
-    message.val(message.val().trim())
+    message.val(sanitize(message.val().replace(/^[ \t\n]+|[ \n\t]+$/g, '')))
     if (message.val() == "") {
       return
     } else {
@@ -79,13 +92,13 @@ $(document).ready(() => {
     var threads_window = document.getElementById("threads-window")
     if (threads_window != null) {
       threads_window.contentWindow.location.reload() 
-    } else {
-      $("#message-window").contents().find("body").append(chat_bubble_part_1_r + data.message + chat_bubble_part_2_r)
-      animateIFrame();
-      msg.emit("acknowledge", {
-        ack: "ack",
-        name: data.name
-      })
+    } else if (data.name == $("#from_user").html()) {
+        $("#message-window").contents().find("body").append(chat_bubble_part_1_r + data.message + chat_bubble_part_2_r)
+        animateIFrame();
+        msg.emit("acknowledge", {
+          ack: "ack",
+          name: data.name
+        })
     }
   })
   msg.on("doubletick", data => {

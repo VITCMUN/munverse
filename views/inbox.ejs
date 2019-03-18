@@ -13,8 +13,8 @@
   <link rel="stylesheet" type="text/css" href="/css/inbox.css">
   <link rel="stylesheet" type="text/css" href="/css/chatbubbles.css">
   <script type="text/javascript" src="/js/jquery.min.js"></script>
-  <script src="https://cdnjs.cloudflare.com/ajax/libs/socket.io/2.2.0/socket.io.js"></script>
-  <script src="https://cdnjs.cloudflare.com/ajax/libs/underscore.js/1.9.1/underscore-min.js"></script>
+  <script src="/js/socket.io.js"></script>
+  <script src="/js/underscore-min.js"></script>
   <script type="text/javascript" src="/js/inbox.js"></script>
   <script type="text/javascript" src="/js/message.js"></script>
   <script>
@@ -145,7 +145,7 @@
     <div class="column is-8">
       <div class="field">
         <div class="control">
-          <textarea id="message_box" class="textarea is-warning message-input" placeholder="Message goes here"></textarea>
+          <textarea id="message_box" maxlength="250" class="textarea is-warning message-input" placeholder="Message goes here"></textarea>
         </div>
       </div>
     </div>

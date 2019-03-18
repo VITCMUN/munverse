@@ -6,7 +6,10 @@ var MessageSchema = new Schema({
 	sender : User.schema,
 	receiver : User.schema,
 	ViaEb : Boolean,
-	content : String
+	content : {
+		type: String,
+		maxlength: 250
+	}
 },{ timestamps: true})
 
 module.exports = mongoose.model('Message', MessageSchema)

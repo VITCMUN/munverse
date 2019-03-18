@@ -28,7 +28,7 @@ function login() {
     }
     var username = $("#username").val()  //Change the ids here if you choose 
     var password = $("#password").val()  //to change the views later.
-    loginreq.open('POST', 'http://localhost:8080/login', true);
+    loginreq.open('POST', '/login', true);
     loginreq.setRequestHeader('Content-Type', 'application/json')
     loginreq.send(JSON.stringify({ username: username, password: password }))
 
