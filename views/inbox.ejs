@@ -17,15 +17,30 @@
   <script src="https://cdnjs.cloudflare.com/ajax/libs/underscore.js/1.9.1/underscore-min.js"></script>
   <script type="text/javascript" src="/js/inbox.js"></script>
   <script type="text/javascript" src="/js/message.js"></script>
-
   <script>
     function columns_click(username, profile_picture_url) {
-        console.log(username, profile_picture_url)
-        $("#from_user").html(username)
+      // aesthetics
+      $("#from_user").html(username)
+      if (profile_picture_url) {
         $("#msg-from-img").attr("src", profile_picture_url)
-        $("#message_box").show()
-        $("#send_message").show()
+        // load iframe
         $(".iframe").html(`<iframe id="message-window" src='/message?from_user=${username}' style="height:100%;width:100%; color: white"></iframe>`)
+        // reset user-list items color
+        $(".list-item").css("background-color", "#FFFFFF")
+        // change active list item's color
+        $(`#${username}_list_item`)[0].style.backgroundColor = "#FCC000"
+        }
+      // input methods
+      $("#message_box").show()
+      $("#send_message").show()
+      var offline = $(`#${username}_status`).hasClass("offline")
+      if (offline == true) {
+        $("#message_box").prop("disabled", "disabled");
+        $("#send_message").css("display", "none")
+      } else {
+        $("#message_box").prop("disabled", false);
+        $("#send_message").css("display", "block")
+      }
     }
   </script>
 </head>
@@ -112,9 +127,9 @@
           <div class="list">
             <% for(var i=0; i<users.length; i++) {%>
               <% if (users[i].user_type !== 2 && users[i].username != user.username) { %>
-                <a class="list-item" style="background: white" onclick="columns_click(`<%= users[i].username %>`, '<%= users[i].profile_picture_url %>')">
+                <a id="<%= users[i].username %>_list_item" class="list-item" style="background: white" onclick="columns_click(`<%= users[i].username %>`, '<%= users[i].profile_picture_url %>')">
                   <table class="padded-table">
-                    <tr>
+                    <tr>  
                       <td style="width:20%">
                           <img width="44px" height="44px" style="border-radius:75%" src="<%= users[i].profile_picture_url %>">
                       </td>

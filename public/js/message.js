@@ -34,6 +34,10 @@ $(document).ready(() => {
       users[id] = name
       try {
         $("#" + name + "_status")[0].classList.remove("offline")
+        if ($("#from_user").html() == name) {
+          // enable columns click again
+          columns_click(name)
+        }
       }
       catch(err) {}
     })
@@ -42,23 +46,33 @@ $(document).ready(() => {
   msg.on("userdisconnected", data => {
     // delete from front end active user list
     delete users[data.name]
+    $("#" + data.name + "_status")[0].classList.add("offline")
+    if ($("#from_user").html() == data.name) {
+      // enable columns click again
+      columns_click(data.name)
+    }
   })
 
   btn.on("click", () => {
     // emit message
-    msg.emit("message", {
-      name: to.html(),
-      message: message.val()
-    })
-    // append to window
-    $("#message-window")
-      .contents()
-      .find("body")
-      .append(chat_bubble_part_1 + message.val() + chat_bubble_part_2)
-    // reset the box value
-    message.val("")
-    // scroll down
-    animateIFrame();
+    message.val(message.val().trim())
+    if (message.val() == "") {
+      return
+    } else {
+      msg.emit("message", {
+        name: to.html(),
+        message: message.val()
+      })
+      // append to window
+      $("#message-window")
+        .contents()
+        .find("body")
+        .append(chat_bubble_part_1 + message.val() + chat_bubble_part_2)
+      // reset the box value
+      message.val("")
+      // scroll down
+      animateIFrame();
+    }
   })
 
   msg.on("newmessage", data => {

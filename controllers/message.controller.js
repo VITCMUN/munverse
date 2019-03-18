@@ -93,13 +93,11 @@ exports.get_messages = async (req, res) => {
 
     if (from_user == null) {
         res.status(400).send({"message": "from_user missing"})
-        return next()
     } else {
         await message_renderer.get_messages_from_user(username, from_user, page)
         .then((messages)=>{
             res.render('../views/messages', {messages: messages, from_user: from_user})
         })
-        return next()
     }
 }
 
