@@ -46,6 +46,7 @@
 </head>
 
 <body style="overflow: hidden;">
+
   <!-- START NAV -->
   <nav class="navbar dark shadow" role="navigation" aria-label="main navigation">
     <div class="navbar-brand">
@@ -92,6 +93,8 @@
     </div>
   </nav>
   <!-- END NAV -->
+
+  <!--CURRENT CHAT INFORMATION-->
   <table style="display:none">
     <tr>
       <td>
@@ -118,13 +121,20 @@
       </td>
     </tr>
   </table>
+
   <div class="columns is-multiline is-mobile top-margin-little">
-    <div class="column is-9 iframe">
+    <!--MESSAGES-->
+    <div class="has-text-centered column is-6 iframe">
+      <h1 class="is-1">Click on a message to start conversation.</h1>
+    </div>
+    <!--THREADS-->
+    <div class="column is-3">
         <iframe id="threads-window" src='/message/threads' style="height:100%; width:100%; color: white"></iframe>
     </div>
 
-    <div id="user-list has-text-right" class="column is-3" style="margin-left: 100; display:inline;">
-          <div class="list"  style="height: 54vh;width: 80%; overflow: auto">
+    <!--LIST OF ONLINE USERS-->
+    <div id="user-list" class="has-text-right is-hidden-mobile column is-3" style="margin-left: 100; display:inline;">
+          <div class="list"  style="height: 54vh; width: 80%; overflow: auto">
             <% for(var i=0; i<users.length; i++) {%>
               <% if (users[i].user_type !== 2 && users[i].username != user.username) { %>
                 <a id="<%= users[i].username %>_list_item" class="list-item" style="background: white" onclick="columns_click(`<%= users[i].username %>`, '<%= users[i].profile_picture_url %>')">
@@ -142,6 +152,8 @@
             <%}%>
           </div>
     </div>
+
+    <!--MESSAGING TEXT BOX AND REPLY BUTTON-->
     <div class="column is-8">
       <div class="field">
         <div class="control">
