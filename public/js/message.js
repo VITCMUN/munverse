@@ -58,7 +58,12 @@ $(document).ready(() => {
 
   msg.on("userdisconnected", data => {
     // delete from front end active user list
-    delete users[data.name]
+    for(var i=0;i<Object.keys(users);i++){
+      if (users[i] == data.name) {
+        delete users[i];
+        break;
+      }
+    }
     $("#" + data.name + "_status")[0].classList.add("offline")
     if ($("#from_user").html() == data.name) {
       // enable columns click again
