@@ -312,3 +312,28 @@ body {
 .offline {
     display: none;
 }
+
+.border-right{
+    box-shadow: 0px 0px 20px -4px rgba(252,193,0,1);
+}
+
+.scrollbar::-webkit-scrollbar-track
+{
+    background-color: #000000;
+}
+
+.scrollbar::-webkit-scrollbar
+{
+    width: 5px;
+    background-color: #000000;
+}
+
+.scrollbar::-webkit-scrollbar-thumb
+{
+    background-color:#fcc000;
+}
+
+input[type="checkbox"]{
+    width: 30px; /*Desired width*/
+    height: 30px; /*Desired height*/
+  }

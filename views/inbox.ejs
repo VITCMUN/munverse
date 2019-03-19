@@ -3,6 +3,25 @@
 <html>
 
 <head>
+  <!--FAVICONS-->
+  <link rel="apple-touch-icon" sizes="57x57" href="/favicons/apple-icon-57x57.png">
+  <link rel="apple-touch-icon" sizes="60x60" href="/favicons/apple-icon-60x60.png">
+  <link rel="apple-touch-icon" sizes="72x72" href="favicons/apple-icon-72x72.png">
+  <link rel="apple-touch-icon" sizes="76x76" href="favicons/apple-icon-76x76.png">
+  <link rel="apple-touch-icon" sizes="114x114" href="/favicons/apple-icon-114x114.png">
+  <link rel="apple-touch-icon" sizes="120x120" href="/favicons/apple-icon-120x120.png">
+  <link rel="apple-touch-icon" sizes="144x144" href="/favicons/apple-icon-144x144.png">
+  <link rel="apple-touch-icon" sizes="152x152" href="/favicons/apple-icon-152x152.png">
+  <link rel="apple-touch-icon" sizes="180x180" href="/apple-icon-180x180.png">
+  <link rel="icon" type="image/png" sizes="192x192"  href="/favicons/android-icon-192x192.png">
+  <link rel="icon" type="image/png" sizes="32x32" href="/favicons/favicon-32x32.png">
+  <link rel="icon" type="image/png" sizes="96x96" href="/favicons/favicon-96x96.png">
+  <link rel="icon" type="image/png" sizes="16x16" href="/favicons/favicon-16x16.png">
+  <link rel="manifest" href="/favicons/manifest.json">
+  <meta name="msapplication-TileColor" content="#ffffff">
+  <meta name="msapplication-TileImage" content="/favicons/ms-icon-144x144.png">
+  <meta name="theme-color" content="#ffffff">
+
   <meta charset="utf-8">
   <meta http-equiv="X-UA-Compatible" content="IE=edge">
   <meta name="viewport" content="width=device-width, initial-scale=1">
@@ -24,7 +43,7 @@
       if (profile_picture_url) {
         $("#msg-from-img").attr("src", profile_picture_url)
         // load iframe
-        $(".iframe").html(`<iframe id="message-window" src='/message?from_user=${username}' style="height:100%;width:100%; color: white"></iframe>`)
+        $(".iframe").html(`<iframe class="scrollbar" id="message-window" src='/message?from_user=${username}' style="overflow: auto; height:100%;width:100%; color: white"></iframe>`)
         // reset user-list items color
         $(".list-item").css("background-color", "#FFFFFF")
         // change active list item's color
@@ -36,10 +55,14 @@
       var offline = $(`#${username}_status`).hasClass("offline")
       if (offline == true) {
         $("#message_box").prop("disabled", "disabled");
+        $("#message_box").val("Can't send message to offline delegates.")
         $("#send_message").css("display", "none")
       } else {
         $("#message_box").prop("disabled", false);
+        $("#message_box").val("")
         $("#send_message").css("display", "block")
+        $("#via-eb-col").css("display", "block")
+
       }
     }
   </script>
@@ -79,6 +102,7 @@
           <img id="council-icon" class="icon-top" src="<%= council.council_logo_url %>">
         </a>
       </div>
+      
       <div  onclick="location.href='/logout';" class="navbar-end" id="navMenu">
         <div class="navbar-item">
           <div class="buttons">
@@ -94,7 +118,7 @@
   </nav>
   <!-- END NAV -->
 
-  <!--CURRENT CHAT INFORMATION-->
+  <!--CURRENT MESSAGE INFORMATION-->
   <table style="display:none">
     <tr>
       <td>
@@ -103,15 +127,15 @@
             <tr>
               <td>
                 <span class="msg-from">
-                  <img id="msg-from-img" width="44mm" height="44mm" style="border-radius:75%">
+                  <!-- <img id="msg-from-img" width="44mm" height="44mm" style="border-radius:75%"> -->
               </span>
               </td>
               <td>
-                <div class="mesg-header">
+                <!-- <div class="mesg-header">
                   <span class="mesg-header">
                       <h1 id="from_user"></h1>
                   </span>
-                </div>
+                </div> -->
               </td>
             </tr>
           </table>
@@ -122,19 +146,40 @@
     </tr>
   </table>
 
-  <div class="columns is-multiline is-mobile top-margin-little">
+  <div class="columns is-multiline is-mobile top-margin-little" style="height:28mm">
+    
+    <div class="column is-1" style="margin-top: -30px; width: 21mm; height: 21mm">
+      <figure>
+          <img id="msg-from-img" width="44mm" height="44mm" style="margin-top:-10; border-radius:75%">
+          
+      </figure>
+    </div>
+    <div class="column is-7" style="margin-top: -30px; height: 21mm; padding-top: 20px">
+        <div class="mesg-header" style="display: inline-block;">
+            <span class="mesg-header">
+                <h1 id="from_user" class="is-bold is-5" ></h1>
+            </span>
+          </div>
+    </div>
+
     <!--MESSAGES-->
-    <div class="has-text-centered column is-6 iframe">
-      <h1 class="is-1">Click on a message to start conversation.</h1>
+    <div class="has-text-centered column is-6 iframe border-right">
+      <h1 class="is-1" style="margin-top: 240px">Click on a message to start conversation.<br>
+          <i class="fa fa-comments" style="font-size: 150px"></i>
+      </h1>
     </div>
     <!--THREADS-->
-    <div class="column is-3">
-        <iframe id="threads-window" src='/message/threads' style="height:100%; width:100%; color: white"></iframe>
+    <div class="column is-4 border-right">
+        <h1>Message Threads</h1>
+        <hr style="background: #fcc000">
+        <iframe id="threads-window scrollbar" src='/message/threads' style="height:54vh; width:100%; color: white"></iframe>
     </div>
 
     <!--LIST OF ONLINE USERS-->
-    <div id="user-list" class="has-text-right is-hidden-mobile column is-3" style="margin-left: 100; display:inline;">
-          <div class="list"  style="height: 54vh; width: 80%; overflow: auto">
+    <div id="user-list" class="is-hidden-mobile column is-2 border-right" style="margin-left: 100; display:inline;">
+      <h1>Delegates List</h1>
+      <hr style="background: #fcc000">
+      <div class="list scrollbar" style="height: 54vh; overflow: auto">
             <% for(var i=0; i<users.length; i++) {%>
               <% if (users[i].user_type !== 2 && users[i].username != user.username) { %>
                 <a id="<%= users[i].username %>_list_item" class="list-item" style="background: white" onclick="columns_click(`<%= users[i].username %>`, '<%= users[i].profile_picture_url %>')">
@@ -154,23 +199,27 @@
     </div>
 
     <!--MESSAGING TEXT BOX AND REPLY BUTTON-->
-    <div class="column is-8">
+    <div class="column is-4">
       <div class="field">
         <div class="control">
-          <textarea id="message_box" maxlength="250" class="textarea is-warning message-input" placeholder="Message goes here"></textarea>
+          <textarea id="message_box" maxlength="250" class="shadow textarea is-warning message-input" placeholder="Type your message."></textarea>
         </div>
       </div>
     </div>
     <div id="send_message" class="column is-1 has-text-centered">
       <a class="button gold-button is-bold">
         <span class="compose">
-            <strong>
+            <strong id="send-message-button">
                 REPLY
             </strong>
         </span>
       </a>
     </div>
+    <div id="via-eb-col" class="column is-1">
+      <input id="via-eb-input" type="checkbox">
+      <h1>EB</h1>
     </div>
+  </div>
 </body>
 
 </html>
