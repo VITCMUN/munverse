@@ -29,12 +29,12 @@ $(document).ready(() => {
 
   var chat_bubble_part_2 = "</p></div></div></div>"
 
-  var chat_bubble_part_1_r = 
+  var chat_bubble_part_1_r =
     '<div class="column is-full">\
         <div class="talk-bubble tri-right round btm-left">\
           <div class="talktext">\
             <p>'
-  
+
   var chat_bubble_part_2_r = '</p></div></div></div>'
 
 
@@ -73,13 +73,18 @@ $(document).ready(() => {
 
   btn.on("click", () => {
     // emit message
+    var checkBox= document.getElementById("via-eb-input")
+    var viaeb=0
+    if (checkBox.checked == true)
+        viaeb=1
     message.val(sanitize(message.val().replace(/^[ \t\n]+|[ \n\t]+$/g, '')))
     if (message.val() == "") {
       return
     } else {
       msg.emit("message", {
         name: to.html(),
-        message: message.val()
+        message: message.val(),
+        viaeb:viaeb
       })
       // append to window
       $("#message-window")
@@ -92,11 +97,15 @@ $(document).ready(() => {
       animateIFrame();
     }
   })
+  msg.on("viaeb",data=>{
+    console.log(data)
+  })
+
 
   msg.on("newmessage", data => {
     var threads_window = document.getElementById("threads-window")
     if (threads_window != null) {
-      threads_window.contentWindow.location.reload() 
+      threads_window.contentWindow.location.reload()
     } else if (data.name == $("#from_user").html()) {
         $("#message-window").contents().find("body").append(chat_bubble_part_1_r + data.message + chat_bubble_part_2_r)
         animateIFrame();

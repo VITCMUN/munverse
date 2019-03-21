@@ -55,22 +55,37 @@ exports.disconnected = (socket, io) => {
 }
 
 exports.sendmessage = (socket, data, io) => {
+  console.log(data.viaeb)
     try {
         id_to = cache[get_index(data.name, null)][1]
         user_from = cache[get_index(null, socket.id)][0]
         user_to = cache[get_index(null, id_to)][0]
+        eb = cache[get_index("EB", null)][1]
     } catch(err) {
         logger.error(err)
         return
     }
+    if(viaeb==0){
     socket.to(id_to).emit('newmessage', {
         message: data.message,
         name: user_from.username
     })
+  }
+  else if(viaeb==1){
+    socket.to(id_to).emit('newmessage', {
+        message: data.message,
+        name: user_from.username,
+    })
+    socket.to(eb).emit('viaeb', {
+        message: data.message,
+        from: user_from.username,
+        to:user_to.username
+    })
+  }
     var new_message = new Message({
         sender: user_from,
         receiver: user_to,
-        ViaEb: 0,
+        ViaEb: data.viaeb,
         content: data.message,
     })
     console.log(new_message)
@@ -120,6 +135,6 @@ exports.get_threads = async (req, res) => {
             }).catch((err) => {
                 logger.error(err)
             })
-        res.render('../views/threads', data); 
+        res.render('../views/threads', data);
     }
 }
