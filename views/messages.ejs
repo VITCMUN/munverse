@@ -16,12 +16,38 @@
   <script type="text/javascript" src="/js/inbox.js"></script>
   <script>
       $(window).on('load',function() {
-        $("html, body").animate({ scrollTop: $(document).height()-$(window).height() });
+        $("html, body").animate(
+          { scrollTop: $(document).height()-$(window).height() }
+          ,10 , ()=>{
+            $(window).on("scroll", ()=>{
+              console.log(document.scrollingElement.scrollTop);  
+              get_messages()
+            })
+        });
        });
 
-       function Getpostion(){    
+       function get_messages(){    
         var vscroll = document.scrollingElement.scrollTop;  
-        console.log(vscroll);
+        if(vscroll==0){
+          var xmessages = new XMLHttpRequest()
+          xmessages.onload = function(){
+            if(xmessages.readyState == XMLHttpRequest.DONE){
+              if(xmessages.status === 200){
+                var dummy = document.createElement('html')
+                dummy.innerHTML = xmessages.responseText;
+                var data = dummy.getElementsByClassName("message-screen")[0].innerHTML
+                console.log(data);
+                console.log(`/threads?from_user=<%= from_user %>&page=1`);
+                
+                $(".message-screen").prepend(data)
+              }else{
+                console.log("Error")
+              }
+            }
+          }
+          xmessages.open("GET",`/threads?from_user=<%= from_user %>&page=1`,true)
+          xmessages.send()
+        }
       }
   </script>
   <style>
@@ -32,7 +58,7 @@
         min-height: 100%;
     }
   </style>
-<body class="scrollbar" onscroll="Getpostion()">
+<body class="scrollbar">
     <div class="headerchat">
         <div class="columns is-multiline">
                <div class="message-screen column is-full mesg-body">

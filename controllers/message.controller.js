@@ -13,6 +13,18 @@ function get_usernames() {
     return usernames
 }
 
+function sendToEBs(socket, message, user_from, user_to) {
+    for (var i=0; i<cache.length; i++) {
+        if (cache[i][0].user_type == 1) {   // EB
+            socket.to(cache[i][1]).emit('viaeb', {
+                message: message,
+                from: user_from.username,
+                to: user_to.username
+            })
+        }
+    }
+}
+
 function get_index(username, socket_id) {
     index = -1
     if (socket_id) {
@@ -55,33 +67,22 @@ exports.disconnected = (socket, io) => {
 }
 
 exports.sendmessage = (socket, data, io) => {
-  console.log(data.viaeb)
     try {
         id_to = cache[get_index(data.name, null)][1]
         user_from = cache[get_index(null, socket.id)][0]
         user_to = cache[get_index(null, id_to)][0]
-        eb = cache[get_index("EB1", null)][1]
+        // eb = cache[get_index("EB1", null)][1]
     } catch(err) {
         logger.error(err)
         return
     }
-    if(data.viaeb==0){
     socket.to(id_to).emit('newmessage', {
         message: data.message,
         name: user_from.username
     })
-  }
-  else if(data.viaeb==1){
-    socket.to(id_to).emit('newmessage', {
-        message: data.message,
-        name: user_from.username,
-    })
-    socket.to(eb).emit('viaeb', {
-        message: data.message,
-        from: user_from.username,
-        to:user_to.username
-    })
-  }
+    if(data.viaeb==1){
+        sendToEBs(socket, data.message, user_from, user_to)
+    }
     var new_message = new Message({
         sender: user_from,
         receiver: user_to,

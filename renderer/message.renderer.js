@@ -13,14 +13,17 @@ exports.get_message_list = async (sender_username) => {
             {
                 'sender.username': sender_username,
                 'receiver.username': all_users[i].username
-            }).sort({'createdAt': -1})
-        if (message)
+            })
+            .sort({'createdAt': -1})
+        if (message) {
             messages[all_users[i].username] = message
+        }
         message = await Message.findOne(
             {
                 'receiver.username': sender_username,
                 'sender.username': all_users[i].username
-            }).sort({'createdAt': -1})
+            })
+            .sort({'createdAt': -1})
         if (message) {
             if (messages[all_users[i].username]) {
                 if (messages[all_users[i].username].createdAt < message.createdAt) {
@@ -30,7 +33,6 @@ exports.get_message_list = async (sender_username) => {
                 messages[all_users[i].username] = message
         }
     }
-    // console.log(Object.values(messages))
     return Object.values(messages)
 }
 

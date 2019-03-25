@@ -95,6 +95,11 @@ $(document).ready(() => {
       message.val("")
       // scroll down
       animateIFrame();
+      // refresh threads window
+      var threads_window = document.getElementById("threads-window")
+      if (threads_window != null) {
+        threads_window.contentWindow.location.reload()
+      } 
     }
   })
   msg.on("viaeb",data=>{
@@ -106,7 +111,8 @@ $(document).ready(() => {
     var threads_window = document.getElementById("threads-window")
     if (threads_window != null) {
       threads_window.contentWindow.location.reload()
-    } else if (data.name == $("#from_user").html()) {
+    } 
+    if (data.name == $("#from_user").html()) {
         $("#message-window").contents().find("body").append(chat_bubble_part_1_r + data.message + chat_bubble_part_2_r)
         animateIFrame();
         msg.emit("acknowledge", {
