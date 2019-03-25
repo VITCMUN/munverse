@@ -60,18 +60,18 @@ exports.sendmessage = (socket, data, io) => {
         id_to = cache[get_index(data.name, null)][1]
         user_from = cache[get_index(null, socket.id)][0]
         user_to = cache[get_index(null, id_to)][0]
-        eb = cache[get_index("EB", null)][1]
+        eb = cache[get_index("EB1", null)][1]
     } catch(err) {
         logger.error(err)
         return
     }
-    if(viaeb==0){
+    if(data.viaeb==0){
     socket.to(id_to).emit('newmessage', {
         message: data.message,
         name: user_from.username
     })
   }
-  else if(viaeb==1){
+  else if(data.viaeb==1){
     socket.to(id_to).emit('newmessage', {
         message: data.message,
         name: user_from.username,

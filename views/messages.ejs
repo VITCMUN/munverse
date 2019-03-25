@@ -18,8 +18,21 @@
       $(window).on('load',function() {
         $("html, body").animate({ scrollTop: $(document).height()-$(window).height() });
        });
+
+       function Getpostion(){    
+        var vscroll = document.scrollingElement.scrollTop;  
+        console.log(vscroll);
+      }
   </script>
-<body class="scrollbar">
+  <style>
+      html {
+        height: 100%;
+    }
+      body {
+        min-height: 100%;
+    }
+  </style>
+<body class="scrollbar" onscroll="Getpostion()">
     <div class="headerchat">
         <div class="columns is-multiline">
                <div class="message-screen column is-full mesg-body">
