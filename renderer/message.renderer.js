@@ -29,7 +29,7 @@ exports.get_message_list = async (sender_username) => {
                 if (messages[all_users[i].username].createdAt < message.createdAt) {
                     messages[all_users[i].username] = message
                 }
-            } else 
+            } else
                 messages[all_users[i].username] = message
         }
     }
@@ -44,14 +44,40 @@ exports.get_messages_from_user = async (user, from_user, page) => {
     page_size = 10
     if (!page) { page = 0 }
     return await Message.find(
-        { 
-            $or: 
+        {
+            $or:
             [
                 {$and: [
-                    {"sender.username": from_user}, 
+                    {"sender.username": from_user},
                     {"receiver.username": user}]},
                 {$and: [
-                    {"sender.username": user}, 
+                    {"sender.username": user},
+                    {"receiver.username": from_user}
+                ]}
+            ]
+        })
+        .sort({ 'createdAt': -1 })
+        .skip(page * page_size)
+        .limit(page_size)
+}
+
+exports.get_messages_from_user_via_eb = async (from_user, page) => {
+    /**
+     * get all messages from from_user via eb
+     * message range: page x 10 + page x 10 + 10
+     */
+    page_size = 10
+    if (!page) { page = 0 }
+    return await Message.find(
+        {
+            $or:
+            [
+                {$and: [
+                    {"ViaEb": true},
+                    {"sender.username": from_user},
+                    ]},
+                {$and: [
+                    {"ViaEb": true},
                     {"receiver.username": from_user}
                 ]}
             ]

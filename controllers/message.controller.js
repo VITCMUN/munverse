@@ -106,14 +106,21 @@ exports.get_messages = async (req, res) => {
     username = req.user.username
     from_user = req.query.from_user
     page = req.query.page
-
+    viaeb = req.query.viaeb
     if (from_user == null) {
         res.status(400).send({"message": "from_user missing"})
     } else {
-        await message_renderer.get_messages_from_user(username, from_user, page)
-        .then((messages)=>{
-            res.render('../views/messages', {messages: messages, from_user: from_user})
-        })
+        if (req.user.user_type == 1 && viaeb == 1) {
+          await message_renderer.get_messages_from_user_via_eb(from_user, page)
+          .then((messages)=>{
+              res.render('../views/messages', {messages: messages, from_user: from_user})
+          })
+        } else {
+          await message_renderer.get_messages_from_user(username, from_user, page)
+          .then((messages)=>{
+              res.render('../views/messages', {messages: messages, from_user: from_user})
+          })
+        }
     }
 }
 
@@ -124,13 +131,13 @@ exports.get_threads = async (req, res) => {
         return
     } else {
         data = {}
-        await shared_renderer.shared_data(req.user.username)
+        await shared_renderer.shared_data(username)
             .then((shared_data) => {
                 data = shared_data
             }).catch((err) => {
                 logger.error(err)
             })
-        await message_renderer.get_message_list(req.user.username)
+        await message_renderer.get_message_list(username)
             .then((message_data) => {
                 data.messages = message_data
             }).catch((err) => {

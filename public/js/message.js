@@ -19,6 +19,7 @@ $(document).ready(() => {
   var btn = $("#send_message")
   var to = $("#from_user")
   var message = $("#message_box")
+  var threads_window = document.getElementById("threads-window")
   users = {}
 
   var chat_bubble_part_1 =
@@ -84,7 +85,7 @@ $(document).ready(() => {
       msg.emit("message", {
         name: to.html(),
         message: message.val(),
-        viaeb:viaeb
+        viaeb: viaeb
       })
       // append to window
       $("#message-window")
@@ -96,22 +97,16 @@ $(document).ready(() => {
       // scroll down
       animateIFrame();
       // refresh threads window
-      var threads_window = document.getElementById("threads-window")
-      if (threads_window != null) {
-        threads_window.contentWindow.location.reload()
-      } 
+      threads_window.contentDocument.location.reload(true);
     }
   })
+
   msg.on("viaeb",data=>{
     console.log(data)
   })
 
-
   msg.on("newmessage", data => {
-    var threads_window = document.getElementById("threads-window")
-    if (threads_window != null) {
-      threads_window.contentWindow.location.reload()
-    } 
+    threads_window.contentDocument.location.reload(true);
     if (data.name == $("#from_user").html()) {
         $("#message-window").contents().find("body").append(chat_bubble_part_1_r + data.message + chat_bubble_part_2_r)
         animateIFrame();
