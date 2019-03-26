@@ -37,10 +37,13 @@
   <script type="text/javascript" src="/js/inbox.js"></script>
   <script type="text/javascript" src="/js/message.js"></script>
   <script>
-    function columns_click(username, profile_picture_url) {
+    function columns_click(username, profile_picture_url, user_type, from_user_type) {
       // aesthetics
       $("#from_user").html(username)
-      if (profile_picture_url) {
+      console.log(user_type);
+      
+      console.log(from_user_type)
+      if (profile_picture_url && user_type == 0) {
         $("#msg-from-img").attr("src", profile_picture_url)
         // load iframe
         $(".iframe").html(`<iframe class="scrollbar" id="message-window" src='/message?from_user=${username}' style="overflow: auto; height:100%;width:100%; color: white"></iframe>`)
@@ -48,6 +51,14 @@
         $(".list-item").css("background-color", "#FFFFFF")
         // change active list item's color
         $(`#${username}_list_item`)[0].style.backgroundColor = "#FCC000"
+        }else if(profile_picture_url && user_type == 1){
+          $("#msg-from-img").attr("src", profile_picture_url)
+          // load iframe
+          $(".iframe").html(`<iframe class="scrollbar" id="message-window" src='/message?from_user=${username}&viaeb=1' style="overflow: auto; height:100%;width:100%; color: white"></iframe>`)
+          // reset user-list items color
+          $(".list-item").css("background-color", "#FFFFFF")
+          // change active list item's color
+          $(`#${username}_list_item`)[0].style.backgroundColor = "#FCC000"
         }
       // input methods
       $("#message_box").show()
@@ -57,12 +68,20 @@
         $("#message_box").prop("disabled", "disabled");
         $("#message_box").val("Can't send message to offline delegates.")
         $("#send_message").css("display", "none")
-      } else {
+        $("#via-eb-col").css("display", "none")
+      } else if(from_user_type == 1 || user_type == 1) {  
+        $("#message_box").prop("disabled", false);
+        $("#message_box").val("")
+        $("#send_message").css("display", "block")
+        $("#via-eb-input").prop('checked', true)
+        $("#via-eb-col").css("display", "none")
+
+      } else{
         $("#message_box").prop("disabled", false);
         $("#message_box").val("")
         $("#send_message").css("display", "block")
         $("#via-eb-col").css("display", "block")
-
+        $("#via-eb-input").prop('checked', false)
       }
     }
   </script>
@@ -163,13 +182,13 @@
     </div>
 
     <!--MESSAGES-->
-    <div class="has-text-centered column is-6 iframe border-right">
-      <h1 class="is-1" style="margin-top: 240px">Click on a message to start conversation.<br>
+    <div class="has-text-centered column is-10 iframe border-right">
+      <h1 class="is-1" style="margin-top: 240px">Click on a delegate to start conversation.<br>
           <i class="fa fa-comments" style="font-size: 150px"></i>
       </h1>
     </div>
     <!--THREADS-->
-    <div class="column is-4 border-right">
+    <div class="column is-4 border-right" style="display: none">
         <h1>Message Threads</h1>
         <hr style="background: #fcc000">
         <iframe id="threads-window" class="scrollbar" src='/message/threads' style="height:54vh; width:100%; color: white"></iframe>
@@ -182,7 +201,7 @@
       <div class="list scrollbar" style="height: 54vh; overflow: auto">
             <% for(var i=0; i<users.length; i++) {%>
               <% if (users[i].user_type !== 2 && users[i].username != user.username) { %>
-                <a id="<%= users[i].username %>_list_item" class="list-item" style="background: white" onclick="columns_click(`<%= users[i].username %>`, '<%= users[i].profile_picture_url %>')">
+                <a id="<%= users[i].username %>_list_item" class="list-item" style="background: white" onclick="columns_click(`<%= users[i].username %>`, '<%= users[i].profile_picture_url %>', `<%= user.user_type %>`, `<%= users[i].user_type %>`)">
                   <table class="padded-table">
                     <tr>  
                       <td style="width:20%">

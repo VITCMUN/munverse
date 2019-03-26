@@ -17,6 +17,7 @@
 <body class="scrollbar">
 <div class="columns">
     <div class="column is-full inbox-messages is-dark">
+        <%= user.username %>
         <% for(var i=0; i<messages.length; i++) {%>
             <%- include('partials/thread', {message: messages[i], user: user}); %>
         <% } %>
