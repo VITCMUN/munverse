@@ -26,7 +26,7 @@
   <meta http-equiv="X-UA-Compatible" content="IE=edge">
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <title>VITCMUN 19: E-Chit</title>
-  <link rel="stylesheet" href="/css/fontawesome.min.css">
+  <link rel="stylesheet" href="/css/all.css">
   <!-- Bulma Version 0.7.2-->
   <link rel="stylesheet" href="/css/bulma.min.css" />
   <link rel="stylesheet" type="text/css" href="/css/inbox.css">
@@ -40,9 +40,6 @@
     function columns_click(username, profile_picture_url, user_type, from_user_type) {
       // aesthetics
       $("#from_user").html(username)
-      console.log(user_type);
-      
-      console.log(from_user_type)
       if (profile_picture_url && user_type == 0) {
         $("#msg-from-img").attr("src", profile_picture_url)
         // load iframe
@@ -66,7 +63,7 @@
       var offline = $(`#${username}_status`).hasClass("offline")
       if (offline == true) {
         $("#message_box").prop("disabled", "disabled");
-        $("#message_box").val("Can't send message to offline delegates.")
+        //$("#message_box").val("Can't send message to offline delegates.")
         $("#send_message").css("display", "none")
         $("#via-eb-col").css("display", "none")
       } else if(from_user_type == 1 || user_type == 1) {  
@@ -75,10 +72,9 @@
         $("#send_message").css("display", "block")
         $("#via-eb-input").prop('checked', true)
         $("#via-eb-col").css("display", "none")
-
-      } else{
+      } else {
         $("#message_box").prop("disabled", false);
-        $("#message_box").val("")
+        //$("#message_box").val("")
         $("#send_message").css("display", "block")
         $("#via-eb-col").css("display", "block")
         $("#via-eb-input").prop('checked', false)
@@ -182,7 +178,7 @@
     </div>
 
     <!--MESSAGES-->
-    <div class="has-text-centered column is-10 iframe border-right">
+    <div class="has-text-centered column is-8 iframe border-right">
       <h1 class="is-1" style="margin-top: 240px">Click on a delegate to start conversation.<br>
           <i class="fa fa-comments" style="font-size: 150px"></i>
       </h1>
@@ -195,7 +191,7 @@
     </div>
 
     <!--LIST OF ONLINE USERS-->
-    <div id="user-list" class="is-hidden-mobile column is-2 border-right" style="margin-left: 100; display:inline;">
+    <div id="user-list" class="is-hidden-mobile column is-4 border-right" style="margin-left: 100; display:inline;">
       <h1>Delegates List</h1>
       <hr style="background: #fcc000">
       <div class="list scrollbar" style="height: 54vh; overflow: auto">

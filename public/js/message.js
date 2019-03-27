@@ -8,11 +8,9 @@ $(document).ready(() => {
         '&': '&amp;',
         '<': '&lt;',
         '>': '&gt;',
-        '"': '&quot;',
-        "'": '&#x27;',
         "/": '&#x2F;',
     };
-    const reg = /[&<>"'/]/ig;
+    const reg = /[&<>/]/ig;
     return string.replace(reg, (match)=>(map[match]));
   }
 
@@ -74,10 +72,8 @@ $(document).ready(() => {
 
   btn.on("click", () => {
     // emit message
-    var checkBox= document.getElementById("via-eb-input")
-    var viaeb=0
-    if (checkBox.checked == true)
-        viaeb=1
+    var checkBox = document.getElementById("via-eb-input")
+    var viaeb = checkBox.checked == 1? true: false
     message.val(sanitize(message.val().replace(/^[ \t\n]+|[ \n\t]+$/g, '')))
     if (message.val() == "") {
       return
@@ -101,22 +97,18 @@ $(document).ready(() => {
     }
   })
 
-  msg.on("viaeb",data=>{
-    console.log(data)
-  })
-
   msg.on("newmessage", data => {
-    threads_window.contentDocument.location.reload(true);
     if (data.name == $("#from_user").html()) {
-        $("#message-window").contents().find("body").append(chat_bubble_part_1_r + data.message + chat_bubble_part_2_r)
+        $("#message-window")
+          .contents()
+          .find("body")
+          .append(chat_bubble_part_1_r + data.message + chat_bubble_part_2_r)
         animateIFrame();
+        threads_window.contentDocument.location.reload(true);
         msg.emit("acknowledge", {
           ack: "ack",
           name: data.name
         })
     }
-  })
-  msg.on("doubletick", data => {
-    console.log(data)
   })
 })

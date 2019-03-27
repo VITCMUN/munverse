@@ -1,7 +1,6 @@
 const Event = require('../models/event.model')
 const Council = require('../models/council.model')
 const User = require('../models/user.model')
-const Message = require('../models/message.model')
 
 exports.shared_data = async (username) => {
     data = { event: null, council: null, user: null }
