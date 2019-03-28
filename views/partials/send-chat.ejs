@@ -9,6 +9,22 @@
     <% } %>
    
     <p><%= message.content %></p>
+    <p style="text-align: right; font-size: 12px">
+        <% var minutes = message.createdAt.getMinutes()
+            var hours = message.createdAt.getHours()
+            var message_date = `${message.createdAt.getDate()}/${message.createdAt.getMonth()}/${message.createdAt.getYear()-100}`
+            var time = hours + ":" + minutes 
+            var cd = new Date()
+            var current_date = cd.getDate() %>
+        <span class="msg-timestamp">
+          <%= time %> 
+          <% if(message_date != current_date){ %>
+            <%= message_date %></span>
+         <% }else{ %>
+            <span></span>
+         <% } %>
+            
+      </p>
   </div>
 </div>
 </div>
