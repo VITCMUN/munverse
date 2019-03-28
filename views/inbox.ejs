@@ -92,8 +92,20 @@
     }
 
     function searchUsers(){
-
+      name = $("#search_box").val().toUpperCase()
+      list = document.getElementById("user-list")
+      items = list.getElementsByTagName("a")
+      for(var i=0;i<items.length;i++){
+        temp = items[i].id.split("_")
+        username = (temp.slice(0, temp.length-2)).join(" ")
+        if(username.toUpperCase().indexOf(name) > -1) {
+          items[i].style.display = "";
+        } else {
+          items[i].style.display = "none";
+        }
+      }
     }
+
   </script>
 </head>
 
@@ -210,8 +222,16 @@
     <div class="is-hidden-mobile column is-2 border-right s-layout__sidebar" style="margin-left: 100; display:inline;">
       <h1>Delegates List</h1>
       <hr style="background: #fcc000">
+      <div class="field">
+        <p class="control has-icons-left has-icons-right">
+          <input id="search_box" onkeyup="searchUsers()" class="input" type="text" placeholder="search users">
+          <span class="icon is-small is-right">
+            <i class="fas fa-search"></i>
+          </span>
+        </p>
+      </div>
       <% if (typeof users !== 'undefined') { %>
-      <div id="user-list" onkeyup="searchUsers()" class="list scrollbar" style="height: 54vh; overflow: auto">
+      <div id="user-list" class="list scrollbar" style="height: 54vh; overflow: auto">
             <% for(var i=0; i<users.length; i++) {%>
               <% if (users[i].user_type !== 2 && users[i].username != user.username) { %>
                 <a id="<%= users[i].username.replace(' ', '_') %>_list_item" class="list-item" style="background: white" onclick="columns_click(`<%= users[i].username %>`, '<%= users[i].profile_picture_url %>', `<%= user.user_type %>`, `<%= users[i].user_type %>`)">
