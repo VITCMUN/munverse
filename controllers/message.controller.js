@@ -13,14 +13,21 @@ function get_usernames() {
     return usernames
 }
 
-function sendToEBs(socket, message, user_from, user_to) {
+async function sendToEBs(socket, message, user_from, user_to) {
     for (var i=0; i<cache.length; i++) {
         if (cache[i][0].user_type == 1) {   // EB
-            socket.to(cache[i][1]).emit('viaeb', {
+            socket.to(cache[i][1]).emit('newmessage', {
                 message: message,
                 from: user_from.username,
                 to: user_to.username
             })
+            var new_message = new Message({
+                sender: user_from,
+                receiver: user_to,
+                ViaEb: 1,
+                content: message,
+            })
+            new_message.save()
         }
     }
 }
@@ -66,7 +73,7 @@ exports.disconnected = (socket, io) => {
     })
 }
 
-exports.sendmessage = (socket, data, io) => {
+exports.sendmessage = async (socket, data, io) => {
     try {
         id_to = cache[get_index(data.name, null)][1]
         user_from = cache[get_index(null, socket.id)][0]
@@ -89,10 +96,7 @@ exports.sendmessage = (socket, data, io) => {
         ViaEb: data.viaeb,
         content: data.message,
     })
-    console.log(new_message)
-    new_message.save((err, results) => {
-        if (err) { logger.error(err) }
-    })
+    new_message.save()
 }
 
 exports.acknowledge = (socket, data) => {
