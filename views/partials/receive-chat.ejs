@@ -18,12 +18,10 @@
           var current_date = cd.getDate() %>
       <span class="msg-timestamp">
         <%= time %> 
-        <% if(message_date != current_date){ %>
-          <%= message_date %></span>
+        <% if(message.createdAt.getDate() != current_date){ %>
+          <%= message_date %>
        <% }else{ %>
-          <span></span>
-       <% } %>
-          
+       <% } %> </span><i class="fa fa-check" aria-hidden="true"></i>
     </p>
   </div>
 </div>

@@ -7,7 +7,6 @@ cache = []
 
 function get_usernames() {
     usernames = []
-    console.log(cache)
     for (var i = 0; i < cache.length; i++)
         usernames.push(cache[i][0].username)
     return usernames

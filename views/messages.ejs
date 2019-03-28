@@ -23,7 +23,6 @@
           ,10 , ()=>{
             $("#page_arrow").unbind('click').click( ()=>{
               get_messages()
-              console.log(PAGE)
               PAGE++
             })
         });
@@ -41,11 +40,9 @@
                 var data = dummy.getElementsByClassName("message-screen")[0].innerHTML 
                 if(data.trim() != ""){
                   $(".message-screen").prepend(data)
-                }else{
-                  console.log("No messages.");
                 }  
               }else{
-                console.log("Error")
+                //console.log(xmessages.responseText)
               }
             }
           }

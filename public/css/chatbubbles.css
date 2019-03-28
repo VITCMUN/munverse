@@ -4,10 +4,11 @@
 
 /* CSS talk bubble */
 .talk-bubble {
+	word-wrap: break-word;
 	margin: 40px;
   display: inline-block;
   position: relative;
-	width: 200px;
+	width: 400px;
 	height: auto;
 	background-color: #FCCC00;
 }

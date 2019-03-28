@@ -39,13 +39,13 @@ $(document).ready(() => {
 
   var chat_bubble_part_2 = "</p></div></div></div>";
 
-  var chat_bubble_part_1_r =
+  var chat_bubble_part_r_1 =
     '<div class="column is-full">\
         <div class="talk-bubble tri-right round btm-left">\
           <div class="talktext">\
             <p>';
 
-  var chat_bubble_part_2_r = "</p></div></div></div>";
+  var chat_bubble_part_r_2 = "</p></div></div></div>";
 
   function animateIFrame() {
     $("#message-window")[0].contentWindow.scrollTo(0, 999999);
@@ -111,7 +111,7 @@ $(document).ready(() => {
               `<p style="text-align: right; font-size: 12px">
             <span class="msg-timestamp">
             ${new Date().getHours()}:${new Date().getMinutes()}
-          </span>      
+          </span><i class="fa fa-check" aria-hidden="true"></i>      
           </p>` +
               chat_bubble_part_2
           );
@@ -129,7 +129,7 @@ $(document).ready(() => {
               `<p style="text-align: right; font-size: 12px">
                 <span class="msg-timestamp">
                   ${new Date().getHours()}:${new Date().getMinutes()}
-                </span>      
+                </span><i class="fa fa-check" aria-hidden="true"></i>      
                 </p>` +
               chat_bubble_part_2
           );
@@ -160,24 +160,29 @@ $(document).ready(() => {
         $("#message-window")
           .contents()
           .find("body")
-          .append(chat_bubble_part_1 + message.val() + chat_bubble_part_2);
+          .append(chat_bubble_part_r_1 + data.message +
+            `<p style="text-align: right; font-size: 12px">
+            <span class="msg-timestamp"><i class="fa fa-check" aria-hidden="true"></i>
+            ${new Date().getHours()}:${new Date().getMinutes()}
+            </span>      
+            </p>` + chat_bubble_part_r_2);
       } else {
         $("#message-window")
           .contents()
           .find("body")
           .append(
-            chat_bubble_part_1 +
+            chat_bubble_part_r_1 +
               `<i>via eb</i>\
               <p>From: <b>${from.html()}</b><br></p>\
               <p>To: <b>${to.html()}</b><br></p>\
               <hr></hr>` +
-              message.val() +
+              data.message +
               `<p style="text-align: right; font-size: 12px">
-              <span class="msg-timestamp">
+              <span class="msg-timestamp"><i class="fa fa-check" aria-hidden="true"></i>
               ${new Date().getHours()}:${new Date().getMinutes()}
               </span>      
               </p>` +
-              chat_bubble_part_2
+              chat_bubble_part_r_2
           );
         $("#via-eb-input").prop("checked", false);
         $("#send-message-button").html("REPLY");

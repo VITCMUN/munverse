@@ -9,7 +9,6 @@ $(document).ready(() => {
   })
 
   $('#via-eb-input').on("change",function() {
-    console.log("Pressed")
       if(this.checked) {
         $("#send-message-button").html("REPLY VIA EB");
       }else{
