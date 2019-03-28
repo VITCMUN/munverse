@@ -39,7 +39,7 @@ exports.get_message_list = async (sender_username) => {
 exports.get_messages_from_user = async (user, from_user, page) => {
     /**
      * get messages for user from from_user
-     * message range: page x 10 + page x 10 + 10
+     * message range: page x 10 <-> page x 10 + 10
      */
     page_size = 10
     if (!page) { page = 0 }

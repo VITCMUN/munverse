@@ -1,7 +1,7 @@
 <div class="column is-full">
 <div class="talk-bubble tri-right round btm-left">
   <div class="talktext">
-      <% if(message.ViaEb && message.receiver.user_type != 1){ %>
+      <% if(message.ViaEb && message.receiver.user_type != 1 && message.sender.user_type !=1){ %>
         <i>via eb</i>
         <p>From: <b><%= message.sender.username %></b><br></p>
         <p>To: <b><%= message.receiver.username %></b><br></p>

@@ -15,40 +15,44 @@
   <script type="text/javascript" src="/js/jquery.min.js"></script>
   <script type="text/javascript" src="/js/inbox.js"></script>
   <script>
+
       $(window).on('load',function() {
+        PAGE = 1
         $("html, body").animate(
           { scrollTop: $(document).height()-$(window).height() }
           ,10 , ()=>{
-            $(window).on("scroll", ()=>{
-             // console.log(document.scrollingElement.scrollTop);  
+            $("#page_arrow").unbind('click').click( ()=>{
               get_messages()
+              console.log(PAGE)
+              PAGE++
             })
         });
        });
 
-       function get_messages(){    
-        var vscroll = document.scrollingElement.scrollTop;  
-        if(vscroll==0){
+     
+
+       function get_messages(){
           var xmessages = new XMLHttpRequest()
           xmessages.onload = function(){
             if(xmessages.readyState == XMLHttpRequest.DONE){
               if(xmessages.status === 200){
                 var dummy = document.createElement('html')
                 dummy.innerHTML = xmessages.responseText;
-                var data = dummy.getElementsByClassName("message-screen")[0].innerHTML
-               // console.log(data);
-               // console.log(`/threads?from_user=<%= from_user %>&page=1`);
-                
-                $(".message-screen").prepend(data)
+                var data = dummy.getElementsByClassName("message-screen")[0].innerHTML 
+                if(data.trim() != ""){
+                  $(".message-screen").prepend(data)
+                }else{
+                  console.log("No messages.");
+                }  
               }else{
                 console.log("Error")
               }
             }
           }
-          xmessages.open("GET",`/threads?from_user=<%= from_user %>&page=1`,true)
+          xmessages.open("GET",`/threads?from_user=<%= from_user %>&page=${PAGE}`,true)
           xmessages.send()
-        }
       }
+
   </script>
   <style>
       html {
@@ -61,6 +65,9 @@
 <body class="scrollbar">
     <div class="headerchat">
         <div class="columns is-multiline">
+              <div id="page_arrow" class="column is-full has-text-centered">
+                  <i class="fas fa-chevron-up" style="color: white"></i>
+              </div>
                <div class="message-screen column is-full mesg-body">
                 <% for(var i = (messages.length-1); i>=0; i-- ){ %>    
                         <% if(messages[i].sender.username == from_user){ %>

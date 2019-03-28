@@ -309,8 +309,8 @@ body {
     padding: 0;
 }
 
-.offline {
-    display: none;
+.offline, .read {
+    visibility:hidden;
 }
 
 .border-right{
@@ -364,3 +364,4 @@ input[type="checkbox"]{
 	border-color: #FCCC00 transparent transparent transparent;
 }
 
+.noscroll { position: fixed; overflow-y:scroll }

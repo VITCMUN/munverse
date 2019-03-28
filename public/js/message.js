@@ -14,6 +14,18 @@ $(document).ready(() => {
     return string.replace(reg, (match)=>(map[match]));
   }
 
+  function space_to_underscore(username){
+    return username.replace(" ", "_")
+  }
+
+  function underscore_to_space(username){
+    return username.replace("_", " ")
+  }
+
+
+  var from = $("#current_user")
+  var to_user_type = $("#from_user_type")
+  var from_user_type = $("#user_type")
   var btn = $("#send_message")
   var to = $("#from_user")
   var message = $("#message_box")
@@ -36,7 +48,6 @@ $(document).ready(() => {
 
   var chat_bubble_part_2_r = '</p></div></div></div>'
 
-
   function animateIFrame() {
     $("#message-window")[0].contentWindow.scrollTo( 0, 999999 );
   }
@@ -45,9 +56,8 @@ $(document).ready(() => {
     _.each(data.users, (name, id) => {
       users[id] = name
       try {
-        $("#" + name + "_status")[0].classList.remove("offline")
+        $("#" + space_to_underscore(name) + "_status")[0].classList.remove("offline")
         if ($("#from_user").html() == name) {
-          // enable columns click again
           columns_click(name)
         }
       }
@@ -63,7 +73,8 @@ $(document).ready(() => {
         break;
       }
     }
-    $("#" + data.name + "_status")[0].classList.add("offline")
+
+    $("#" + space_to_underscore(data.name) + "_status")[0].classList.add("offline")
     if ($("#from_user").html() == data.name) {
       // enable columns click again
       columns_click(data.name)
@@ -84,10 +95,23 @@ $(document).ready(() => {
         viaeb: viaeb
       })
       // append to window
-      $("#message-window")
+      if(!viaeb||to_user_type.html() == '1'||from_user_type.html() == "1"){
+        $("#message-window")
         .contents()
         .find("body")
         .append(chat_bubble_part_1 + message.val() + chat_bubble_part_2)
+      }else{
+        $("#message-window")
+        .contents()
+        .find("body")
+        .append(chat_bubble_part_1 + `<i>via eb</i>\
+        <p>From: <b>${from.html()}</b><br></p>\
+        <p>To: <b>${to.html()}</b><br></p>\
+        <hr></hr>`+ message.val() + chat_bubble_part_2)
+        $("#via-eb-input").prop('checked', false)
+        $("#send-message-button").html("REPLY");
+      }
+     
       // reset the box value
       message.val("")
       // scroll down
@@ -98,17 +122,34 @@ $(document).ready(() => {
   })
 
   msg.on("newmessage", data => {
+    list_item = $(`#${space_to_underscore(data.name)}_list_item`).get(0).outerHTML
+    $(`#${space_to_underscore(data.name)}_list_item`).remove()
+    $(`#user-list`).prepend(list_item)
     if (data.name == $("#from_user").html()) {
+      if(!data.viaeb||to_user_type.html() == '1'||from_user_type.html() == "1"){
         $("#message-window")
-          .contents()
-          .find("body")
-          .append(chat_bubble_part_1_r + data.message + chat_bubble_part_2_r)
+        .contents()
+        .find("body")
+        .append(chat_bubble_part_1 + message.val() + chat_bubble_part_2)
+      }else{
+        $("#message-window")
+        .contents()
+        .find("body")
+        .append(chat_bubble_part_1 + `<i>via eb</i>\
+        <p>From: <b>${from.html()}</b><br></p>\
+        <p>To: <b>${to.html()}</b><br></p>\
+        <hr></hr>`+ message.val() + chat_bubble_part_2)
+        $("#via-eb-input").prop('checked', false)
+        $("#send-message-button").html("REPLY");
+      }
         animateIFrame();
         threads_window.contentDocument.location.reload(true);
         msg.emit("acknowledge", {
           ack: "ack",
           name: data.name
         })
+    } else {
+      $(`#${space_to_underscore(data.name)}_notification`).removeClass("read")
     }
   })
 })

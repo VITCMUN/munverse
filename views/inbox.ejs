@@ -37,9 +37,17 @@
   <script type="text/javascript" src="/js/inbox.js"></script>
   <script type="text/javascript" src="/js/message.js"></script>
   <script>
+    function space_to_underscore(username){
+      return username.replace(" ", "_")
+    }
+
     function columns_click(username, profile_picture_url, user_type, from_user_type) {
+      //add read
+      $(`#${space_to_underscore(username)}_notification`).addClass("read")
       // aesthetics
       $("#from_user").html(username)
+      $("#from_user_type").html(from_user_type)
+      $("#user_type").html(user_type)
       if (profile_picture_url && user_type == 0) {
         $("#msg-from-img").attr("src", profile_picture_url)
         // load iframe
@@ -47,7 +55,7 @@
         // reset user-list items color
         $(".list-item").css("background-color", "#FFFFFF")
         // change active list item's color
-        $(`#${username}_list_item`)[0].style.backgroundColor = "#FCC000"
+        $(`#${space_to_underscore(username)}_list_item`)[0].style.backgroundColor = "#FCC000"
         }else if(profile_picture_url && user_type == 1){
           $("#msg-from-img").attr("src", profile_picture_url)
           // load iframe
@@ -55,7 +63,7 @@
           // reset user-list items color
           $(".list-item").css("background-color", "#FFFFFF")
           // change active list item's color
-          $(`#${username}_list_item`)[0].style.backgroundColor = "#FCC000"
+          $(`#${space_to_underscore(username)}_list_item`)[0].style.backgroundColor = "#FCC000"
         }
       // input methods
       $("#message_box").show()
@@ -72,13 +80,19 @@
         $("#send_message").css("display", "block")
         $("#via-eb-input").prop('checked', true)
         $("#via-eb-col").css("display", "none")
+        $("#send-message-button").html("REPLY");
       } else {
         $("#message_box").prop("disabled", false);
         //$("#message_box").val("")
         $("#send_message").css("display", "block")
         $("#via-eb-col").css("display", "block")
         $("#via-eb-input").prop('checked', false)
+        $("#send-message-button").html("REPLY");
       }
+    }
+
+    function searchUsers(){
+
     }
   </script>
 </head>
@@ -173,6 +187,8 @@
         <div class="mesg-header" style="display: inline-block;">
             <span class="mesg-header">
                 <h1 id="from_user" class="is-bold is-5" ></h1>
+                <h1 id="from_user_type" style="display: none"></h1>
+                <h1 id="user_type" style="display: none"></h1>
             </span>
           </div>
     </div>
@@ -191,26 +207,29 @@
     </div>
 
     <!--LIST OF ONLINE USERS-->
-    <div id="user-list" class="is-hidden-mobile column is-2 border-right s-layout__sidebar" style="margin-left: 100; display:inline;">
+    <div class="is-hidden-mobile column is-2 border-right s-layout__sidebar" style="margin-left: 100; display:inline;">
       <h1>Delegates List</h1>
       <hr style="background: #fcc000">
-      <div class="list scrollbar" style="height: 54vh; overflow: auto">
+      <% if (typeof users !== 'undefined') { %>
+      <div id="user-list" onkeyup="searchUsers()" class="list scrollbar" style="height: 54vh; overflow: auto">
             <% for(var i=0; i<users.length; i++) {%>
               <% if (users[i].user_type !== 2 && users[i].username != user.username) { %>
-                <a id="<%= users[i].username %>_list_item" class="list-item" style="background: white" onclick="columns_click(`<%= users[i].username %>`, '<%= users[i].profile_picture_url %>', `<%= user.user_type %>`, `<%= users[i].user_type %>`)">
+                <a id="<%= users[i].username.replace(' ', '_') %>_list_item" class="list-item" style="background: white" onclick="columns_click(`<%= users[i].username %>`, '<%= users[i].profile_picture_url %>', `<%= user.user_type %>`, `<%= users[i].user_type %>`)">
                   <table class="padded-table">
                     <tr>  
-                      <td style="width:20%">
-                          <img width="44px" height="44px" style="border-radius:75%" src="<%= users[i].profile_picture_url %>">
+                      <td style="width:40%">
+                          <img width="44px" height="44px" style="border-radius:75%; border: 2px solid #f2f2f2" src="<%= users[i].profile_picture_url %>">
                       </td>
                       <td style="width:60%"> <%= users[i].username %> </td>
-                      <td class="has-text-right" style="width:50%"> <i id="<%= users[i].username %>_status" class="fa fa-circle offline" style="color:green"></i> </td>
+                      <td class="has-text-right" style="width:30%"> <i id="<%= users[i].username.replace(' ', '_') %>_status" class="fa fa-circle offline" style="color:green"></i> </td>
+                      <td class="has-text-right" style="width:30%"> <i id="<%= users[i].username.replace(' ', '_') %>_notification" class="fa fa-circle read" style="color:blue"></i> </td>
                     </tr>
                   </table>
                 </a>
               <% } %>
             <%}%>
-          </div>
+      </div>
+      <% } %>
     </div>
 
     <!--MESSAGING TEXT BOX AND REPLY BUTTON-->
