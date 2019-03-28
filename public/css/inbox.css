@@ -9,7 +9,6 @@ html, body {
     font-family: 'Nunito', sans-serif;
     font-size: 16px;
     line-height: 1.5;
-    height: 100%;
     background: #000000;
 }
 
@@ -19,11 +18,10 @@ h1 {
     font-weight: bolder;
 }
 
-nav.navbar {
-    border-top: 4px;
-    border-color: #FCCC00;
-    margin-bottom: 1rem;
+.navbar{
+    padding-top: 1%;
 }
+
 
 .navbar-item.is-logo {
     position: absolute;
@@ -147,7 +145,18 @@ a.gold-button {
 }
 
 img.icon-top {
-    padding-left: 0px;
+    margin: 0 0 0 0;
+}
+
+#user-icon {
+    border: 3px solid #FCCC00;
+    border-radius: 100%;
+}
+
+#council-icon {
+    width: 120px;
+    height: 120px;
+    margin-bottom: 25px;
 }
 
 .aside {
@@ -262,3 +271,97 @@ img.icon-top {
 .ribbon.button.h1:hover {
     color: #000000;
 }
+
+.border{
+    border: 2px solid white;
+}
+
+.padded-table {
+    border: 0px;
+}
+
+.padded-table td{
+    padding: 10px;
+    vertical-align: middle;
+}
+
+.narrow-height-column {
+    min-height: 10%;
+}
+
+.shadow {
+    -webkit-box-shadow: 0px 10px 20px -8px rgba(252,193,0,1);
+    -moz-box-shadow: 0px 10px 20px -8px rgba(252,193,0,1);
+    box-shadow: 0px 10px 20px -8px rgba(252,193,0,1);
+}
+
+.top-margin-little {
+    margin-top: 2.5%;
+}
+
+html, body {
+    height: 100%;
+}
+
+body {
+    max-height: 100%;
+    margin: 0;
+    padding: 0;
+}
+
+.offline, .read {
+    visibility:hidden;
+}
+
+.border-right{
+    box-shadow: 0px 0px 20px -4px rgba(252,193,0,1);
+}
+
+.scrollbar::-webkit-scrollbar-track
+{
+    background-color: #000000;
+}
+
+.scrollbar::-webkit-scrollbar
+{
+    width: 5px;
+    background-color: #000000;
+}
+
+.scrollbar::-webkit-scrollbar-thumb
+{
+    background-color:#fcc000;
+}
+
+input[type="checkbox"]{
+    width: 30px; /*Desired width*/
+    height: 30px; /*Desired height*/
+  }
+
+/* Right triangle placed top left flush. */
+.tri-right.border.left-top:before {
+	content: ' ';
+	position: absolute;
+	width: 0;
+	height: 0;
+  left: -40px;
+	right: auto;
+  top: -8px;
+	bottom: auto;
+	border: 32px solid;
+	border-color: #666 transparent transparent transparent;
+}
+.tri-right.left-top:after{
+	content: ' ';
+	position: absolute;
+	width: 0;
+	height: 0;
+  left: -20px;
+	right: auto;
+  top: 0px;
+	bottom: auto;
+	border: 22px solid;
+	border-color: #FCCC00 transparent transparent transparent;
+}
+
+.noscroll { position: fixed; overflow-y:scroll }

@@ -1,0 +1,40 @@
+<!--Message Thread-->
+<div class="thread card" id="msg-card-0">
+    <% if(message.sender.username == user.username) {
+         from_user = message.receiver
+      } else {
+         from_user = message.sender
+     } %>
+  <div class="card-content">
+    <div class="columns is-multiline is-mobile" onclick="parent.columns_click(`<%= from_user.username %>`, '<%= from_user.profile_picture_url %>')">
+     
+      <div class="column is-3">
+        <span class="msg-from">
+          <img id="from-user-thread-img" src="<%= from_user.profile_picture_url %>" alt="India" width="44px" height="44px" style="border-radius:75%">
+        </span>
+      </div>
+
+      <div class="column is-8">
+        <div class="mesg-header">
+          <span class="mesg-header">
+            <h1 class="username">
+              <%= from_user.username %>
+            </h1>
+          </span>
+        </div>
+        <div class="msg-subject">
+          <span class="msg-subject">
+            <small id="<%= from_user %>" style="color:antiquewhite"><%= message.content %></small>
+          </span>
+        </div>
+      </div>
+
+      <div class="column is-1">
+        <% var minutes = message.createdAt.getMinutes()
+           var hours = message.createdAt.getHours()
+           var time = hours + ":" + minutes %>
+        <span class="msg-timestamp" style="color:antiquewhite"><%= time %></span>
+      </div>
+    </div>
+  </div>
+</div>

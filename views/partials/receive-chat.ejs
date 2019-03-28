@@ -1,0 +1,29 @@
+<div class="column is-full">
+<div class="talk-bubble tri-right round btm-left">
+  <div class="talktext">
+      <% if(message.ViaEb && message.receiver.user_type != 1 && message.sender.user_type !=1){ %>
+        <i>via eb</i>
+        <p>From: <b><%= message.sender.username %></b><br></p>
+        <p>To: <b><%= message.receiver.username %></b><br></p>
+        <hr>
+      <% } %>
+    
+    <p><%= message.content %></p>
+    <p style="text-align: right; font-size: 12px">
+      <% var minutes = message.createdAt.getMinutes()
+          var hours = message.createdAt.getHours()
+          var message_date = `${message.createdAt.getDate()}/${message.createdAt.getMonth()}/${message.createdAt.getYear()-100}`
+          var time = hours + ":" + minutes 
+          var cd = new Date()
+          var current_date = cd.getDate() %>
+      <span class="msg-timestamp">
+        <%= time %> 
+        <% if(message.createdAt.getDate() != current_date){ %>
+          <%= message_date %>
+       <% }else{ %>
+       <% } %> </span><i class="fa fa-check" aria-hidden="true"></i>
+    </p>
+  </div>
+</div>
+</div>
+

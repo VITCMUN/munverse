@@ -1,23 +1,39 @@
 const passport = require('passport')
 const User = require('../models/user.model')
 const logger = require('../utils/logger')
-const admin_renderer = require('../renderer/admin')
+const admin_renderer = require('../renderer/admin.renderer')
+const shared_renderer = require('../renderer/shared.renderer')
+const message_renderer = require('../renderer/message.renderer')
 
-exports.home_view = (req, res) => {
+// /get-messages/?from=Pakistan
+exports.home_view = async (req, res) => {
     /** view function for home page */
     if (req.user.user_type == 2) {
-        admin_renderer.admin_data().then((data) => {
+        await admin_renderer.admin_data().then((data) => {
             data.error_event = req.query.error_event
             data.error_council = req.query.error_council
+            data.error_user = req.query.error_user
             res.render('../views/admin', data)
         }).catch((err) => {
             logger.error(err)
             res.status(500).send({ "message": "error rendering page" })
         })
     } else {
-        res.status(200).send({ "view": `Welcome ${req.user.username}!` })
+        data = {}
+        await shared_renderer.shared_data(req.user.username)
+        .then((shared_data) => {
+            data = shared_data
+        }).catch((err) => {
+            logger.error(err)
+        })
+        await shared_renderer.shared_data(req.user.username)
+            .then((shared_data) => {
+                data = shared_data
+            }).catch((err) => {
+                logger.error(err)
+            })
+        res.render('../views/inbox', data);   
     }
-
 }
 
 exports.login_view = (req, res) => {
@@ -25,7 +41,7 @@ exports.login_view = (req, res) => {
     if (req.user) {
         res.redirect("/")
     } else {
-        admin_renderer.shared_data().then((data) => {
+        shared_renderer.shared_data().then((data) => {
             res.render('../views/login', data)
         }).catch((err) => {
             logger.error(err)

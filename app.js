@@ -9,6 +9,8 @@ const User = require('./models/user.model')
 const logger = require('./utils/logger')
 const auth_route = require('./routes/auth.route')
 const admin_route = require('./routes/admin.route')
+const message_route = require('./routes/message.route')
+var socket = require('socket.io')
 const app = express()
 
 app.set('view engine', 'ejs')
@@ -39,7 +41,8 @@ passport.deserializeUser(User.deserializeUser())
 
 app.use(auth_route)
 app.use('/admin', admin_route)
-
+app.use('/message', message_route.router)
+app.use('/threads',message_route.router)
 mongoose.connect(db_url, { useCreateIndex: true, useNewUrlParser: true })
 mongoose.Promise = global.Promise
 
@@ -51,9 +54,15 @@ app.get('/server-status', (req, res) => {
 })
 
 // start the server
-app.listen(config.port, '0.0.0.0', () => {
+const server = app.listen(config.port, '0.0.0.0', () => {
     logger.info(`munverse started on ${config.port}`)
 })
 
+var io = socket(server)
+message_route.io(io)
+
+
+
 // expose to the test suite
 module.exports = app
+

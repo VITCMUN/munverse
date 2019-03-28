@@ -8,6 +8,14 @@ exports.is_authenticated = (req, res, next) => {
     }
 }
 
+exports.is_authenticated_with_404_fallback = (req, res, next) => {
+    if (req.user) {
+        return next()
+    } else {
+        res.status(403).send("")
+    }
+}
+
 exports.is_admin = (req, res, next) => {
     if (req.user && req.user.user_type == 2) {
         return next()
