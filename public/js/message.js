@@ -130,15 +130,15 @@ $(document).ready(() => {
         $("#message-window")
         .contents()
         .find("body")
-        .append(chat_bubble_part_1 + data.message + chat_bubble_part_2)
+        .append(chat_bubble_part_r_1 + data.message + chat_bubble_part_r_2)
       }else{
         $("#message-window")
         .contents()
         .find("body")
-        .append(chat_bubble_part_1 + `<i>via eb</i>\
+        .append(chat_bubble_part_r_1 + `<i>via eb</i>\
         <p>From: <b>${from.html()}</b><br></p>\
         <p>To: <b>${to.html()}</b><br></p>\
-        <hr></hr>`+ data.message + chat_bubble_part_2)
+        <hr></hr>`+ data.message + chat_bubble_part_r_2)
         $("#via-eb-input").prop('checked', false)
         $("#send-message-button").html("REPLY");
       }
