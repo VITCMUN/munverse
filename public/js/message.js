@@ -29,7 +29,6 @@ $(document).ready(() => {
   var btn = $("#send_message");
   var to = $("#from_user");
   var message = $("#message_box");
-  var threads_window = document.getElementById("threads-window");
   users = {};
 
   var chat_bubble_part_1 =
@@ -142,8 +141,6 @@ $(document).ready(() => {
       message.val("");
       // scroll down
       animateIFrame();
-      // refresh threads window
-      threads_window.contentDocument.location.reload(true);
     }
   });
 
@@ -196,7 +193,6 @@ $(document).ready(() => {
         $("#send-message-button").html("REPLY");
       }
       animateIFrame();
-      threads_window.contentDocument.location.reload(true);
       msg.emit("acknowledge", {
         ack: "ack",
         name: data.name
