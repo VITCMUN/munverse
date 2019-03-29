@@ -365,3 +365,13 @@ input[type="checkbox"]{
 }
 
 .noscroll { position: fixed; overflow-y:scroll }
+
+@media screen and (max-width: 600px) {
+    .iframe {
+     height: 60vh;
+    }
+
+    .column{
+        padding: 0;
+    }
+  }

@@ -146,6 +146,13 @@ $(document).ready(() => {
     }
   });
 
+  msg.on("viaeb", data => {
+    list_item = $(`#${space_to_underscore(data.from)}_list_item`).get(0).outerHTML;
+    $(`#${space_to_underscore(data.from)}_list_item`).remove();
+    $(`#user-list`).prepend(list_item);
+    $(`#${space_to_underscore(data.from)}_notification`).removeClass("read");
+  })
+  
   msg.on("newmessage", data => {
     list_item = $(`#${space_to_underscore(data.name)}_list_item`).get(0)
       .outerHTML;

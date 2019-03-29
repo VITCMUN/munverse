@@ -37,11 +37,13 @@
   <script type="text/javascript" src="/js/inbox.js"></script>
   <script type="text/javascript" src="/js/message.js"></script>
   <script>
+    $("")
     function space_to_underscore(username){
       return username.replace(" ", "_")
     }
 
     function columns_click(username, profile_picture_url, user_type, from_user_type) {
+      document.getElementById("mySidenav").style.width = "0";
       //add read
       $(`#${space_to_underscore(username)}_notification`).addClass("read")
       // aesthetics
@@ -106,11 +108,64 @@
       }
     }
 
+    function openNav() {
+      $("#user_list_panel").removeClass("is-hidden-mobile")
+      document.getElementById("mySidenav").style.width = "100%";
+      data = $("#user_list_panel").get(0).outerHTML
+      $("#user_list_panel").remove()
+      $("#mySidenav").html(data)
+    }
+
+    
+
   </script>
 </head>
 
 <body style="overflow: hidden;">
-
+<!-- FOR SIDE NAV -->
+  <style> 
+    .sidenav {
+      height: 100%;
+      width: 0;
+      position: fixed;
+      z-index: 1;
+      top: 0;
+      left: 0;
+      background-color: #111;
+      overflow-x: hidden;
+      transition: 0.5s;
+      padding-top: 60px;
+    }
+    
+    .sidenav a {
+      padding: 8px 8px 8px 32px;
+      text-decoration: none;
+      font-size: 25px;
+      color: #818181;
+      display: block;
+      transition: 0.3s;
+    }
+    
+    .sidenav a:hover {
+      color: #f1f1f1;
+    }
+    
+    .sidenav .closebtn {
+      position: absolute;
+      top: 0;
+      right: 25px;
+      font-size: 36px;
+      margin-left: 50px;
+    }
+    
+    @media screen and (max-height: 450px) {
+      .sidenav {padding-top: 15px;}
+      .sidenav a {font-size: 18px;}
+    }
+    </style>
+  <!-- SIDE NAV FOR MOBILE -->
+  <div id="mySidenav" class="sidenav">
+  </div>
   <!-- START NAV -->
   <nav class="navbar dark shadow" role="navigation" aria-label="main navigation">
     <div class="navbar-brand">
@@ -123,14 +178,24 @@
       <a class="navbar-item is-hidden-tablet" href="#">
         <img class="icon-top" src="<%= user.profile_picture_url %>" width="50mm" height="50mm">
       </a>
+      <a class="navbar-item" href="#">
+          <img id="msg-from-img" width="50mm" height="50mm" style="border-radius:75%">      
+      </a>
+      <div class="mesg-header" style="display: inline-block; margin-top: 20px; ">
+          <span class="mesg-header">
+              <h1 id="from_user" class="is-bold is-5" ></h1>
+              <h1 id="from_user_type" style="display: none"></h1>
+              <h1 id="user_type" style="display: none"></h1>
+          </span>
+        </div>
       <!--Council Logo for Mobile Devices-->
      
       <div class="navbar-item is-logo is-hidden-tablet">
         <a class="is-logo" href="#">
-          <img id="council-icon" class="icon-top" src="<%= council.council_logo_url %>">
+          <img id="council-icon" class="icon-top is-hidden-mobile" src="<%= council.council_logo_url %>">
         </a>
       </div>
-      <a role="button" class="navbar-burger burger s-sidebar__trigger" aria-label="menu" aria-expanded="false" data-target="navMenu" style="color: #ffffff;">
+      <a id="side_trigger" role="button" class="navbar-burger burger" onclick="openNav()" aria-label="menu" aria-expanded="false" style="color: #ffffff;">
         <span aria-hidden="true"></span>
         <span aria-hidden="true"></span>
         <span aria-hidden="true"></span>
@@ -188,25 +253,9 @@
   </table>
 
   <div class="columns is-multiline is-mobile top-margin-little" style="height:28mm">
-    
-    <div class="column is-1" style="margin-top: -30px; width: 21mm; height: 21mm">
-      <figure>
-          <img id="msg-from-img" width="44mm" height="44mm" style="margin-top:-10; border-radius:75%">
-          
-      </figure>
-    </div>
-    <div class="column is-7" style="margin-top: -30px; height: 21mm; padding-top: 20px">
-        <div class="mesg-header" style="display: inline-block;">
-            <span class="mesg-header">
-                <h1 id="from_user" class="is-bold is-5" ></h1>
-                <h1 id="from_user_type" style="display: none"></h1>
-                <h1 id="user_type" style="display: none"></h1>
-            </span>
-          </div>
-    </div>
 
     <!--MESSAGES-->
-    <div class="has-text-centered column is-10-desktop iframe border-right is-full-mobile">
+    <div class="is-full-mobile has-text-centered column is-10-desktop iframe border-right">
       <h1 class="is-1" style="margin-top: 240px">Click on a delegate to start conversation.<br>
           <i class="fa fa-comments" style="font-size: 150px"></i>
       </h1>
@@ -219,8 +268,8 @@
     </div>
 
     <!--LIST OF ONLINE USERS-->
-    <div class="is-hidden-mobile column is-2 border-right s-layout__sidebar" style="margin-left: 100; display:inline;">
-      <h1>Delegates List</h1>
+    <div id="user_list_panel" class="column border-right is-full-mobile is-hidden-mobile">
+      <h1 class="is-hidden-mobile">Delegates List</h1>
       <hr style="background: #fcc000">
       <div class="field">
         <p class="control has-icons-left has-icons-right">
@@ -253,7 +302,7 @@
     </div>
 
     <!--MESSAGING TEXT BOX AND REPLY BUTTON-->
-    <div class="column is-10">
+    <div class="column is-10 is-full-mobile">
       <div class="field">
         <div class="control">
           <textarea id="message_box" maxlength="250" class="shadow textarea is-warning message-input tri-right round btm-right-in" placeholder="Type your message."></textarea>

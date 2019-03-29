@@ -15,18 +15,11 @@ function get_usernames() {
 async function sendToEBs(socket, message, user_from, user_to) {
     for (var i=0; i<cache.length; i++) {
         if (cache[i][0].user_type == 1) {   // EB
-            socket.to(cache[i][1]).emit('newmessage', {
+            socket.to(cache[i][1]).emit('viaeb', {
                 message: message,
                 from: user_from.username,
                 to: user_to.username
             })
-            var new_message = new Message({
-                sender: user_from,
-                receiver: user_to,
-                ViaEb: 1,
-                content: message,
-            })
-            new_message.save()
         }
     }
 }
@@ -82,13 +75,14 @@ exports.sendmessage = async (socket, data, io) => {
         logger.error(err)
         return
     }
+    if (data.viaeb == 1) {
+        sendToEBs(socket, data.message, data.user_from, data.user_to)
+    }
     socket.to(id_to).emit('newmessage', {
         message: data.message,
-        name: user_from.username
+        name: user_from.username,
+        viaeb: data.viaeb
     })
-    if(data.viaeb==1){
-        // sendToEBs(socket, data.message, user_from, user_to)
-    }
     var new_message = new Message({
         sender: user_from,
         receiver: user_to,
