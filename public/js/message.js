@@ -151,6 +151,11 @@ $(document).ready(() => {
       .outerHTML;
     $(`#${space_to_underscore(data.name)}_list_item`).remove();
     $(`#user-list`).prepend(list_item);
+    hours = new Date().getHours();
+    minutes = new Date().getMinutes();
+    if(minutes<10) { 
+      minutes = "0"+minutes
+    }
     if (data.name == $("#from_user").html()) {
       if (
         !data.viaeb ||
@@ -163,7 +168,7 @@ $(document).ready(() => {
           .append(chat_bubble_part_r_1 + data.message +
             `<p style="text-align: right; font-size: 12px">
             <span class="msg-timestamp"><i class="fa fa-check" aria-hidden="true"></i>
-            ${new Date().getHours()}:${new Date().getMinutes()}
+            ${hours}:${minutes}
             </span>      
             </p>` + chat_bubble_part_r_2);
       } else {
@@ -179,7 +184,7 @@ $(document).ready(() => {
               data.message +
               `<p style="text-align: right; font-size: 12px">
               <span class="msg-timestamp"><i class="fa fa-check" aria-hidden="true"></i>
-              ${new Date().getHours()}:${new Date().getMinutes()}
+              ${hours}:${minutes}
               </span>      
               </p>` +
               chat_bubble_part_r_2
