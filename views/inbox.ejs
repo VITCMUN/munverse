@@ -22,6 +22,11 @@
   <meta name="msapplication-TileImage" content="/favicons/ms-icon-144x144.png">
   <meta name="theme-color" content="#ffffff">
 
+ <!-- Add IntroJs styles -->
+ <link href="/css/introjs.css" rel="stylesheet">
+
+ <link href="/css/bootstrap-responsive.min.css" rel="stylesheet">
+
   <meta charset="utf-8">
   <meta http-equiv="X-UA-Compatible" content="IE=edge">
   <meta name="viewport" content="width=device-width, initial-scale=1">
@@ -116,7 +121,7 @@
     <div class="navbar-brand">
       <!--Big Flag for Desktop Device-->
       <a class="navbar-item is-hidden-mobile navbar-flag" href="#">
-        <img id="user-icon" class="icon-top" src="<%= user.profile_picture_url %>" width="25%" height="25%">
+        <img id="user-icon" class="icon-top" src="<%= user.profile_picture_url %>" width="25%" height="25%" data-step="1" data-intro="This is the Flag logo of your country.">
         <h1 id="current_user" style="margin-left: 20px"><%= user.username %></h1>
       </a>
       <!--Small Flag for Mobile Devices-->
@@ -140,12 +145,21 @@
       <!--Council Logo for Laptop Devices-->
       <div class="navbar-item is-logo is-hidden-mobile">
         <a class="is-logo" href="#">
-          <img id="council-icon" class="icon-top" src="<%= council.council_logo_url %>">
+          <img id="council-icon" class="icon-top" src="<%= council.council_logo_url %>" data-step="2" data-intro="This is the Council logo of your council.">
         </a>
       </div>
-      
-      <div  onclick="location.href='/logout';" class="navbar-end" id="navMenu">
-        <div class="navbar-item">
+    
+      <div  class="navbar-end" id="navMenu" >
+        <div onclick="javascript:introJs().start();" class="navbar-item">
+          <div class="buttons">
+            <a class="button gold-button">
+              <strong>
+                TOUR
+              </strong>
+            </a>
+          </div>
+        </div>
+        <div onclick="location.href='/logout';" class="navbar-item" data-step="6" data-intro="Logout here.">
           <div class="buttons">
             <a class="button gold-button">
               <strong>
@@ -206,7 +220,7 @@
     </div>
 
     <!--MESSAGES-->
-    <div class="has-text-centered column is-10-desktop iframe border-right is-full-mobile">
+    <div class="has-text-centered column is-10-desktop iframe border-right is-full-mobile" data-step="3" data-intro="This is the area where you can chat and find your chat history.">
       <h1 class="is-1" style="margin-top: 240px">Click on a delegate to start conversation.<br>
           <i class="fa fa-comments" style="font-size: 150px"></i>
       </h1>
@@ -224,14 +238,14 @@
       <hr style="background: #fcc000">
       <div class="field">
         <p class="control has-icons-left has-icons-right">
-          <input id="search_box" onkeyup="searchUsers()" class="input" type="text" placeholder="search users">
+          <input id="search_box" onkeyup="searchUsers()" class="input" type="text" placeholder="search users" data-step="5" data-intro="This is where you can search any member country." data-position="left">
           <span class="icon is-small is-right">
             <i class="fas fa-search"></i>
           </span>
         </p>
       </div>
       <% if (typeof users !== 'undefined') { %>
-      <div id="user-list" class="list scrollbar" style="height: 54vh; overflow: auto">
+      <div id="user-list" class="list scrollbar" style="height: 54vh; overflow: auto" data-step="4" data-intro="This is where all the member countries of this council is listed." data-position="left">
             <% for(var i=0; i<users.length; i++) {%>
               <% if (users[i].user_type !== 2 && users[i].username != user.username) { %>
                 <a id="<%= users[i].username.replace(' ', '_') %>_list_item" class="list-item" style="background: white" onclick="columns_click(`<%= users[i].username %>`, '<%= users[i].profile_picture_url %>', `<%= user.user_type %>`, `<%= users[i].user_type %>`)">
@@ -274,6 +288,7 @@
       <h1>EB</h1>
     </div>
   </div>
+  <script type="text/javascript" src="/js/intro.js"></script>
 </body>
 
 </html>
