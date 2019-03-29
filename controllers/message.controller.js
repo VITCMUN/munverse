@@ -84,11 +84,9 @@ exports.sendmessage = async (socket, data, io) => {
     }
     socket.to(id_to).emit('newmessage', {
         message: data.message,
-        name: user_from.username
+        name: user_from.username,
+        viaeb: data.viaeb
     })
-    if(data.viaeb==1){
-        // sendToEBs(socket, data.message, user_from, user_to)
-    }
     var new_message = new Message({
         sender: user_from,
         receiver: user_to,
