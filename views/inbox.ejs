@@ -68,10 +68,10 @@
       // input methods
       $("#message_box").show()
       $("#send_message").show()
-      var offline = $(`#${username}_status`).hasClass("offline")
+      var offline = $(`#${space_to_underscore(username)}_status`).hasClass("offline")
       if (offline == true) {
         $("#message_box").prop("disabled", "disabled");
-        //$("#message_box").val("Can't send message to offline delegates.")
+        $("#message_box").val("Can't send message to offline delegates.")
         $("#send_message").css("display", "none")
         $("#via-eb-col").css("display", "none")
       } else if(from_user_type == 1 || user_type == 1) {  
