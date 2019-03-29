@@ -1,5 +1,6 @@
 $(document).ready(() => {
   var msg = io.connect(document.location.href, {
+    query: `username=${$("#current_user").html()}`,
     reconnection: false
   });
 
@@ -161,8 +162,8 @@ $(document).ready(() => {
     if (data.name == $("#from_user").html()) {
       if (
         !data.viaeb ||
-        to_user_type.html() == "1" ||
-        from_user_type.html() == "1"
+        data.from_type == 1||
+        data.to_type == 1
       ) {
         $("#message-window")
           .contents()

@@ -1,4 +1,5 @@
 const Message = require('../models/message.model')
+const User = require('../models/user.model')
 const logger = require('../utils/logger')
 const message_renderer = require('../renderer/message.renderer')
 const shared_renderer = require('../renderer/shared.renderer')
@@ -42,15 +43,12 @@ function get_index(username, socket_id) {
     return index
 }
 
-exports.get_user = (req, res, next) => {
-    /** get user for chat */
-    user = req.user
-    return next()
-}
-
-exports.connected = (socket, io) => {
+exports.connected = async (socket, io) => {
     /** on user connect cache the current socket id **/
+    data = socket.request._query
+    user = await User.findOne({username: data['username']})
     cache.push([user, socket.id])
+    console.log(cache)
     io.sockets.emit("allusers", {
         users: get_usernames()
     })
@@ -81,6 +79,8 @@ exports.sendmessage = async (socket, data, io) => {
     socket.to(id_to).emit('newmessage', {
         message: data.message,
         name: user_from.username,
+        from_type: user_from.user_type,
+        to_type: user_to.user_type,
         viaeb: data.viaeb
     })
     var new_message = new Message({
