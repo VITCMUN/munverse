@@ -3,14 +3,14 @@ const express = require('express')
 const morgan = require('morgan')
 const bodyParser = require('body-parser')
 const passport = require('passport')
-const mongoose = require('mongoose')
 const LocalStrategy = require('passport-local').Strategy
 const User = require('./models/user.model')
 const logger = require('./utils/logger')
 const auth_route = require('./routes/auth.route')
 const admin_route = require('./routes/admin.route')
 const message_route = require('./routes/message.route')
-var socket = require('socket.io')
+const db = require('./db/db')
+const socket = require('socket.io')
 const app = express()
 
 app.set('view engine', 'ejs')
@@ -19,11 +19,8 @@ app.use(express.static('media'))
 app.use(bodyParser.json({limit: "5mb"}))
 app.use(bodyParser.urlencoded({ limit: "5mb", extended: false }))
 
-if (process.env.NODE_ENV === 'test') {
-    db_url = "mongodb://localhost:27017/test"
-} else {
-    app.use(morgan('dev'))
-    db_url = "mongodb://localhost:27017/munverse"
+if (process.env.NODE_ENV !== 'test') {
+    app.use(morgan("dev"))
 }
 
 app.use(require('express-session')({
@@ -43,15 +40,12 @@ app.use(auth_route)
 app.use('/admin', admin_route)
 app.use('/message', message_route.router)
 app.use('/threads',message_route.router)
-mongoose.connect(db_url, { useCreateIndex: true, useNewUrlParser: true })
-mongoose.Promise = global.Promise
-
-let db = mongoose.connection
-db.on('error', console.error.bind(console, 'Error connecting to MongoDB'))
 
 app.get('/server-status', (req, res) => {
     res.status(200).send('Server is up!')
 })
+
+db.init()
 
 // start the server
 const server = app.listen(config.port, '0.0.0.0', () => {
@@ -60,8 +54,6 @@ const server = app.listen(config.port, '0.0.0.0', () => {
 
 var io = socket(server)
 message_route.io(io)
-
-
 
 // expose to the test suite
 module.exports = app
