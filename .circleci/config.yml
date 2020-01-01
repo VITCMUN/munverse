@@ -52,9 +52,7 @@ jobs:
 
       - run: echo "$DOCKER_PASS" | docker login --username $DOCKER_USER --password-stdin
 
-      - run: |
-          npm version patch
-          TAG=$(sed -nE 's/^\s*"version": "(.*?)",$/\1/p' package.json)
+      - run: TAG=$(sed -nE 's/^\s*"version": "(.*?)",$/\1/p' package.json)
 
       - run:
           name: create docker image
