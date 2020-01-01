@@ -11,8 +11,9 @@ const admin_route = require('./routes/admin.route')
 const message_route = require('./routes/message.route')
 const db = require('./db/db')
 const socket = require('socket.io')
-const redis = require('redis')
+const mongoose = require('mongoose')
 const session = require('express-session')
+const MongoStore = require('connect-mongo')(session);
 const app = express()
 
 app.set('view engine', 'ejs')
@@ -25,14 +26,13 @@ if (process.env.NODE_ENV !== 'test') {
     app.use(morgan("dev"))
 }
 
-let RedisStore = require('connect-redis')(session)
-let client = redis.createClient()
+db.init()
 
 app.use(session({
     secret: 'Silicon Valley',
     resave: false,
     saveUninitialized: false,
-    store: new RedisStore({ client })
+    store: new MongoStore({ mongooseConnection: mongoose.connection })
 }))
 
 app.use(passport.initialize())
@@ -50,8 +50,6 @@ app.use('/threads',message_route.router)
 app.get('/server-status', (req, res) => {
     res.status(200).send('Server is up!')
 })
-
-db.init()
 
 // start the server
 const server = app.listen(config.port, '0.0.0.0', () => {
