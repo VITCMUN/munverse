@@ -4,7 +4,7 @@
 #
 version: 2
 jobs:
-  build:
+  test:
     docker:
       # specify the version you desire here
       - image: circleci/node:7.10
@@ -45,8 +45,13 @@ jobs:
             MONGO_HOSTNAME: localhost
             MONGO_PORT: 27017
             MONGO_DB: test
+  build:
+    docker:
+      - image: buildpack-deps:trusty
 
-      # create a docker build and push
+    steps:
+      - checkout
+
       - run: docker login -u $DOCKER_USER -p $DOCKER_PASS
 
       - run: |
