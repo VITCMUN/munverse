@@ -11,11 +11,14 @@ services:
     restart: unless-stopped
     env_file: .env
     environment:
+      NODE_ENV: $NODE_ENV
       MONGO_USERNAME: $MONGO_USERNAME
       MONGO_PASSWORD: $MONGO_PASSWORD
       MONGO_HOSTNAME: mongo
       MONGO_PORT: 27017
       MONGO_DB: $MONGO_DB
+    volumes:
+      - .:/app
     command: ["./wait-for-it.sh", "mongo:27017", "--", "npm", "start"]
     ports:
       - "80:8080"
