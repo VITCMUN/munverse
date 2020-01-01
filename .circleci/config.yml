@@ -64,10 +64,13 @@ jobs:
           name: push to dockerhub
           command: docker push vitcmun/munverse:$TAG.$CIRCLE_BUILD_NUM
 
+# test -> deploy
 workflows:
   version: 2
-  jobs:
-    - deploy:
-        requires:
-          - test
+  build-deploy:
+    jobs:
+      - test
+      - deploy:
+          requires:
+            - test
 
