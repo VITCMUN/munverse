@@ -11,6 +11,8 @@ const admin_route = require('./routes/admin.route')
 const message_route = require('./routes/message.route')
 const db = require('./db/db')
 const socket = require('socket.io')
+const redis = require('redis')
+const session = require('express-session')
 const app = express()
 
 app.set('view engine', 'ejs')
@@ -23,10 +25,14 @@ if (process.env.NODE_ENV !== 'test') {
     app.use(morgan("dev"))
 }
 
-app.use(require('express-session')({
+let RedisStore = require('connect-redis')(session)
+let client = redis.createClient()
+
+app.use(session({
     secret: 'Silicon Valley',
     resave: false,
-    saveUninitialized: false
+    saveUninitialized: false,
+    store: new RedisStore({ client })
 }))
 
 app.use(passport.initialize())
