@@ -52,7 +52,7 @@ jobs:
 
       - run: echo "$DOCKER_PASS" | docker login --username $DOCKER_USER --password-stdin
 
-      - run: TAG=$(sed -nE 's/^\s*"version": "(.*?)",$/\1/p' package.json)
+      - run: export TAG=$(sed -nE 's/^\s*"version": "(.*?)",$/\1/p' package.json) >> $BASH_ENV
 
       - run:
           name: create docker image
