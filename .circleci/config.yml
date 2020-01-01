@@ -45,14 +45,12 @@ jobs:
             MONGO_HOSTNAME: localhost
             MONGO_PORT: 27017
             MONGO_DB: test
-  build:
-    docker:
-      - image: buildpack-deps:trusty
-
+  deploy:
+    machine: true
     steps:
       - checkout
 
-      - run: docker login -u $DOCKER_USER -p $DOCKER_PASS
+      - run: echo "$DOCKER_PASS" | docker login --username $DOCKER_USER --password-stdin
 
       - run: |
           npm version bump
@@ -65,3 +63,11 @@ jobs:
       - run:
           name: push to dockerhub
           command: docker push vitcmun/munverse:$TAG.$CIRCLE_BUILD_NUM
+
+workflows:
+  version: 2
+  jobs:
+    - deploy:
+        requires:
+          - test
+
