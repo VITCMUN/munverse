@@ -52,15 +52,13 @@ jobs:
 
       - run: echo "$DOCKER_PASS" | docker login --username $DOCKER_USER --password-stdin
 
-      - run: export TAG=$(jq -r ".version" package.json) >> $BASH_ENV
-
       - run:
           name: create docker image
-          command: docker build -f build.Dockerfile -t vitcmun/munverse:$TAG.$CIRCLE_BUILD_NUM .
+          command: docker build -f build.Dockerfile -t vitcmun/munverse:0.1.$CIRCLE_BUILD_NUM .
 
       - run:
           name: push to dockerhub
-          command: docker push vitcmun/munverse:$TAG.$CIRCLE_BUILD_NUM
+          command: docker push vitcmun/munverse:0.1.$CIRCLE_BUILD_NUM
 
 # test -> deploy
 workflows:
