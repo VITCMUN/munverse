@@ -1,15 +1,9 @@
-ARG VERSION=carbon
-FROM node:${VERSION}
+FROM node:11
 
 WORKDIR /app
 
 COPY package*.json ./
 
-ARG NODE_ENV=development
-
-RUN if [ ${NODE_ENV} = "development" ]; \
-	then npm install;  \
-	else npm install --only=production; \
-	fi
+RUN npm install
 
 EXPOSE 8080
