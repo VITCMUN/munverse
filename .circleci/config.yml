@@ -47,8 +47,7 @@ jobs:
             MONGO_DB: test
 
       # create a docker build and push
-
-      - run: echo "$DOCKER_PASS" | docker login --username $DOCKER_USER --password-stdin
+      - run: docker login -u $DOCKER_USER -p $DOCKER_PASS
 
       - run: |
           npm version bump
