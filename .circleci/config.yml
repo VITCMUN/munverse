@@ -63,7 +63,7 @@ jobs:
 # test -> deploy
 workflows:
   version: 2
-  build-deploy:
+  test-deploy:
     jobs:
       - test
       - deploy:
