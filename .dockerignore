@@ -1,0 +1,12 @@
+node_modules
+Dockerfile*
+docker-compose*
+.dockerignore
+.git
+.gitignore
+.github
+.circleci
+README.md
+LICENSE
+CODE_OF_CONDUCT.md
+.env

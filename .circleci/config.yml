@@ -4,7 +4,7 @@
 #
 version: 2
 jobs:
-  build:
+  test:
     docker:
       # specify the version you desire here
       - image: circleci/node:7.10
@@ -12,6 +12,10 @@ jobs:
       # CircleCI maintains a library of pre-built images
       # documented at https://circleci.com/docs/2.0/circleci-images/
       - image: circleci/mongo:3.4
+        environment:
+          MONGO_INITDB_ROOT_USERNAME: test
+          MONGO_INITDB_ROOT_PASSWORD: test
+          MONGO_INITDB_DATABASE: test
 
     steps:
       - checkout
@@ -31,6 +35,38 @@ jobs:
           key: v1-dependencies-{{ checksum "package.json" }}
         
       # run tests!
-      - run: npm test
+      - run: 
+          name: tests
+          command: npm test
+          environment:
+            NODE_ENV: test
+            MONGO_USERNAME: test
+            MONGO_PASSWORD: test
+            MONGO_HOSTNAME: localhost
+            MONGO_PORT: 27017
+            MONGO_DB: test
+  deploy:
+    machine: true
+    steps:
+      - checkout
 
+      - run: echo "$DOCKER_PASS" | docker login --username $DOCKER_USER --password-stdin
+
+      - run:
+          name: create docker image
+          command: docker build -f build.Dockerfile -t vitcmun/munverse:0.1.$CIRCLE_BUILD_NUM .
+
+      - run:
+          name: push to dockerhub
+          command: docker push vitcmun/munverse:0.1.$CIRCLE_BUILD_NUM
+
+# test -> deploy
+workflows:
+  version: 2
+  test-deploy:
+    jobs:
+      - test
+      - deploy:
+          requires:
+            - test
 

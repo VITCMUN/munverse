@@ -8,11 +8,12 @@
   },
   "scripts": {
     "start": "nodemon app.js",
+    "start:prod": "node app.js",
     "test": "./node_modules/.bin/mocha --recursive --exit"
   },
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/VITCMUN/munverse.git"
+    "url": "https://github.com/VITCMUN/munverse.git"
   },
   "author": "",
   "license": "GPL-3.0",
@@ -23,9 +24,10 @@
   "dependencies": {
     "async": "^2.6.2",
     "body-parser": "^1.18.3",
+    "connect-mongo": "3.2.0",
     "ejs": "^2.6.1",
     "express": "^4.16.4",
-    "express-session": "^1.15.6",
+    "express-session": "1.17.0",
     "image-to-base64": "^2.0.1",
     "moment-timezone": "^0.5.23",
     "mongoose": "^5.7.5",
