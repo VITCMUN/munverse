@@ -1,16 +1,11 @@
 version: "3.7"
 services:
   web:
-    build:
-      context: .
-      dockerfile: Dockerfile
-      args:
-        - NODE_ENV=$NODE_ENV
-    image: munverse_image
+    image: vitcmun/munverse:latest
     container_name: munverse_container
     depends_on:
       - mongo
-    restart: unless-stopped
+    restart: always
     env_file: .env
     environment:
       NODE_ENV: $NODE_ENV
@@ -19,9 +14,6 @@ services:
       MONGO_HOSTNAME: mongo
       MONGO_PORT: 27017
       MONGO_DB: $MONGO_DB
-    volumes:
-      - .:/app
-      - /app/node_modules
     command: ["scripts/wait-for-it.sh", "mongo:27017", "--", "scripts/startup.sh"]
     ports:
       - "80:8080"
@@ -37,21 +29,5 @@ services:
     volumes:
       - ./db/seed.js:/docker-entrypoint-initdb.d/seed.js
       - dbdata:/data/db
-  mongo-express:
-    image: mongo-express
-    container_name: munverse_mongo_express
-    depends_on:
-      - mongo
-    restart: always
-    ports:
-      - 8081:8081
-    env_file: .env
-    environment:
-      ME_CONFIG_BASICAUTH_USERNAME: $MONGO_EXPRESS_USERNAME
-      ME_CONFIG_BASICAUTH_PASSWORD: $MONGO_EXPRESS_PASSWORD
-      ME_CONFIG_MONGODB_AUTH_DATABASE: $MONGO_DB
-      ME_CONFIG_MONGODB_ADMINUSERNAME: $MONGO_USERNAME
-      ME_CONFIG_MONGODB_ADMINPASSWORD: $MONGO_PASSWORD
-
 volumes:
   dbdata:
