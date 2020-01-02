@@ -13,7 +13,7 @@ const db = require('./db/db')
 const socket = require('socket.io')
 const mongoose = require('mongoose')
 const session = require('express-session')
-const MongoStore = require('connect-mongo')(session);
+const MongoStore = require('connect-mongo')(session)
 const app = express()
 
 app.set('view engine', 'ejs')
