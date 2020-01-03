@@ -6,6 +6,8 @@ services:
     depends_on:
       - mongo
     restart: always
+    volumes:
+      - ./media:/app/media
     env_file: .env
     environment:
       MONGO_HOSTNAME: mongo
