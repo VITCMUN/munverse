@@ -54,7 +54,7 @@ jobs:
 
       - run:
           name: create docker image
-          command: docker build -f build.Dockerfile -t vitcmun/munverse:0.1.$CIRCLE_BUILD_NUM .
+          command: docker build -f build.Dockerfile -t vitcmun/munverse:latest -t vitcmun/munverse:0.1.$CIRCLE_BUILD_NUM .
 
       - run:
           name: push to dockerhub
