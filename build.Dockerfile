@@ -2,6 +2,9 @@ FROM node:11-alpine
 
 WORKDIR /app
 
+# Required for scripts/wait-for-it.sh
+RUN apk add --update netcat-openbsd && rm -rf /var/cache/apk/*
+
 COPY . .
 
 RUN npm install --only=production
