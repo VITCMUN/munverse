@@ -12,11 +12,12 @@ services:
     environment:
       MONGO_HOSTNAME: mongo
       MONGO_PORT: 27017
+      NODE_ENV: production
     command: ["scripts/wait-for-it.sh", "mongo:27017", "--", "scripts/startup.sh"]
     ports:
       - "80:8080"
   mongo:
-    image: mongo
+    image: mongo:4.2.3
     container_name: munverse_mongo
     restart: always
     env_file: .env
