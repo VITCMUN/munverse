@@ -22,7 +22,7 @@
   },
   "homepage": "https://github.com/VITCMUN/munverse#readme",
   "dependencies": {
-    "async": "^2.6.2",
+    "async": "^2.6.4",
     "body-parser": "^1.18.3",
     "connect-mongo": "3.2.0",
     "ejs": "^2.6.1",
