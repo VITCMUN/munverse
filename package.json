@@ -26,7 +26,7 @@
     "body-parser": "^1.18.3",
     "connect-mongo": "3.2.0",
     "ejs": "^2.6.1",
-    "express": "^4.16.4",
+    "express": "^4.17.3",
     "express-session": "1.17.0",
     "image-to-base64": "^2.0.1",
     "moment-timezone": "^0.5.23",
